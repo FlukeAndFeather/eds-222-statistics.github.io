@@ -1,0 +1,41 @@
+---
+title: "Collaboration tools"
+subtitle: "Day 10"
+description: "Friday August 23^rd^, 2024"
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/horst-first-like.png")
+```
+
+:::{.gray-text .center-text}
+*Artwork by [Allison Horst](https://allisonhorst.com/)*
+:::
+
+<!-- ## Pre-class prep -->
+
+<!-- No pre-class prep before our first day of class! -->
+
+## Class materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Interactive session |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| day 10 / morning   |  | [R packages revisited, tables in R, a taste of git collaboration](interactive-sessions/interactive-session-10.qmd){target="_blank"} |
+| day 10 / afternoon | [Course wrap-up](https://docs.google.com/presentation/d/1Q2tbBXW8_6tkPlqdxebEzV3KxTbwsS16tJ3oVac063k/present?usp=sharing){target="_blank"} |  |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## End-of-day practice
+
+Complete the following tasks / activities before heading home for the day!
+
+- [{{< fa pencil title="A pencil" >}} **Day 10 Morning Practice:** GitHub collaboration](eod-practice/eod-day10a.qmd){target="_blank"}
+- [{{< fa pencil title="A pencil" >}} **Day 10 Afternoon Practice:** Data import, exploration, & visualization](eod-practice/eod-day10b.qmd){target="_blank"}
+
+## Additional Resources
+
+TBD
+

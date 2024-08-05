@@ -1,0 +1,40 @@
+---
+title: "Conditionals and logical operators"
+subtitle: "Day 3"
+description: "Wednesday August 14^th^, 2024"
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/horst-across.png")
+```
+
+:::{.gray-text .center-text}
+*Artwork by [Allison Horst](https://allisonhorst.com/)*
+:::
+
+<!-- ## Pre-class prep -->
+
+<!-- No pre-class prep before our first day of class! -->
+
+## Class materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Interactive session |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| day 3 / morning   | [Conditionals and logical operations, intro to for loops](https://docs.google.com/presentation/d/1TCBHls1pKjFw4S1N7fjalcl_km9CnSPj7j1xqDSwbik/present?usp=sharing){target="_blank"} | [Refresh logical operations, write basics for loops in R](interactive-sessions/interactive-session-3.qmd){target="_blank"} |
+| day 3 / afternoon | [Loops continued - and functions to help](https://docs.google.com/presentation/d/16SHVrCijddMrATuAnTPY9oVhlaqU1j3ispxkEG7k34Y/present?usp=sharing){target="_blank"} | [For loops with conditions, `apply()` functions, and `across()`](interactive-sessions/interactive-session-3.qmd){target="_blank"} |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## End-of-day practice
+
+Complete the following tasks / activities before heading home for the day!
+
+- [{{< fa pencil title="A pencil" >}} **Day 3 Practice:** Conditionals & for loops](eod-practice/eod-day3.qmd){target="_blank"}
+
+## Additional Resources
+
+TBD
+

@@ -1,0 +1,92 @@
+---
+title: "Scientific Programming Essentials"
+subtitle: "Master of Environmental Data Science (MEDS)"
+description: "Summer 2024"
+title-block-banner: false
+toc: false
+---
+
+```{r}
+#| eval: true 
+#| echo: false
+#| fig-align: "center"
+#| out-width: "70%" 
+#| fig-alt: "A friendly yellow python in a teal beanie helpfully holds a ball of yarn, which is being used by a round hedgehog to knit a teal and yellow mitten. A squirrel on a drum labeled 'SQL' paints an 'R' to make it read 'SQ(R)L' (which may be read as 'squirrel'). The goal is to show Python, R, and SQL together in polyglot workflows facilitated by R Markdown / Quarto."
+knitr::include_graphics("images/horst-language-critters.png")
+```
+
+::: {.gray-text .center-text}
+*Artwork by [Allison Horst](https://allisonhorst.com/)*
+:::
+
+## Course Description
+
+This course teaches key scientific programming skills and demonstrates the application of these techniques to environmental data analysis and problem solving. Topics include structured programming and algorithm development, flow control, simple and advanced data input-output and representation, functions and objects, documentation, testing and debugging. The course will be taught using a combination of the R and Python programming languages.
+
+By the end of EDS 221, students should be able to:
+
+- **Understand, create, and work with different data structures** (e.g. vectors, data frames, lists) **and types** (e.g. numeric, character, factor, logical, date-times)
+
+- **Design, implement, test, and document functions**, including functions with iteration, conditionals, messages, and warnings in R
+
+- **Use basic** (non-collaborative) **project-oriented workflos with reproducible code** (R scripts, Quarto documents, Jupyter notebooks) **and version control** (git/GitHub basics)
+
+- **Perform basic data wrangling and visualization** with real world environmental data and tidyverse packages (in R)
+
+- **Employ troubleshooting and debugging strategies** including tools, mindsets, strategies, and resources
+
+
+## Teaching Team
+
+<br>
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+
+::: {.center-text .body-text-l}
+**Instructor**
+:::
+
+```{r}
+#| eval: true 
+#| echo: false
+#| fig-align: "center"
+#| out-width: "45%" 
+knitr::include_graphics("images/ruth.png")
+```
+
+::: {.center-text}
+[**Ruth Oliver**]{.teal-text}  
+**Email:** [rutholiver@ucsb.edu](mailto::rutholiver@ucsb.edu)  
+**Learn more:** [ryoliver-lab.github.io](https://ryoliver-lab.github.io/)  
+:::
+
+:::
+
+::: {.g-col-12 .g-col-md-6}
+
+::: {.center-text .body-text-l}
+**TA**
+:::
+
+```{r}
+#| eval: true 
+#| echo: false
+#| fig-align: "center"
+#| out-width: "45%" 
+knitr::include_graphics("images/anna.png")
+```
+
+::: {.center-text}
+[**Anna Pede**]{.teal-text}  
+**Email:** [acostolapede@ucsb.edu](mailto::acostolapede@ucsb.edu)   
+**Learn more:** [Bren profile](https://bren.ucsb.edu/people/anna-costola-pede)
+:::
+
+:::
+:::
+
+## Acknowledgements
+
+EDS 221 was originally developed and taught by [Allison Horst](https://allisonhorst.github.io/). This new website houses materials which are *heavily* reused, adapted from, and inspired by Allison's original work.

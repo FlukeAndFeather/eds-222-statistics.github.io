@@ -1,0 +1,195 @@
+---
+title: "Interactive Session 2B"
+subtitle: "Data in R: accessing / updating elements continued"
+editor_options: 
+  chunk_output_type: console
+---
+
+:::{.callout-note}
+## Source materials
+
+These materials are modified from the following source:
+
+Wickham, Hadley. Advanced R.
+
+http://adv-r.had.co.nz/Subsetting.html
+:::
+
+## 1. Selecting multiple elements
+
+### Atomic vectors
+
+Let's explore the different types of subsetting with a simple vector, `x` using `[`.  
+
+```{r}
+x <- c(2.1, 4.2, 3.3, 5.4)
+```
+
+Note that the number after the decimal point represents the original position in the vector.
+
+There are six things that you can use to subset a vector: 
+
+*   __Positive integers__ return elements at the specified positions: 
+
+    ```{r}
+    x[c(3, 1)]
+    x[order(x)]
+
+    # Duplicate indices will duplicate values
+    x[c(1, 1)]
+
+    # Real numbers are silently truncated to integers
+    x[c(2.1, 2.9)]
+    ```
+
+*   __Negative integers__ exclude elements at the specified positions:
+
+    ```{r}
+    x[-c(3, 1)]
+    ```
+
+    Note that you can't mix positive and negative integers in a single subset:
+
+    ```{r, error = TRUE}
+    x[c(-1, 2)]
+    ```
+
+*   __Logical vectors__ select elements where the corresponding logical 
+    value is `TRUE`. This is probably the most useful type of subsetting
+    because you can write an expression that uses a logical vector:
+    
+    ```{r}
+    x[c(TRUE, TRUE, FALSE, FALSE)]
+    x[x > 3]
+    ```
+
+    \index{recycling}
+    In `x[y]`, what happens if `x` and `y` are different lengths? The behaviour 
+    is controlled by the __recycling rules__ where the shorter of the two is
+    recycled to the length of the longer. This is convenient and easy to
+    understand when one of `x` and `y` is length one, but I recommend avoiding
+    recycling for other lengths because the rules are inconsistently applied
+    throughout base R.
+  
+    ```{r}
+    x[c(TRUE, FALSE)]
+    # Equivalent to
+    x[c(TRUE, FALSE, TRUE, FALSE)]
+    ```
+
+    Note that a missing value in the index always yields a missing value in the output:
+
+    ```{r}
+    x[c(TRUE, TRUE, NA, FALSE)]
+    ```
+
+*   __Nothing__ returns the original vector. This is not useful for 1D vectors,
+    but, as you'll see shortly, is very useful for matrices, data frames, and arrays. 
+    It can also be useful in conjunction with assignment.
+
+    ```{r}
+    x[]
+    ```
+
+*   __Zero__ returns a zero-length vector. This is not something you 
+    usually do on purpose, but it can be helpful for generating test data.
+
+    ```{r}
+    x[0]
+    ```
+
+:::{.callout-note}
+## Subsetting with factors
+
+Factors are not treated specially when subsetting. This means that subsetting will use the underlying integer vector, not the character levels. This is typically unexpected, so you should avoid subsetting with factors:
+
+```{r}
+x[factor("b")]
+```
+:::
+
+## 2. Subsetting and assignment
+
+All subsetting operators can be combined with assignment to modify selected values of the input vector.
+
+```{r}
+x <- 1:5
+x[c(1, 2)] <- 2:3
+x
+```
+
+You just need to make sure that the lengths of left and right hand side of the assignments match.
+```{r}
+x[-1] <- 4:1
+x
+```
+
+You can't combine integer indices with NA
+```{r}
+#| eval: false
+x[c(1, NA)] <- c(1, 2)
+```
+
+But you can combine logical indices and NAs! (The NAs will be treated as false.)
+```{r}
+x[c(T, F, NA)] <- 1
+x
+```
+
+This becomes really useful because you can conditionally modify vectors.
+```{r}
+df <- data.frame(a = c(1, 10, NA))
+df$a[df$a < 5] <- 0
+df$a
+```
+
+## 3. Subsetting rows based on conditions (logical subsetting)
+We can use the same operations to subset data based on conditions.
+
+For example, if we wanted to find all the cars with 5 gears.
+```{r}
+mtcars[mtcars$gear == 5, ]
+```
+
+Or, we could subset based on conditions for multiple columns.
+
+```{r}
+mtcars[mtcars$gear == 5 & mtcars$cyl == 4, ]
+```
+
+The `subset()` function is a specialized shorthand function for subsetting data frames.
+
+```{r}
+subset(mtcars, gear == 5)
+
+subset(mtcars, gear == 5 & cyl == 4)
+
+```
+
+## 4. Removing columns from data frames (character subsetting)
+
+To remove columns from a data frame, you can...
+
+- set individual columns to NULL
+```{r}
+df <- data.frame(x = 1:3, y = 3:1, z = letters[1:3])
+df$z <- NULL
+df
+```
+
+- subset to return only the columns you want, based on their names
+
+```{r}
+df <- data.frame(x = 1:3, y = 3:1, z = letters[1:3])
+df[c("x", "y")]
+```
+
+- or, if you know the columns you don't want, use set operations to work which columns to keep
+
+```{r}
+df[setdiff(names(df), "z")]
+```
+
+::: {.center-text .body-text-xl .teal-text}
+End Interactive Session 2A
+:::

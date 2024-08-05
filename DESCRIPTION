@@ -1,0 +1,30 @@
+Package: eds-222-statistics.github.io
+Title: Course Website for EDS 222: Statistics for Environmental Data
+    Science
+Version: 0.0.0.9000
+Authors@R: 
+    person("Max", "Czapanskiy", , "maxczap@ucsb.edu", role = c("aut", "cre"),
+           comment = c("ORCID-ID" = "0000-0002-6302-905X"))
+Description: A Quarto-based website for EDS 222: Statistics for
+    Environmental Data Science, a core course in the UCSB MEDS program.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Language: es
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports: 
+    gapminder,
+    ggbeeswarm,
+    ggExtra,
+    gghighlight,
+    ggrepel,
+    here,
+    janitor,
+    kableExtra,
+    lterdatasampler,
+    paletteer,
+    patchwork,
+    reticulate,
+    sf,
+    skimr,
+    testthat

@@ -1,0 +1,40 @@
+---
+title: "Troubleshooting"
+subtitle: "Day 9"
+description: "Thursday August 22^nd^, 2024"
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/horst-debugging.png")
+```
+
+:::{.gray-text .center-text}
+*Artwork by [Allison Horst](https://allisonhorst.com/)*
+:::
+
+<!-- ## Pre-class prep -->
+
+<!-- No pre-class prep before our first day of class! -->
+
+## Class materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Interactive session |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| day 9 / morning   | [Troubleshooting 101](https://docs.google.com/presentation/d/174_oWnENwYmMW3KcIv3CFBZVWRkfXNe5b8-z4vgTm6o/present?usp=sharing){target="_blank"} | [Teach Me How to Google Workshop](https://samanthacsik.github.io/talks_workshops/2021-10-11-teach-me-how-to-google/){target="_blank"} (with [Sam Csik](https://samanthacsik.github.io/){target="_blank"}) |
+| day 9 / afternoon | `kable` tables & alt-text | [More wrangling tools and practice, `kable` tables](interactive-sessions/interactive-session-9.qmd){target="_blank"} |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## End-of-day practice
+
+Complete the following tasks / activities before heading home for the day!
+
+- [{{< fa pencil title="A pencil" >}} **Day 9 Practice:** Troubleshooting, `reprex`, & working with data continued](eod-practice/eod-day9.qmd){target="_blank"}
+
+## Additional Resources
+
+TBD
+

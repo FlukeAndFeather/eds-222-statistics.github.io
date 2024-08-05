@@ -1,0 +1,40 @@
+---
+title: "Data representations"
+subtitle: "Day 2"
+description: "Tuesday August 13^th^, 2024"
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/horst-data-types.jpeg")
+```
+
+:::{.gray-text .center-text}
+*Artwork by [Allison Horst](https://allisonhorst.com/)*
+:::
+
+<!-- ## Pre-class prep -->
+
+<!-- No pre-class prep before our first day of class! -->
+
+## Class materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Interactive session |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| day 2 / morning   | [Data representations and types](https://docs.google.com/presentation/d/1P8-NoqJz0dvKRBhSEiI73XHMzQy2vvlpj9P9a9c1Dtc/present?usp=sharing){target="_blank"} | [Creating and indexing with different data types in R and Python](interactive-sessions/interactive-session-2a.qmd){target="_blank"} |
+| day 2 / afternoon | [Common data types and structures in EDS](https://docs.google.com/presentation/d/14h2Re_ceXFlRzSWlToOE3GnJiOJUuPK_YgJ_xggY7MI/present?usp=sharing){target="_blank"} | [Data in R: accessing / updating elements & casting continued](interactive-sessions/interactive-session-2b.qmd){target="_blank"} |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## End-of-day practice
+
+Complete the following tasks / activities before heading home for the day!
+
+- [{{< fa pencil title="A pencil" >}} **Day 2 Practice:** Exploring data types, indexing, importing, and plotting](eod-practice/eod-day2.qmd){target="_blank"}
+
+## Additional Resources
+
+TBD
+

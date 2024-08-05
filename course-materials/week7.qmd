@@ -1,0 +1,40 @@
+---
+title: "Data wrangling"
+subtitle: "Day 7"
+description: "Tuesday August 20^th^, 2024"
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/horst-lubridate.png")
+```
+
+:::{.gray-text .center-text}
+*Artwork by [Allison Horst](https://allisonhorst.com/)*
+:::
+
+<!-- ## Pre-class prep -->
+
+<!-- No pre-class prep before our first day of class! -->
+
+## Class materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Interactive session |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| day 7 / morning   | [Data wrangling continued - more tidying, relational data & types of joins ](https://docs.google.com/presentation/d/1nQTiyoL-vX-G6rWCp5soJKO2yxE48hVnUNX5Bpddc_c/present?usp=sharing){target="_blank"} | [Data wrangling continued: joins](interactive-sessions/interactive-session-7.qmd){target="_blank"} |
+| day 7 / afternoon | [Data wrangling continued - working with dates & times, wrangling strings](https://docs.google.com/presentation/d/1S23fUMX_VN40EEg-W3VcvtVLElhYfMH81oIjWdiBGcc/present?usp=sharing){target="_blank"} | [Data wrangling continued: dates, times, strings](interactive-sessions/interactive-session-7.qmd){target="_blank"} |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## End-of-day practice
+
+Complete the following tasks / activities before heading home for the day!
+
+- [{{< fa pencil title="A pencil" >}} **Day 7 Practice:** Wrangling continued: joins, strings, dates](eod-practice/eod-day7.qmd){target="_blank"}
+
+## Additional Resources
+
+TBD
+

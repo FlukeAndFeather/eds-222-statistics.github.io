@@ -1,0 +1,40 @@
+---
+title: "Introduction to functions"
+subtitle: "Day 4"
+description: "Thursay August 15^th^, 2024"
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/horst-r-knowledge.png")
+```
+
+:::{.gray-text .center-text}
+*Artwork by [Allison Horst](https://allisonhorst.com/)*
+:::
+
+<!-- ## Pre-class prep -->
+
+<!-- No pre-class prep before our first day of class! -->
+
+## Class materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Interactive session |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| day 4 / morning   | [Introduction to writing functions in R & Python](https://docs.google.com/presentation/d/12H0Vw84TyYKnqspq8MYxNdIMESVGMCSgD-YMctnvQoA/present?usp=sharing){target="_blank"} | [Functions 101: basics](interactive-sessions/interactive-session-4.qmd){target="_blank"} |
+| day 4 / afternoon | [Functions continued: planning, adding useful messages, more advanced functions and outputs](https://docs.google.com/presentation/d/1D6pTuGAfdazvfBxB_8ZLPslB3JMdiKw7hRMLPQUgSC8/present?usp=sharing){target="_blank"} | [Functions 102: beyond basics](interactive-sessions/interactive-session-4.qmd){target="_blank"} |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## End-of-day practice
+
+Complete the following tasks / activities before heading home for the day!
+
+- [{{< fa pencil title="A pencil" >}} **Day 4 Practice:** Intro to functions](eod-practice/eod-day4.qmd){target="_blank"}
+
+## Additional Resources
+
+TBD
+
