@@ -28,3 +28,5 @@ Imports:
     sf,
     skimr,
     testthat
+URL: https://github.com/FlukeAndFeather/eds-222-statistics.github.io
+BugReports: https://github.com/FlukeAndFeather/eds-222-statistics.github.io/issues
