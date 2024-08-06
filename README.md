@@ -24,7 +24,7 @@ Statistics is the science of collecting, manipulating, and analyzing empirical d
 
 ## Report a bug / issue
 
-Found something that doesn't look quite right? Feel free to file an [issue](https://github.com/eds-222-statistics/eds-222-statistics.github.io) and include a concise, clear description, along with a link to the location on the website. Screenshots are always appreciated as well!
+Found something that doesn't look quite right? Feel free to file an [issue](https://github.com/eds-222-statistics/eds-222-statistics.github.io/issues) and include a concise, clear description, along with a link to the location on the website. Screenshots are always appreciated as well!
 
 ## Acknowledgements
 
