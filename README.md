@@ -1,31 +1,31 @@
-# Course website for EDS 221 - Scientific Programming Essentials
+# Course website for EDS 222 - Statistics for Environmental Data Science
 
-![horst-brainstorm-montage](images/horst-language-critters.png)
+![The green striped dragon gives an example calculation using the resulting model from multiple linear regression. The model is shown at the top: 'weight = 2.4 + 0.6(spotted) + 0.3*height.' The dragon is showing a calculation for a striped dragon that is 5.1 feet tall, with a large name tag saying 'Hi, I'm...a 5.1 ft tall striped dragon and my predicted weight is 3.9 tons.' An asterisk reads '*dragons are dense.'](images/horst-regression-dragons.png)
 
 <p align="center"><em>Artwork by <a href="https://allisonhorst.com/">Allison Horst</a></em></p>
 
 ## Course Description
 
-This course teaches key scientific programming skills and demonstrates the application of these techniques to environmental data analysis and problem solving. Topics include structured programming and algorithm development, flow control, simple and advanced data input-output and representation, functions and objects, documentation, testing and debugging. The course will be taught using a combination of the R and Python programming languages.
+Statistics is the science of collecting, manipulating, and analyzing empirical data. In this class, we will learn the statistical fundamentals that will enable us to draw conclusions about the environment and its interaction with social and economic systems. We will cover fundamental statistical concepts and tools, and then apply and expand upon those tools to learn some temporal and spatial statistical methods that are particularly helpful in environmental data science. Welcome!
 
-By the end of EDS 221, students should be able to:
+### Some concepts we’ll cover:
 
-- Understand, create, and work with different data structures (e.g. vectors, data frames, lists) and types (e.g. numeric, character, factor, logical, date-times)
+- Sampling and study design, descriptive statistics
 
-- Design, implement, test, and document functions, including functions with iteration, conditionals, messages, and warnings in R
+- Linear and logistic regression (univariate and multivariate)
 
-- Use basic** (non-collaborative) project-oriented workflos with reproducible code (R scripts, Quarto documents, Jupyter notebooks) and version control (git/GitHub basics)
+- Hypothesis testing and inference
 
-- Perform basic data wrangling and visualization with real world environmental data and tidyverse packages (in R)
+- Spatial weighting, spatial clustering
 
-- Employ troubleshooting and debugging strategies including tools, mindsets, strategies, and resources
+- Time series analysis, forecasting
 
-  Visit the [course page](https://bren.ucsb.edu/courses/eds-221) on the Bren Website.
+  Visit the [course page](https://bren.ucsb.edu/courses/eds-222) on the Bren Website.
 
 ## Report a bug / issue
 
-Found something that doesn't look quite right? Feel free to file an [issue](https://github.com/eds-221-programming-essentials/EDS-221-programming-essentials.github.io) and include a concise, clear description, along with a link to the location on the website. Screenshots are always appreciated as well!
+Found something that doesn't look quite right? Feel free to file an [issue](https://github.com/eds-222-statistics/eds-222-statistics.github.io) and include a concise, clear description, along with a link to the location on the website. Screenshots are always appreciated as well!
 
 ## Acknowledgements
 
-EDS 221 (along with all [materials](https://allisonhorst.github.io/EDS_221_programming-essentials/)) was originally developed and taught by [Allison Horst](https://github.com/allisonhorst). This new website houses materials which are heavily reused, adapted from, and inspired by Allison’s original work.
+EDS 222 was originally developed and taught by Tamma Carleton. This new website houses materials which are *heavily* reused, adapted from, and inspired by Tamma's original work.
