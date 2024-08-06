@@ -1,7 +1,7 @@
 ---
-title: "Scientific Programming Essentials"
+title: "Statistics for Environmental Data Science"
 subtitle: "Master of Environmental Data Science (MEDS)"
-description: "Summer 2024"
+description: "Fall 2024"
 title-block-banner: false
 toc: false
 ---
@@ -10,9 +10,9 @@ toc: false
 #| eval: true 
 #| echo: false
 #| fig-align: "center"
-#| out-width: "70%" 
-#| fig-alt: "A friendly yellow python in a teal beanie helpfully holds a ball of yarn, which is being used by a round hedgehog to knit a teal and yellow mitten. A squirrel on a drum labeled 'SQL' paints an 'R' to make it read 'SQ(R)L' (which may be read as 'squirrel'). The goal is to show Python, R, and SQL together in polyglot workflows facilitated by R Markdown / Quarto."
-knitr::include_graphics("images/horst-language-critters.png")
+#| out-width: "60%" 
+#| fig-alt: "The green striped dragon gives an example calculation using the resulting model from multiple linear regression. The model is shown at the top: 'weight = 2.4 + 0.6(spotted) + 0.3*height.' The dragon is showing a calculation for a striped dragon that is 5.1 feet tall, with a large name tag saying 'Hi, I'm...a 5.1 ft tall striped dragon and my predicted weight is 3.9 tons.' An asterisk reads '*dragons are dense.'"
+knitr::include_graphics("images/horst-regression-dragons.png")
 ```
 
 ::: {.gray-text .center-text}
@@ -21,19 +21,19 @@ knitr::include_graphics("images/horst-language-critters.png")
 
 ## Course Description
 
-This course teaches key scientific programming skills and demonstrates the application of these techniques to environmental data analysis and problem solving. Topics include structured programming and algorithm development, flow control, simple and advanced data input-output and representation, functions and objects, documentation, testing and debugging. The course will be taught using a combination of the R and Python programming languages.
+Statistics is the science of collecting, manipulating, and analyzing empirical data. In this class, we will learn the statistical fundamentals that will enable us to draw conclusions about the environment and its interaction with social and economic systems. We will cover fundamental statistical concepts and tools, and then apply and expand upon those tools to learn some temporal and spatial statistical methods that are particularly helpful in environmental data science. Welcome!
 
-By the end of EDS 221, students should be able to:
+### Some concepts we’ll cover:
 
-- **Understand, create, and work with different data structures** (e.g. vectors, data frames, lists) **and types** (e.g. numeric, character, factor, logical, date-times)
+- Sampling and study design, descriptive statistics
 
-- **Design, implement, test, and document functions**, including functions with iteration, conditionals, messages, and warnings in R
+- Linear and logistic regression (univariate and multivariate)
 
-- **Use basic** (non-collaborative) **project-oriented workflos with reproducible code** (R scripts, Quarto documents, Jupyter notebooks) **and version control** (git/GitHub basics)
+- Hypothesis testing and inference
 
-- **Perform basic data wrangling and visualization** with real world environmental data and tidyverse packages (in R)
+- Spatial weighting, spatial clustering
 
-- **Employ troubleshooting and debugging strategies** including tools, mindsets, strategies, and resources
+- Time series analysis, forecasting
 
 
 ## Teaching Team
@@ -57,9 +57,8 @@ knitr::include_graphics("images/ruth.png")
 ```
 
 ::: {.center-text}
-[**Ruth Oliver**]{.teal-text}  
-**Email:** [rutholiver@ucsb.edu](mailto::rutholiver@ucsb.edu)  
-**Learn more:** [ryoliver-lab.github.io](https://ryoliver-lab.github.io/)  
+[**Max Czapanskiy**]{.teal-text}  
+**Email:** [maxczap@ucsb.edu](mailto::maxczap@ucsb.edu)
 :::
 
 :::
@@ -79,9 +78,8 @@ knitr::include_graphics("images/anna.png")
 ```
 
 ::: {.center-text}
-[**Anna Pede**]{.teal-text}  
-**Email:** [acostolapede@ucsb.edu](mailto::acostolapede@ucsb.edu)   
-**Learn more:** [Bren profile](https://bren.ucsb.edu/people/anna-costola-pede)
+[**Leonardo Feitosa**]{.teal-text}  
+**Email:** [lmfeitosa@ucsb.edu](mailto::lmfeitosa@ucsb.edu)   
 :::
 
 :::
@@ -89,4 +87,4 @@ knitr::include_graphics("images/anna.png")
 
 ## Acknowledgements
 
-EDS 221 was originally developed and taught by [Allison Horst](https://allisonhorst.github.io/). This new website houses materials which are *heavily* reused, adapted from, and inspired by Allison's original work.
+EDS 222 was originally developed and taught by Tamma Carleton. This new website houses materials which are *heavily* reused, adapted from, and inspired by Tamma's original work.

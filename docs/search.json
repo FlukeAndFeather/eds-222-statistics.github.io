@@ -534,23 +534,23 @@
   {
     "objectID": "index.html#course-description",
     "href": "index.html#course-description",
-    "title": "Scientific Programming Essentials",
+    "title": "Statistics for Environmental Data Science",
     "section": "Course Description",
-    "text": "Course Description\nThis course teaches key scientific programming skills and demonstrates the application of these techniques to environmental data analysis and problem solving. Topics include structured programming and algorithm development, flow control, simple and advanced data input-output and representation, functions and objects, documentation, testing and debugging. The course will be taught using a combination of the R and Python programming languages.\nBy the end of EDS 221, students should be able to:\n\nUnderstand, create, and work with different data structures (e.g. vectors, data frames, lists) and types (e.g. numeric, character, factor, logical, date-times)\nDesign, implement, test, and document functions, including functions with iteration, conditionals, messages, and warnings in R\nUse basic (non-collaborative) project-oriented workflos with reproducible code (R scripts, Quarto documents, Jupyter notebooks) and version control (git/GitHub basics)\nPerform basic data wrangling and visualization with real world environmental data and tidyverse packages (in R)\nEmploy troubleshooting and debugging strategies including tools, mindsets, strategies, and resources"
+    "text": "Course Description\nStatistics is the science of collecting, manipulating, and analyzing empirical data. In this class, we will learn the statistical fundamentals that will enable us to draw conclusions about the environment and its interaction with social and economic systems. We will cover fundamental statistical concepts and tools, and then apply and expand upon those tools to learn some temporal and spatial statistical methods that are particularly helpful in environmental data science. Welcome!\n\nSome concepts we’ll cover:\n\nSampling and study design, descriptive statistics\nLinear and logistic regression (univariate and multivariate)\nHypothesis testing and inference\nSpatial weighting, spatial clustering\nTime series analysis, forecasting"
   },
   {
     "objectID": "index.html#teaching-team",
     "href": "index.html#teaching-team",
-    "title": "Scientific Programming Essentials",
+    "title": "Statistics for Environmental Data Science",
     "section": "Teaching Team",
-    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nRuth Oliver\nEmail: rutholiver@ucsb.edu\nLearn more: ryoliver-lab.github.io\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\nAnna Pede\nEmail: acostolapede@ucsb.edu\nLearn more: Bren profile"
+    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nMax Czapanskiy\nEmail: maxczap@ucsb.edu\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\nLeonardo Feitosa\nEmail: lmfeitosa@ucsb.edu"
   },
   {
     "objectID": "index.html#acknowledgements",
     "href": "index.html#acknowledgements",
-    "title": "Scientific Programming Essentials",
+    "title": "Statistics for Environmental Data Science",
     "section": "Acknowledgements",
-    "text": "Acknowledgements\nEDS 221 was originally developed and taught by Allison Horst. This new website houses materials which are heavily reused, adapted from, and inspired by Allison’s original work."
+    "text": "Acknowledgements\nEDS 222 was originally developed and taught by Tamma Carleton. This new website houses materials which are heavily reused, adapted from, and inspired by Tamma’s original work."
   },
   {
     "objectID": "about.html",
