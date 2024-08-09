@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
 
 website:
   navbar:
@@ -9,10 +11,12 @@ website:
       - href: index.qmd
         text: home
       - text: syllabus
-        href: https://docs.google.com/document/d/14WaSESgCsRoDvpfr6UMWIGT9tYXEKnlhup5KK9sarWM/edit?usp=sharing
+        href: https://docs.google.com/document/d/14WaSESgCsRoDvpfr6UMWIGT9tYXEKnlhup5KK9sarWM/edit
         target: _blank
       - text: daily materials
         menu:
+          - text: week 0 (9/24)
+            href: course-materials/week0.qmd
           - text: week 1 (10/1)
             href: course-materials/week1.qmd
           - text: week 2 (10/8)

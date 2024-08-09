@@ -1,0 +1,28 @@
+---
+title: "Course introduction"
+subtitle: "Week 0"
+description: "Thursday September 26^th^, 2024"
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+```
+
+<!-- ## Pre-class prep -->
+
+<!-- No pre-class prep before our first day of class! -->
+
+## Class materials
+
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|----|----|----|
+| [Course Intro & Motivation](slides/week0/week0-slides.html){target="_blank"} | None | Preface, Chapters 1-2 in *IMS* <br /> [optional] [Gender Shades](http://gendershades.org/){target="_blank"} and video on [RCTs](https://www.youtube.com/watch?v=0zvrGiPkVcs){target="_blank"}
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## Notes
+
+* Prof Czapanskiy will be gone weeks 0 and 1. Your TA, Leo, will cover during this time.
+

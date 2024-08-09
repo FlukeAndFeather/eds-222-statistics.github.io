@@ -25,6 +25,7 @@ Imports:
     paletteer,
     patchwork,
     reticulate,
+    rmarkdown,
     sf,
     skimr,
     testthat

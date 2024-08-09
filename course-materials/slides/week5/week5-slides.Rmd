@@ -1,0 +1,927 @@
+---
+title: "Logistic Regression (and other nonlinear models)"
+subtitle: "EDS 222"
+author: "Tamma Carleton"
+#institute: ""
+date: "Fall 2023"
+output:
+  xaringan::moon_reader:
+    css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```{r Setup, include = F}
+options(htmltools.dir.version = FALSE)
+library(pacman, dplyr)
+p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp,parallel,gg3D)
+
+rootdir <- ("~/Dropbox/Teaching/UCSB/EDS_222/EDS222_data")
+source(file.path(rootdir,"labs","_common.R"))
+
+# Define pink color
+red_pink <- "#e64173"
+# Notes directory
+dir_slides <- "~/Dropbox/Teaching/UCSB/EDS_222/EDS222_code/EDS-222-stats/slides/06-nonlinearmodels/"
+# Knitr options
+opts_chunk$set(
+  comment = "#>",
+  fig.align = "center",
+  fig.height = 7,
+  fig.width = 10.5,
+  # dpi = 300,
+  # cache = T,
+  warning = F,
+  message = F,
+  dev = "svg"
+)
+# A blank theme for ggplot
+theme_empty <- theme_bw() + theme(
+  line = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_blank(),
+  plot.margin = structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit"),
+  legend.position = "none"
+)
+theme_simple <- theme_bw() + theme(
+  line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 14),
+  axis.text.y = element_blank(),
+  axis.ticks = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_blank(),
+  # plot.margin = structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit"),
+  legend.position = "none"
+)
+
+theme_axes <- theme_empty + theme(
+  axis.title = element_text(size = 18),
+  plot.margin = structure(c(0, 0, 0.1, 0), unit = "lines", valid.unit = 3L, class = "unit"),
+)
+
+source("../../labs/_common.R")
+
+```
+
+```{css, echo = FALSE}
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+```
+
+# Announcements/check-in
+
+- Assignment 03 pass/fail, due **today** (5pm)
+
+--
+
+- Assignment 04 after we cover inference/uncertainty (likely assigned next week)
+
+--
+
+- Final project proposals, due 11/10 (5pm)
+  + More details in a few slides
+
+
+---
+# Final project
+
+
+### Goal:
+
+Apply **some of** the statistical concepts you have learned in this course to **answer an environmental data science question**.<sup>*</sup> 
+
+--
+
+### Two parts:
+
+Deliverable 1: Technical blog post. Some examples:
+  + [G-FEED](http://www.g-feed.com/2020/09/indirect-mortality-from-recent.html)
+  + [emLab](https://emlab.ucsb.edu/blog/summertime-blues)
+  + [MEDS '22, ex. 1](https://cullen-molitor.github.io/posts/2021-12-05-species-density-sst-lagsst/)
+  + [MEDS '22, ex. 2](https://jake-eisaguirre.github.io/posts/2021-11-29-mpasandkelp/)
+  + [MEDS '22, ex. 3](https://hdolinh.github.io/posts/2021-11-14-stats-final/)
+
+---
+# Final project
+
+
+### Goal:
+
+Apply **some of** the statistical concepts you have learned in this course to **answer an environmental data science question**.<sup>*</sup> 
+
+--
+
+### Two parts:
+  
+Deliverable 2: Three-minute in-class presentation during final exam slot (4-7pm, 12/12)
+
+
+.footnote[
+[*]: Your project _must_ include concepts from the second half of the course.
+] 
+
+---
+# Final project
+
+### Proposal: 
+
+Short paragraph (4-5 sentences) describing your proposed project. Motivate the question, describe possible data sources, suggest possible analyses. 
+
+**Email Sandy your proposal** at sandysum@ucsb.edu by 5pm on November 10th. 
+
+---
+# Final project
+
+Full guidelines on our [Resources Page](https://tcarleton.github.io/EDS-222-stats/resources.html)
+
+### Some example topics:
+
+- Are political views on climate change associated with recent natural disaster exposure? 
+
+--
+
+- Detecting trends in water quality for indigenous communities in Chile
+
+--
+
+- Spatial patterns of deforestation during COVID-19
+
+--
+
+- Are there gendered health effects of wildfire smoke?
+
+---
+name: Overview
+
+# Today
+
+#### More on nonlinear relationships with linear regression models
+Log-linear, log-log regressions
+
+--
+
+#### Logistic regression
+How do we model binary outcomes? 
+
+---
+layout: false
+class: clear, middle, inverse
+# Nonlinear relationships in linear regression models
+
+---
+# Nonlinear transformations
+
+- Our linearity assumption requires that **parameters enter linearly** (_i.e._, the $\beta_k$ multiplied by variables)
+- We allow nonlinear relationships between $y$ and the explanatory variables $x$.
+
+**Example: Polynomials**
+
+$$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + u_i$$
+
+$$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + u_i$$
+
+$$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + u_i$$
+
+...
+---
+# Polynomials
+
+- Recall the relationship between **temperature** and **harmful algal blooms**:
+
+$$ area_i = \beta_0 + \beta_1 temperature_i + \beta_2 temperature_i^2 + u_i$$
+
+```{R, polys, dev = "svg", out.width="70%", echo = F}
+# Set seed
+set.seed(1235)
+# Sample size
+n <- 1e3
+# Generate data
+blooms_df <- tibble(
+  temp = runif(n, 0, 3),
+  # y = 1 + x + x^2 + x^3 + x^4 + 0.5 * x^5 + rnorm(n, mean = 0, sd = 6)
+  area = 0.5*temp + 2*temp^2 + rnorm(n, mean = 0, sd=3)
+)
+# Plot
+ggplot(data = blooms_df, aes(x = temp, y = area)) +
+  geom_point(size = 2.5, color = "darkslategrey", alpha = 1) +
+  labs(x="temperature (degrees C)", y = "bloom area (hectares)") + 
+  theme_bw() + 
+  theme(
+    line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_blank(),
+  axis.text.y = element_blank(),
+  axis.title = element_text(size=12,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+---
+# Polynomials
+
+Estimating polynomial regressions in `R`:
+```{r, echo = T}
+blooms_df = blooms_df %>% mutate(temp2 = temp^2)
+summary(lm(area~temp+temp2, data=blooms_df))
+```
+---
+# Other nonlinear-in-X regressions
+
+- **Polynomials** and **interactions:** $y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{1i}^2 + \beta_3 x_{2i} + \beta_4 x_{2i}^2 + \beta_5 \left( x_{1i} x_{2i} \right) + u_i$ (more on this today)
+
+- **Exponentials** $\log(y_i) = \beta_0 + \beta_2 e^{x_{2i}} + u_i$ 
+
+- **Logs:** $\log(y_i) = \beta_0 + \beta_1 x_{1i} + u_i$ (Today!)
+
+- **Indicators** and **thresholds:** $y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 \, \mathbb{I}(x_{1i} \geq 100) + u_i$
+
+--
+
+In all cases, the effect of a change in $x$ on $y$ will vary depending on your baseline level of $x$. This is not true with linear relationships! 
+
+
+---
+
+# Log-linear specification
+
+You will frequently see logged<sup>*</sup>  outcome variables with linear (non-logged) explanatory variables, _e.g._,
+
+$$ \log(\text{area}_i) = \beta_0 + \beta_1 \, \text{temperature}_i + u_i $$
+
+This specification changes our interpretation of the slope coefficients.
+
+--
+
+**Interpretation**
+
+- A one-unit increase in our explanatory variable increases the outcome variable by approximately $\beta_1\times 100$ percent.
+
+- *Example:* If $\beta_1 = 0.03$, an additional degree of warming increases algal bloom area by approximately 3 percent.
+
+.footnote[
+[*]: When I say "log", I mean "natural log", i.e. $ln(x) = log_e(x)$.
+] 
+
+---
+# Review: Percent changes
+
+- What is a percent change again, anyway?
+
+--
+
+- Local gasoline prices were $5/gallon, but last month increased by 12%. How much are they now?
+
+--
+
+$$ 5(1+0.12) = 5\times1.12 = 5.6$$ 
+--
+
+Can also write this as $$0.12 = \frac{5.6-5}{5}$$
+
+--
+
+Generally, we have that when $y$ increases by $r$ percent, our new value is $y(1+r)$.
+
+$$ r = \frac{y_2 - y_1}{y_1}$$
+---
+# Log differences as percent changes?
+
+Near $y=1$, $log(y)$ is approximately slope 1, i.e. $log(y) \approx y-1$
+
+
+```{R, logs, dev = "svg", out.width = "80%", echo = F}
+
+x = seq(0.1, 4, by=0.01)
+lny = log(x)
+df = data.frame(x,lny)
+# Plot
+ggplot(data = df, aes(x = x, y = lny)) +
+  geom_line(size = 2.5, color = "darkslategrey", alpha = 1) +
+  labs(x="y", y = "log(y), y - 1") + geom_abline(intercept = -1, slope = 1, color = "lightcoral", size=2, linetype="dashed") +
+  theme_bw() + 
+  theme(
+  rect = element_blank(),
+  strip.text = element_blank(),  
+  axis.text.x = element_text(size=12),
+  axis.text.y = element_text(size=12),
+  axis.title = element_text(size=12,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+---
+
+# Log differences as percent changes?
+
+Near $y=1$, $log(y)$ is approximately slope 1, i.e. $log(y) \approx y-1$
+
+Therefore, $log(1+r) \approx r$ **when $r$ is small!** (so that you're still close to 1 on the x-axis)
+
+--
+
+This lets us show that:
+
+$$log(y(1+r))  =  log(y) + log(1+r) \approx log(y) + r$$
+
+So when we see $log(y)$ go up by $r$, we can say that represents an $r \times 100$ percent change in $y$!
+
+--
+
+For example: $y$ is increased by 5% means $y$ increases to $y(1.05)$. The log of $y$ changes from $log(y)$ to approximately $log(y) + 0.05$.  Increasing $y$ by 5% is therefore (almost) equivalent to adding 0.05 to $log(y)$.
+
+---
+# Log-linear specification
+
+Back to our log-linear model
+
+$$ \log(y_i) = \beta_0 + \beta_1 \, x_i + u $$
+
+A one unit change in $x$ causes a $\beta_1$ unit change in $log(y)$. 
+
+This is equivalent to a $\beta_1$ **percentage change** in $y$.
+
+---
+# Log-linear specification
+
+Because the log-linear specification comes with a different interpretation, you need to make sure it fits your data-generating process/model.
+
+Does $x$ change $y$ in levels (_e.g._, a 3-unit increase) or percentages (_e.g._, a 10-percent increase)?
+
+--
+
+_I.e._, you need to be sure an exponential relationship makes sense:
+
+$$ \log(y_i) = \beta_0 + \beta_1 \, x_i + u_i \iff y_i = e^{\beta_0 + \beta_1 x_i + u_i} $$
+
+Note: You are using linear regression to estimate a nonlinear-in-parameters relationship. This is the power of taking logs! 
+
+---
+# Log-linear specification
+
+```{r, log linear plot, echo = F, cache = T, dev = "svg", fig.height = 6}
+# Set seed
+set.seed(1234)
+# Sample size
+n <- 1e3
+# Generate data
+ll_df <- tibble(
+  x = runif(n, 0, 3),
+  y = exp(-100 + 0.75 * x + rnorm(n, sd = 0.5))
+)
+# Plot
+ggplot(data = ll_df, aes(x = x, y = y)) +
+geom_hline(yintercept = 0) +
+geom_vline(xintercept = 0) +
+geom_point(size = 2, color = "darkslategrey", alpha = 0.5) +
+geom_smooth(color = red_pink, se = F, size=2) +
+xlab("x") +
+ylab("y") +
+theme_axes
+```
+
+
+---
+# Log-log specification
+
+Similarly, log-log models are those where the outcome variable is logged *and* at least one explanatory variable is logged
+
+$$ \log(\text{log}_i) = \beta_0 + \beta_1 \, \log(\text{temperature}_i) + u_i $$
+
+**Interpretation:**
+
+- A one-percent increase in $x$ will lead to a $\beta_1$ percent change in $y$.
+- Often interpreted as an "elasticity" in economics.
+
+---
+# Log-log specification
+
+```{r, log log plot, echo = F, cache = T, dev = "svg", fig.height = 6}
+# Set seed
+set.seed(1234)
+# Sample size
+n <- 1e3
+# Generate data
+log_df <- tibble(
+  x = runif(n, 0, 10),
+  y = exp(3 * log(x) + rnorm(n, sd = 0.5))
+)
+# Plot
+ggplot(data = log_df, aes(x = x, y = y)) +
+geom_hline(yintercept = 0) +
+geom_vline(xintercept = 0) +
+geom_point(size = 2, color = "darkslategrey", alpha = 0.5) +
+geom_smooth(color = red_pink, se = F, size=2) +
+xlab("x") +
+ylab("y") +
+theme_axes
+```
+---
+# Log-linear with a binary variable
+
+**Note:** If you have a log-linear model with a binary indicator variable, the interpretation for the coefficient on that variable changes.
+
+Consider:
+
+$$\log(y_i) = \beta_0 + \beta_1 x_{1i} + u_i$$
+
+for binary variable $x_1$.
+
+The interpretation of $\beta_1$ is now
+
+- When $x_1$ changes from 0 to 1, $y$ will change by $100 \times \left( e^{\beta_1} -1 \right)$ percent.
+- When $x_1$ changes from 1 to 0, $y$ will change by $100 \times \left( e^{-\beta_1} -1 \right)$ percent.
+
+
+---
+# When the approximation fails
+
+The nice interpretation so far relies on the fact that near 1, $log(y) \approx y-1$ 
+  - So, for example, $log(y(1+r)) = log(y) + log(1+r) \approx log(y) + r$
+
+--
+
+What if $r$ is large? E.g., $r$=0.8:
+  - $log(1*(1.8)) = log(1) + log(1.8) = 0.59 \neq log(1) + 0.8 = 0.8$
+
+--
+
+Exact percentage change (use for large predicted changes):
+
+If $log(y) = \beta_0 + \beta_1 x + \varepsilon$, then the percentage change in $y$ for a one unit change in $x$ is:
+
+$$\text{% change in y} = (e^{\beta_1}-1)\times 100 $$
+--
+
+Note that $e^x$ in `R` is `exp(x)`
+
+---
+# When the approximation fails
+
+Example: Suppose in $log(y) = \beta_0 + \beta_1 x + \varepsilon$, we estimate that $\hat\beta_1 = 0.6$ 
+
+--
+
+This looks like a 1 unit change in $x$ causes a 60% change in $y$. But the exact percentage change in $y$ is:
+  + $(e^{0.6}-1)\times 100 = 0.82 \times 100 \implies 82$ percent change in $y$
+  + Note that the imprecise approximation for large changes will always be biased _downwards_
+
+--
+
+Can you just change units of $x$? 
+  + Yes, mechanically you can do this and avoid the issues with approximation
+  + But think hard about your problem! You probably care about understanding the impacts of a meaningful increase in $x$, not a tiny increase in $x$ 
+  
+---
+layout: false
+class: clear, middle, inverse
+# Logistic regression
+---
+# Modeling binary outcomes 
+
+What do you do when your dependent variable takes on just two values? 
+
+```{r, binary, echo = F, cache = T, dev = "svg", out.width = "90%"}
+# Set seed
+set.seed(1234)
+n <- 100
+x <- round(runif(100, min = 0, max = 50))
+xb <- -9 + 0.4*x 
+p <- 1/(1 + exp(-xb))
+y <- rbinom(n = 100, size = 1, prob = p)
+log_df = tibble(x,y,p)
+
+# Plot
+ggplot(data = log_df, aes(x = x, y = y)) +
+geom_hline(yintercept = 0) +
+geom_vline(xintercept = 0) +
+geom_point(size = 3, color = "darkslategrey", alpha = 1) +
+xlab("forest cover (%)") +
+ylab("species presence") +
+  theme_bw() + 
+  theme(
+  rect = element_blank(),
+  strip.text = element_blank(),  
+  axis.text.x = element_text(size=12),
+  axis.text.y = element_text(size=12),
+  axis.title = element_text(size=12,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+---
+# Modeling binary outcomes 
+
+What's wrong with running our standard linear regression?
+
+$$\text{species present}_i = \beta_0  + \beta_1 \text{forest cover}_i + \varepsilon_i $$
+```{r, lpm, echo = F, cache = T, dev = "svg", out.width = "90%"}
+# Plot
+ggplot(data = log_df, aes(x = x, y = y)) +
+geom_hline(yintercept = 0) +
+geom_vline(xintercept = 0) +
+geom_point(size = 3, color = "darkslategrey", alpha = 1) +
+  geom_smooth(method="lm", se = F, size=2, color = "lightcoral", alpha=1) +
+xlab("forest cover (%)") +
+ylab("species presence") +
+  theme_bw() + 
+  theme(
+  rect = element_blank(),
+  strip.text = element_blank(),  
+  axis.text.x = element_text(size=12),
+  axis.text.y = element_text(size=12),
+  axis.title = element_text(size=12,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+---
+# Modeling probabilities
+
+- Our data take on the form $y_i = 1$ or $y_i = 0$
+
+--
+
+- For each individual $i$, there is some probability $p_i$ they have $y_i=1$, so probability $1-p_i$ they have $y_i=0$
+
+--
+
+- We are interested in how a change in variable $x$ changes the probability of $y_i=1$
+  + That is, **we model $p_i$** as a function of independent variables
+  
+--
+
+- Basic idea: we need some transformation of the _probability_ that lets us write:
+
+$$transformation(p_i) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$
+
+---
+# Modeling probabilities
+
+Basic idea: we need some transformation of the _probability_ that lets us write:
+
+$$transformation(p_i) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$
+
+- We want this transformation to ensure that:
+  + we can input a value between 0 and 1 and return a continuous variable (i.e., we want our outcome variable to be a continuous variable)
+  + our predicted probabilities $\hat p_i$ (inverse of the transformation) will fall between 0 and 1
+
+---
+# Logistic regression
+
+The **logit function** is the most commonly used nonlinear transformation that ensures predicted probabilities between 0 and 1:
+
+```{r, logit, echo = F, cache = T, dev = "svg", out.width = "90%"}
+logitdf <- tibble(
+  logitp = seq(-6, 6, 1),
+  p = exp(logitp)/(1+exp(logitp))
+)
+
+ggplot(data = logitdf, aes(x = logitp, y = p)) +
+geom_hline(yintercept = 0) +
+geom_vline(xintercept = 0) +
+  geom_line(size=2, color = "lightcoral", alpha=1) +
+  geom_point(size = 6, color = "darkslategrey", alpha = 1) +
+xlab("logit(p)") +
+ylab("p") +
+  theme_bw() + 
+  theme(
+  rect = element_blank(),
+  strip.text = element_blank(),  
+  axis.text.x = element_text(size=12),
+  axis.text.y = element_text(size=12),
+  axis.title = element_text(size=12,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+---
+# Logistic regression
+
+The **logit function** is the most commonly used nonlinear transformation that ensures predicted probabilities between 0 and 1:
+
+$$logit(p) = log\left(\frac{p}{1-p}\right)$$
+
+--
+
+We can then write:
+
+$$log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$
+
+The logit function is also called "log odds" because the "odds ratio" is the probability of success, $p_i$, divided by the probability of failure, $1-p_i$
+
+--
+
+Because of the properties of the logit function (see last graph), this ensures we will generate predicted probabilities $\hat{p}_i$ that fall between 0 and 1.
+
+---
+# Logistic regression
+
+How do we estimate this regression?
+
+$$log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$
+
+--
+
+- Can't use linear regression -- we don't have data on $p_i$! We only see $y_i = 1$ or $y_i = 0$
+- We use what's called "maximum likelihood estimation" (alternatively, can use gradient descent)
+  + Essentially, this asks: what combination of parameters $\beta_0, \beta_1, ...$ maximizes the likelihood that we would observe the data we have? 
+  + E.g., if you have high $x_1$ values coinciding with many $y_i =1$ values, likely that $\beta_1$ is high and that $p_i$ is high for observations with large $x_1$
+
+---
+# Logistic regression
+
+How do we estimate this regression?
+
+$$log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$
+
+All you really need to know on estimation is...
+  + That we use `glm()` instead of `lm()` -- GLM for "generalized linear model" 
+  + Interpreting coefficients is a lot more complicated! (next slide)
+
+---
+# Interpreting logistic regression output
+
+$$log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$
+
+- $\beta_k$: effect of a 1-unit change in $x_k$ on the log-odds of $y = 1$ 🤔
+
+--
+
+We need to transform our output to get predicted probabilities back! 
+
+$$
+\begin{aligned}
+\log\left( \frac{p_i}{1-p_i} \right) &= b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i} \\
+\frac{p_i}{1-p_i} &= e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i &= \left( 1 - p_i \right) e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i &= e^{b_0 + b_1 x_{1,i}  + \cdots + b_k x_{k,i}} - p_i \times e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i + p_i \text{ } e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} &= e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i(1 + e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}}) &= e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i &= \frac{e^{b_0 + b_1 x_{1,i}  + \cdots + b_k x_{k,i}}}{1 + e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}}}
+\end{aligned}
+$$
+---
+# Interpreting logistic regression output
+
+This means that if you run a regression with many independent variables, you need to plug your estimated $\hat\beta$'s _and_ the values of all your $x$ variables into this equation to get back a predicted probability for any individual:
+
+$$p_i = \frac{e^{b_0 + b_1 x_{1,i}  + \cdots + b_k x_{k,i}}}{1 + e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}}}$$
+--
+
+If you want to know the _effect_ of changing just one variable $x_j$ on the probability $p_i$, you need to compute:
+
+$$
+\begin{aligned}
+p_i(x_j+1) - p_i(x_j) &= \frac{e^{b_0 + \cdots + b_j (x_{j,i}+1)  + \cdots + b_k x_{k,i}}}{1 + e^{b_0 + \cdots + b_j (x_{j,i}+1) + \cdots + b_k x_{k,i}}} - \frac{e^{b_0 + \cdots + b_j x_{j,i}  + \cdots + b_k x_{k,i}}}{1 + e^{b_0 + \cdots + b_j x_{j,i} + \cdots + b_k x_{k,i}}}
+\end{aligned}
+$$
+
+--
+
+**Note** that this calculation depends on all the other $x$'s! And it will vary with the baseline level of $x_j$ 
+
+---
+# Logistic regression: Example
+
+- Bertrand and Mullainathan (2003) study discrimination in hiring decisions
+- Authors created many fake resumes, randomly assigning different characteristics (name, sex, race, experience, honors, etc.)
+
+--
+
+- **Outcome variable is binary:** Did the resume get a call back from a (real) potential employer? 
+  + Yes: $y_i=1$
+  + No: $y_i=0$
+  
+
+- Manipulated first names to be those that are commonly associated with White or Black individuals
+- Random study design allows estimation of the causal effect of race on callback probability
+
+---
+# Logistic regression: Example
+
+```{r resume-names}
+resume_names_full <- resume %>% 
+  select(firstname, race, gender) %>% 
+  distinct(firstname, .keep_all = TRUE) %>% 
+  arrange(firstname) %>%
+  rownames_to_column() %>% 
+  mutate(
+    rowname = as.numeric(rowname), 
+    column = cut(rowname, breaks = c(0, 12, 24, 36)),
+    race = str_to_title(race),
+    sex = if_else(gender == "f", "female", "male"),
+    column = as.numeric(column)
+    ) %>%
+  select(-rowname, -gender) %>%
+  relocate(column)
+resume_names_1 <- resume_names_full %>% 
+  filter(column == 1) %>%
+  select(-column)
+resume_names_2 <- resume_names_full %>% 
+  filter(column == 2) %>%
+  select(-column)
+resume_names_3 <- resume_names_full %>% 
+  filter(column == 3) %>%
+  select(-column)
+resume_names_1 %>%
+  bind_cols(resume_names_2) %>%
+  bind_cols(resume_names_3) %>%
+  kbl(linesep = "", booktabs = TRUE, align = "lllllllll", 
+      col.names = c("first_name", "race", "sex",
+                    "first_name", "race", "sex",
+                    "first_name", "race", "sex"),
+      caption = "List of all 36 unique names along with the commonly inferred race and sex associated with these names.") %>%
+  kable_styling(bootstrap_options = c("striped", "condensed"), 
+                latex_options = c("striped", "hold_position"), full_width = FALSE) %>%
+  column_spec(4, border_left = T) %>% 
+  column_spec(7, border_left = T)
+```
+---
+# Logistic regression: Example
+
+Variables included in the data (all randomly assigned):
+
+```{r resume-data-prep}
+resume <- resume %>%
+  rename(sex = gender) %>%
+  mutate(
+    sex = if_else(sex == "m", "man", "woman"),
+    sex = fct_relevel(sex, "woman", "man"),
+    received_callback = as.factor(received_callback),
+    college_degree = as.factor(college_degree),
+    honors = as.factor(honors),
+    military = as.factor(military),
+    has_email_address = as.factor(has_email_address),
+    race = if_else(race == "black", "Black", "White")
+    ) %>%
+  select(received_callback, job_city, college_degree, years_experience,
+         honors, military, has_email_address, race, sex)
+```
+
+```{r, resumeexample, out.width="40%"}
+resume_variables <- tribble(
+  ~variable,           ~description,
+  "received_callback", "Specifies whether the employer called the applicant following submission of the application for the job.",
+  "job_city",          "City where the job was located: Boston or Chicago.",
+  "college_degree",    "An indicator for whether the resume listed a college degree.",
+  "years_experience",  "Number of years of experience listed on the resume.",
+  "honors",            "Indicator for the resume listing some sort of honors, e.g. employee of the month.",
+  "military",          "Indicator for if the resume listed any military experience.",
+  "has_email_address", "Indicator for if the resume listed an email address for the applicant.",
+  "race",              "Race of the applicant, implied by their first name listed on the resume.",
+  "sex",               "Sex of the applicant (limited to only and in this study), implied by the first name listed on the resume."
+)
+
+resume_variables[1:5,] %>%
+  kbl(linesep = "", booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped", "condensed"),
+                latex_options = c("striped",  "font_size"=7), full_width = TRUE) %>%
+  column_spec(1, monospace = TRUE) %>%
+  column_spec(2, width = "30em")
+```
+
+---
+# Logistic regression: Example
+
+Variables included in the data (all randomly assigned):
+
+```{r, resumeexample2, out.width="40%"}
+
+resume_variables[6:9,] %>%
+  kbl(linesep = "", booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped", "condensed"),
+                latex_options = c("striped",  "font_size"=7), full_width = TRUE) %>%
+  column_spec(1, monospace = TRUE) %>%
+  column_spec(2, width = "30em")
+```
+
+---
+# Logistic Regression: example
+
+- First, we estimate a single predictor: `race`
+- `race` indicates whether the applicant is White or not (**Note:** `race` is also binary in this case!)
+- We find:
+
+$$\log \left( \frac{\widehat{p}_i}{1-\widehat{p}_i} \right) = -2.67 + 0.44 \times {\texttt{race_White}}$$
+
+a.  If a resume is randomly selected from the study and it has a Black associated name, what is the probability it resulted in a callback?
+
+b.  What would the probability be if the resume name was associated with White individuals?
+
+---
+# Logistic regression: Example
+
+$$\log \left( \frac{\widehat{p}_i}{1-\widehat{p}_i} \right) = -2.67 + 0.44 \times {\texttt{race_white}}$$
+
+
+a.  If a resume is randomly selected from the study and it has a Black associated name, what is the probability it resulted in a callback?
+
+--
+
+**Answer:** If a randomly chosen resume is associated with a Black name, then `race_white` takes the value of 0 and the right side of the model equation equals $-2.67$. Solving for $p_i$ gives $log(\frac{\hat p_i}{1-\hat p_i}) = -2.67 \implies \hat p_i = \frac{e^{-2.67}}{1+e^{-2.67}} = 0.065$.   
+
+---
+# Logistic regression: Example
+
+$$\log \left( \frac{\widehat{p}_i}{1-\widehat{p}_i} \right) = -2.67 + 0.44 \times {\texttt{race_white}}$$
+
+b.  What would the probability be if the resume name was associated with White individuals?
+
+**Answer:** If the resume had a name associated with White individuals, then the right side of the model equation is $-2.67+0.44\times 1 = -2.23$. This translates into $\hat p_i = 0.097$.
+
+--
+
+**Conclude:** Being White increases the likelihood of a call back, by 3.2 percentage points.
+
+---
+# Logistic regression: Example
+
+**Use the same process** to compute predicted probabilities with multiple independent variables, you just have more calculations!
+
+--
+
+For example, you might estimate:
+
+$$
+\begin{aligned}
+&log \left(\frac{p}{1 - p}\right) \\
+&= - 2.7162 - 0.4364 \times \texttt{job_city}_{\texttt{Chicago}} \\
+& \quad \quad + 0.0206 \times \texttt{years_experience} \\
+& \quad \quad + 0.7634 \times \texttt{honors} - 0.3443 \times \texttt{military} + 0.2221 \times \texttt{email} \\
+& \quad \quad + 0.4429 \times \texttt{race}_{\texttt{White}} - 0.1959 \times \texttt{sex}_{\texttt{man}} 
+\end{aligned}
+$$
+
+To predict callback probability for a White individual, you also need to know job location, experience, honors, military experience, whether they have an email, race, and sex!
+
+---
+# Logistic regression: Example
+
+For example, you might estimate:
+
+$$
+\begin{aligned}
+&log \left(\frac{p}{1 - p}\right) \\
+&= - 2.7162 - 0.4364 \times \texttt{job_city}_{\texttt{Chicago}} \\
+& \quad \quad + 0.0206 \times \texttt{years_experience} \\
+& \quad \quad + 0.7634 \times \texttt{honors} - 0.3443 \times \texttt{military} + 0.2221 \times \texttt{email} \\
+& \quad \quad + 0.4429 \times \texttt{race}_{\texttt{White}} - 0.1959 \times \texttt{sex}_{\texttt{man}} 
+\end{aligned}
+$$
+
+
+Note: the effect of race on call back now varies based on all the other covariates! 
+  + Try it: Effect of being white for Chicago male with 10 years experience, an email, no honors and no military experience _versus_ a female with the same characteristics? 
+
+---
+# Multinomial logistic regression
+
+**What if** your outcome variable is categorical, not binary?
+
+--
+
+For example:
+  - Species
+  - Socioeconomic status
+  - Survey responses
+  - ...
+
+--
+
+**Multinomial logistic regression** generalizes the binary logistic regression you've seen here to work for multiple outcome categories
+  - Model predicts the probability an individual will fall into each category
+  - Beyond the scope of this class, but not a far leap from what you've seen here (lots of online resources -- ask me if you're interested!)
+
+---
+
+class: center, middle
+
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+Some slide components were borrowed from [Ed Rubin's](https://github.com/edrubin/EC421S20) awesome course materials.
+
+---
+exclude: true
+
+
+```{R, print pdfs, echo = F, eval = F}
+pagedown::chrome_print(
+  input = "06-nonlinearmodels.html",
+  output = "06-nonlinearmodels.pdf",
+  timeout = 60
+)
+```
+

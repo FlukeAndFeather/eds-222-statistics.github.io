@@ -1,0 +1,1342 @@
+---
+title: "Ordinary Least Squares"
+subtitle: "EDS 222"
+author: "Tamma Carleton"
+#institute: ""
+date: "Fall 2023"
+output:
+  xaringan::moon_reader:
+    css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```{r Setup, include = F}
+options(htmltools.dir.version = FALSE)
+library(pacman)
+p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp)
+# Define pink color
+red_pink <- "#e64173"
+# Notes directory
+dir_slides <- "~/Dropbox/Teaching/UCSB/EDS_222/EDS222_code/EDS-222-stats/slides/02-summstats/"
+# Knitr options
+opts_chunk$set(
+  comment = "#>",
+  fig.align = "center",
+  fig.height = 7,
+  fig.width = 10.5,
+  # dpi = 300,
+  # cache = T,
+  warning = F,
+  message = F,
+  dev = "svg"
+)
+# A blank theme for ggplot
+theme_empty <- theme_bw() + theme(
+  line = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_blank(),
+  plot.margin = structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit"),
+  legend.position = "none"
+)
+theme_simple <- theme_bw() + theme(
+  line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 14),
+  axis.text.y = element_blank(),
+  axis.ticks = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_blank(),
+  # plot.margin = structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit"),
+  legend.position = "none"
+)
+```
+
+
+
+name: Overview
+
+# Today
+
+#### Relationships between variables
+- Covariance, correlation
+
+--
+
+#### Ordinary Least Squares (OLS)
+- Finding the "best fit" line, properties of OLS, assumptions of OLS
+
+--
+
+#### Interpreting OLS output
+- Slopes, intercepts, unit conversions
+
+---
+
+# Announcements/check-in
+
+- Assignment #1: Grading next week, some review in Discussion Section
+
+--
+
+- Assignment #2: To be posted this week, due 10/20, 5pm 
+
+--
+
+- Flag on IMS and linear regression
+
+---
+layout: false
+class: clear, middle, inverse
+# Relationships between variables
+---
+# Two random variables
+
+### Often we are interested in the _relationship_ between two (or more) random variables.
+E.g., heat waves and heart attacks, nitrogen fertilizer and water pollution
+
+--
+
+```{R, scatter1, echo = F, fig.height=4}
+n_p <- 100
+# Set the seed
+set.seed(12468)
+# Generate data
+pop_df <- tibble(
+  i = 3,
+  x = rnorm(n_p, mean = 5, sd = 1.5),
+  e = rnorm(n_p, mean = 0, sd = 1),
+  y = i + 0.5 * x + e,
+  row = rep(1:sqrt(n_p), times = sqrt(n_p)),
+  col = rep(1:sqrt(n_p), each = sqrt(n_p)),
+)
+# Regressions
+lm0 <- lm(y ~ x, data = pop_df)
+
+ggplot(data = pop_df, aes(x = x, y = y)) +
+geom_point(color = "darkslategray", size = 6) +
+  xlab("Number of extreme heat days") +
+  ylab("Number of violent crimes") +
+   theme_bw() + 
+  theme(
+    line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 16),
+  axis.text.y = element_text(size = 16),
+  axis.title = element_text(size=18,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+Note: these are simulated data. But the violence-temperature link is real! See [here](https://www.annualreviews.org/doi/abs/10.1146/annurev-economics-080614-115430) for a summary of research.
+---
+# Two random variables
+
+### What metrics can we use to characterize the _relationship_ between two variables? 
+
+There are lots. But let's start with...
+
+--
+
+#### 1. Covariance
+
+
+#### 2. Correlation
+
+```{R, scatter2, echo = F, fig.height=3.5}
+ggplot(data = pop_df, aes(x = x, y = y)) +
+geom_point(color = "darkslategray", size = 6) +
+  xlab("Number of extreme heat days") +
+  ylab("Number of violent crimes") +
+   theme_bw() + 
+  theme(
+    line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 16),
+  axis.text.y = element_text(size = 16),
+  axis.title = element_text(size=18,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+---
+# Covariance 
+
+#### **Variance** indicates how dispersed a distribution is (average squared deviation from the mean)
+
+--
+
+#### **Covariance** is a measure of the _joint_ distribution of two variables 
+
+- Higher values of $X$ correspond to higher values of $Y$ $\rightarrow$ **positive** covariance
+- Higher values of $X$ correspond to lower values of $Y$ $\rightarrow$ **negative** covariance 
+
+--
+
+In the population:
+$$Cov(X,Y) = E[(X-\mu_x)(Y-\mu_y)] = E[XY]-\mu_x\mu_y$$
+
+In the sample:
+$$s_{xy} = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar x)(y_i - \bar y)$$
+---
+# Covariance 
+
+#### **Variance** indicates how dispersed a distribution is (average squared deviation from the mean)
+
+#### **Covariance** is a measure of the _joint_ distribution of two variables 
+
+- Higher values of $X$ correspond to higher values of $Y$ $\rightarrow$ **positive** covariance
+- Higher values of $X$ correspond to lower values of $Y$ $\rightarrow$ **negative** covariance 
+
+--
+
+#### The **sign** of $s_{xy}$ tells us the sign of the linear relationship between $X$ and $Y$, but the **magnitude** depends on the units of the variables and is therefore difficult to interpret
+
+---
+# Covariance
+
+### Example: positive covariance
+```{R, covar1, echo = F, fig.height=5}
+set.seed(1248)
+x1 = 1:100
+y1 = 2*x1 + rnorm(100, mean=2, sd=25)
+x2 = x1
+y2 = rnorm(100, mean = 0, sd = 100)
+x3 = 50*x1
+y3 = 1000-x3 + rnorm(100, mean=0, sd=2000)
+
+df = as.data.frame(cbind(x1,x2,x3,y1,y2,y3))
+cov1 = round(cov(x1,y1),0)
+cov2 = round(cov(x2,y2),0)
+cov3 = round(cov(x3,y3),0)
+
+ggplot(data = df, aes(x = x1, y = y1)) +
+geom_point(color = "darkslategray", size = 6) +
+  annotate(geom="text", x=15, y=200, label=paste0("cov=",cov1),
+              color="lightcoral", size=8, fontface="bold") +
+   theme_bw() + 
+  theme(
+    line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 16),
+  axis.text.y = element_text(size = 16),
+  axis.title = element_text(size=18,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+---
+# Covariance
+
+### Example: zero covariance
+
+```{R, covar2, echo = F, fig.height=5}
+
+ggplot(data = df, aes(x = x2, y = y2)) +
+geom_point(color = "darkslategray", size = 6) +
+  annotate(geom="text", x=15, y=200, label=paste0("cov=",cov2),
+              color="lightcoral", size=8, fontface="bold") +
+   theme_bw() + 
+  theme(
+    line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 16),
+  axis.text.y = element_text(size = 16),
+  axis.title = element_text(size=18,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+
+---
+# Covariance
+
+### Example: Negative covariance
+
+```{R, covar3, echo = F, fig.height=5}
+
+ggplot(data = df, aes(x = x3, y = y3)) +
+geom_point(color = "darkslategray", size = 6) +
+  annotate(geom="text", x=4000, y=3000, label=paste0("cov=",cov3),
+              color="lightcoral", size=8, fontface="bold") +
+   theme_bw() + 
+  theme(
+    line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 16),
+  axis.text.y = element_text(size = 16),
+  axis.title = element_text(size=18,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+How do I interpret these units?! Hard to compare across these three graphs...
+
+---
+
+# Correlation
+
+#### **Correlation** allows us to normalize covariance into interpretable units
+
+--
+
+The sign still tells us about the nature of the (linear) relationship between two variables:
+  
+  - **positive** covariance $\rightarrow$ **positive** correlation (and vice versa)
+
+But now, the magnitude is interpretable:
+  
+  - Ranges from -1 to 1, with magnitude indicating _strength_ of the relationship
+
+
+---
+# Correlation
+
+#### **Correlation** allows us to normalize covariance into interpretable units  
+  
+In the population:
+$$\rho_{X,Y} = corr(X,Y) = \frac{cov(X,Y)}{\sigma_x \sigma_y}$$
+  
+--
+
+In the sample:
+$$r_{x,y} = \frac{s_{x,y}}{s_x s_y} = \frac{1}{(n-1)s_x s_y}\sum_{i=1}^n (x_i - \bar x)(y_i - \bar y)$$
+
+Note: $\sigma_x$= population variance of $x$; $s_x$ = sample estimate of variance
+
+.footnote[
+Want to prove that $-1 \leq r_{x,y} \leq 1$ ? Key result: Cauchy-Schwarz Inequality tells us that $|cov(X,Y)|^2 \leq var(X)var(Y)$.
+]
+
+---
+  
+# Correlation
+  
+### Example: Strong positive correlation
+
+```{R, corr1, echo = F, fig.height=5}
+
+corr1 = round(cor(x1,y1),2)
+corr2 = round(cor(x2,y2),2)
+corr3 = round(cor(x3,y3),2)
+
+ggplot(data = df, aes(x = x1, y = y1)) +
+  geom_point(color = "darkslategray", size = 6) +
+  annotate(geom="text", x=15, y=200, label=paste0("corr=",corr1),
+           color="lightcoral", size=8, fontface="bold") +
+  theme_bw() + 
+  theme(
+    line = element_blank(),
+    panel.grid = element_blank(),
+    rect = element_blank(),
+    strip.text = element_blank(),
+    axis.text.x = element_text(size = 16),
+    axis.text.y = element_text(size = 16),
+    axis.title = element_text(size=18,face="bold"),
+    plot.title = element_blank(),
+    legend.position = "none")
+```
+
+
+---
+# Correlation
+  
+### Example: zero correlation
+  
+```{R, corr2, echo = F, fig.height=5}
+
+ggplot(data = df, aes(x = x2, y = y2)) +
+  geom_point(color = "darkslategray", size = 6) +
+  annotate(geom="text", x=15, y=200, label=paste0("corr=",corr2),
+           color="lightcoral", size=8, fontface="bold") +
+  theme_bw() + 
+  theme(
+    line = element_blank(),
+    panel.grid = element_blank(),
+    rect = element_blank(),
+    strip.text = element_blank(),
+    axis.text.x = element_text(size = 16),
+    axis.text.y = element_text(size = 16),
+    axis.title = element_text(size=18,face="bold"),
+    plot.title = element_blank(),
+    legend.position = "none")
+```
+
+---
+# Correlation
+  
+### Example: Moderate negative correlation
+  
+```{R, corr3, echo = F, fig.height=5}
+
+ggplot(data = df, aes(x = x3, y = y3)) +
+  geom_point(color = "darkslategray", size = 6) +
+  annotate(geom="text", x=4000, y=3000, label=paste0("corr=",corr3),
+           color="lightcoral", size=8, fontface="bold") +
+  theme_bw() + 
+  theme(
+    line = element_blank(),
+    panel.grid = element_blank(),
+    rect = element_blank(),
+    strip.text = element_blank(),
+    axis.text.x = element_text(size = 16),
+    axis.title = element_text(size=18,face="bold"),
+    plot.title = element_blank(),
+    legend.position = "none")
+```
+
+---
+layout: false
+class: clear, middle, inverse
+# Ordinary Least Squares
+
+---
+# Linear regression
+
+Covariance and correlation give us a single summary of the **strength** of the relationship between two random variables $Y$ and $X$...
+
+--
+
+...but we want to know more!
+
+--
+
+In particular, we are often interested in the **linear** relationship between $X$ and $Y$:
+
+In the **population**:
+$$y = \beta_0 + \beta_1 x + u $$
+--
+
+### Can we use our sample to estimate $\beta_0$ (the intercept) and $\beta_1$ (the slope)? 
+
+(Call these estimates $\hat\beta_0$ and $\hat\beta_1$, respectively)
+
+---
+# Finding a "best fit" line
+
+Consider some sample data.
+
+```{R, lines1, echo = F, dev = "svg", fig.height = 6}
+n_p <- 100
+n_s <- 30
+# Set the seed
+set.seed(12468)
+
+# Generate data
+pop_df <- tibble(
+  i = 3,
+  x = rnorm(n_p, mean = 5, sd = 1.5),
+  e = rnorm(n_p, mean = 0, sd = 1),
+  y = i + 0.5 * x + e,
+  row = rep(1:sqrt(n_p), times = sqrt(n_p)),
+  col = rep(1:sqrt(n_p), each = sqrt(n_p)),
+  s1 = sample(x = c(rep(T, n_s), rep(F, n_p - n_s))),
+  s2 = sample(x = c(rep(T, n_s), rep(F, n_p - n_s))),
+  s3 = sample(x = c(rep(T, n_s), rep(F, n_p - n_s)))
+)
+
+ggplot(data = pop_df, aes(x = x, y = y)) +
+geom_point(size = 5, color = "darkslategray", alpha = 0.9) +
+theme_bw() + theme(line = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_text(size=22,face="bold"))
+```
+
+---
+# Finding a "best fit" line
+
+For any line $\left(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\right)$ $\color{#ffffff}{\bigg|}$
+
+```{R, lines2, echo = F, dev = "svg", fig.height = 6}
+# Define a function
+y_hat <- function(x, b0, b1) {b0 + b1 * x}
+# Define line's parameters
+b0 <- 6
+b1 <- 0.2
+# The plot
+ggplot(data = pop_df, aes(x = x, y = y)) +
+# geom_segment(aes(x = x, xend = x, y = y, yend = y_hat(x, b0, b1)), size = 0.5, alpha = 0.2) +
+geom_point(size = 5, color = "darkslategray", alpha = 0.9) +
+geom_abline(intercept = b0, slope = b1, color = "orange", size = 2, alpha = 0.9) +
+theme_bw() + theme(line = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_text(size=22,face="bold"))
+```
+
+---
+# Finding a "best fit" line
+
+For any line $\left(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\right)$, we can calculate errors: $e_i = y_i - \hat{y}_i$ $\color{#ffffff}{\bigg|}$
+
+```{R, lines3, echo = F, dev = "svg", fig.height = 6}
+# Define a function
+y_hat <- function(x, b0, b1) {b0 + b1 * x}
+# Define line's parameters
+b0 <- 6
+b1 <- 0.2
+# The plot
+ggplot(data = pop_df, aes(x = x, y = y)) +
+geom_segment(aes(x = x, xend = x, y = y, yend = y_hat(x, b0, b1)), size = 0.5, alpha = 0.2) +
+geom_point(size = 5, color = "darkslategray", alpha = 0.9) +
+geom_abline(intercept = b0, slope = b1, color = "orange", size = 2, alpha = 0.9) +
+theme_bw() + theme(line = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_text(size=22,face="bold"))
+```
+
+---
+# Finding a "best fit" line
+
+For any line $\left(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\right)$, we can calculate errors: $e_i = y_i - \hat{y}_i$ $\color{#ffffff}{\bigg|}$
+
+```{R, lines4, echo = F, dev = "svg", fig.height = 6}
+# Define a function
+y_hat <- function(x, b0, b1) {b0 + b1 * x}
+# Define line's parameters
+b0 <- 3
+b1 <- 0.2
+# The plot
+ggplot(data = pop_df, aes(x = x, y = y)) +
+geom_segment(aes(x = x, xend = x, y = y, yend = y_hat(x, b0, b1)), size = 0.5, alpha = 0.2) +
+geom_point(size = 5, color = "darkslategray", alpha = 0.9) +
+geom_abline(intercept = b0, slope = b1, color = "orange", size = 2, alpha = 0.9) +
+theme_bw() + theme(line = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_text(size=22,face="bold"))
+```
+
+---
+# Finding a "best fit" line
+
+For any line $\left(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\right)$, we can calculate errors: $e_i = y_i - \hat{y}_i$ $\color{#ffffff}{\bigg|}$
+
+```{R, lines5, echo = F, dev = "svg", fig.height = 6}
+# Define a function
+y_hat <- function(x, b0, b1) {b0 + b1 * x}
+# Define line's parameters
+b0 <- 10
+b1 <- -0.8
+# The plot
+ggplot(data = pop_df, aes(x = x, y = y)) +
+geom_segment(aes(x = x, xend = x, y = y, yend = y_hat(x, b0, b1)), size = 0.5, alpha = 0.2) +
+geom_point(size = 5, color = "darkslategray", alpha = 0.9) +
+geom_abline(intercept = b0, slope = b1, color = "orange", size = 2, alpha = 0.9) +
+theme_bw() + theme(line = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_text(size=22,face="bold"))
+```
+
+---
+# Ordinary Least Squares
+
+### OLS chooses a line that minimizes the **sum of squared errors** (SSE):
+
+$$SSE = \sum_i e_i^2 = \sum_i (y_i - \hat{y}_i)^2 = \sum_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)^2$$
+Where $i$ indicates one observation in our data. In other words, OLS gives us a combination of $\hat\beta_0$ and $\hat\beta_1$ that minimizes the SSE.
+
+#### Now you see where "least squares" comes from! 
+
+### In .mono[R]:
+
+`library(stats)`
+
+`lm(y ~ x, my_data)`
+
+#### Note: SSE is also called "sum of squared residuals" or SSR
+
+---
+# Ordinary Least Squares
+
+SSE squares the errors $\left(\sum e_i^2\right)$: bigger errors get bigger penalties. $\color{#ffffff}{\bigg|}$
+
+```{R, lines6, echo = F, dev = "svg", fig.height = 6}
+# Define a function
+y_hat <- function(x, b0, b1) {b0 + b1 * x}
+# Define line's parameters
+b0 <- 10
+b1 <- -0.8
+# The plot
+ggplot(data = pop_df, aes(x = x, y = y)) +
+geom_segment(aes(x = x, xend = x, y = y, yend = y_hat(x, b0, b1), color = (y - y_hat(x, b0, b1))^2), size = 0.5, alpha = 0.8) +
+geom_point(size = 5, color = "darkslategray", alpha = 0.9) +
+geom_abline(intercept = b0, slope = b1, color = "orange", size = 2, alpha = 0.9) +
+scale_color_viridis(option = "cividis", direction = -1) +
+theme_bw() + theme(line = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_text(size=22,face="bold"))
+```
+
+---
+# Ordinary Least Squares
+
+The OLS estimate is the combination of $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimizes SSE. $\color{#ffffff}{\bigg|}$
+
+```{R, lines7, echo = F, dev = "svg", fig.height = 6}
+# Define a function
+y_hat <- function(x, b0, b1) {b0 + b1 * x}
+# Define line's parameters
+b0 <- lm0$coefficients[1]
+b1 <- lm0$coefficients[2]
+# The plot
+ggplot(data = pop_df, aes(x = x, y = y)) +
+geom_segment(aes(x = x, xend = x, y = y, yend = y_hat(x, b0, b1), color = (y - y_hat(x, b0, b1))^2), size = 0.5, alpha = 0.8) +
+geom_point(size = 5, color = "darkslategray", alpha = 0.9) +
+geom_abline(intercept = b0, slope = b1, color = red_pink, size = 2, alpha = 0.9) +
+scale_color_viridis(option = "cividis", direction = -1) +
+theme_bw() + theme(line = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_text(size=22,face="bold"))
+```
+
+---
+# OLS, formally
+
+In simple linear regression, the OLS estimator comes from choosing the $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the sum of squared errors (SSE), _i.e._,
+
+$$ \min_{\hat{\beta}_0,\, \hat{\beta}_1} \text{SSE} $$
+
+--
+
+but we already know $\text{SSE} = \sum_i e_i^2$. Now use the definitions of $e_i$ and $\hat{y}$.
+
+$$ e_i^2 = \left( y_i - \hat{y}_i \right)^2 = \left( y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i \right)^2$$
+this expands to:
+$$ e_i^2= y_i^2 - 2 y_i \hat{\beta}_0 - 2 y_i \hat{\beta}_1 x_i + \hat{\beta}_0^2 + 2 \hat{\beta}_0 \hat{\beta}_1 x_i + \hat{\beta}_1^2 x_i^2$$
+
+---
+# OLS, formally
+
+Choose the $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the sum of squared errors (SSE), _i.e._,
+
+$$  \min_{\hat{\beta}_0,\, \hat{\beta}_1} \sum_i e_i^2 $$
+**Derivation:** Minimizing a multivariate function requires (**1**) first derivatives equal zero (the *1.super[st]-order conditions*) and (**2**) second-order conditions (concavity).
+
+--
+
+**See extra slides** if you want the full derivation. Basically, we take the first derivatives of the SSE above with respect to $\hat\beta_0$ and $\hat\beta_1$, set them equal to zero, and solve for $\hat\beta_0$ and $\hat\beta_1$.
+
+---
+# OLS, formally
+
+The OLS estimator for the slope is:
+
+$$ \hat{\beta}_1 = \dfrac{\sum_i (x_i - \overline{x})(y_i - \overline{y})}{\sum_i (x_i - \overline{x})^2} = \frac{cov(x,y)}{var(x)}$$
+
+and the intercept:
+
+$$ \hat{\beta}_0 = \overline{y} - \hat{\beta}_1 \overline{x} $$
+
+--
+
+Note that the expression for $\hat\beta_0$ can be rearranged to show us that our regression line always passes through the sample mean of $x$ and $y$.
+
+
+---
+# Let's collect some definitions
+
+True **population** relationship:
+$$ y = \beta_0 + \beta_1 x + u $$
+
+--
+
+Estimated **sample** relationship:
+$$ \hat y = \hat\beta_0 + \hat\beta_1 x  $$
+--
+
+- **Dependent variable** = regressand = $y$
+- **Independent variable** = explanatory variable = regressor = $x$
+- **Residual** = sample error = $y - \hat y$ (for one observation $i$, sample error is $y_i-\hat y_i$)
+- Estimated **intercept** coefficient = $\hat\beta_0$
+- Estimated **slope** coefficient = $\hat\beta_1$
+
+---
+# Why choose the OLS line?
+
+### There are many possible ways to define a "best fit" linear relationship. For example:
+- Least absolute deviations: minimize $\sum_i | y_i - \hat y_i|$
+- Ridge regression: minimize $\sum_i \left[ (y_i - \hat y_i)^2 + \lambda \sum_k \hat\beta_k ^2 \right]$
+- ...
+
+---
+# Why choose the OLS line?
+
+### There are many possible ways to define a "best fit" linear relationship. 
+
+### So why do we often rely on OLS?
+- Under a key set of assumptions, OLS satisfies some very desirable properties that most statisticians, economists, political scientists put emphasis on
+
+--
+
+- However, you will see many other linear (and nonlinear) estimators in machine learning
+
+--
+
+- What estimator you use depends on what the goal of your analysis is, but OLS is the best option a LOT of the time
+
+---
+# Why choose the OLS line?
+
+## Under key assumptions, OLS satisfies two desirable properties:
+
+- OLS is **unbiased**.
+- OLS has the **minimum variance** of all unbiased linear estimators.
+
+--
+
+Let's dig into each of these for a moment so you can appreciate how amazing OLS is.
+
+---
+# OLS property #1: Unbiasedness
+
+### Under a key set of assumptions (we'll get into these in a few slides), OLS is **unbiased**
+
+#### Unbiasedness:
+
+On average (after *many* samples), does the estimator tend toward the true population value?
+
+**More formally:** The mean of estimator's distribution equals the population parameter it estimates:
+
+$$ \mathop{\text{Bias}}_\beta \left( \hat{\beta} \right) = \mathop{\boldsymbol{E}}\left[ \hat{\beta} \right] - \beta $$
+
+---
+# OLS property #1: Unbiasedness
+
+### Under a key set of assumptions (we'll get into these in a few slides), OLS is **unbiased**
+
+#### Unbiasedness:
+
+On average (after *many* samples), does the estimator tend toward the true population value?
+
+--
+
+$\rightarrow$ You should think about the distribution of $\hat \beta$ values as the distribution of regression results you would get if you could draw many random samples from the population and generate a new $\hat\beta$ every time. 
+
+--
+
+$\rightarrow$ In two weeks we'll talk a lot more about uncertainty in and distributions of estimators like $\hat\beta$.
+
+---
+# OLS property #1: Unbiasedness
+
+
+.pull-left[
+
+**Unbiased estimator:** $\mathop{\boldsymbol{E}}\left[ \hat{\beta} \right] = \beta$
+
+```{R, unbiasedpdf, echo = F, dev = "svg"}
+tmp <- tibble(x = seq(-4, 4, 0.01), y = dnorm(x))
+tmp <- rbind(tmp, tibble(x = seq(4, -4, -0.01), y = 0))
+ggplot(data = tmp, aes(x, y)) +
+geom_polygon(fill = red_pink, alpha = 0.9) +
+geom_hline(yintercept = 0, color = "black") +
+geom_vline(xintercept = 0, size = 1, linetype = "dashed") +
+scale_x_continuous(breaks = 0, labels = TeX("$\\beta$")) +
+theme_simple +
+theme(axis.text.x = element_text(size = 40))
+```
+
+]
+
+--
+
+.pull-right[
+
+**Biased estimator:** $\mathop{\boldsymbol{E}}\left[ \hat{\beta} \right] \neq \beta$
+
+```{R, biasedpdf, echo = F, dev = "svg"}
+ggplot(data = tmp, aes(x, y)) +
+geom_polygon(aes(x = x + 2), fill = "darkslategray", alpha = 0.9) +
+geom_hline(yintercept = 0, color = "black") +
+geom_vline(xintercept = 0, size = 1, linetype = "dashed") +
+scale_x_continuous(breaks = 0, labels = TeX("$\\beta$")) +
+theme_simple +
+theme(axis.text.x = element_text(size = 40))
+```
+
+]
+
+Distributions show probability density function of $\hat\beta$ estimates recovered from many different randomly drawn samples. 
+
+---
+# OLS property #2: Lowest variance
+
+### Under a key set of assumptions (again, let's wait a couple slides), OLS is the estimator with the **lowest variance**
+
+#### Lowest variance:
+
+Just as we discussed when defining summary statistics, the central tendencies (means) of distributions are not the only things that matter. We also care about the **variance** of an estimator.
+
+$$ \mathop{\text{Var}} \left( \hat{\beta} \right) = \mathop{\boldsymbol{E}}\left[ \left( \hat{\beta} - \mathop{\boldsymbol{E}}\left[ \hat{\beta} \right] \right)^2 \right] $$
+
+Lower variance estimators mean we get estimates closer to the mean in each sample.
+
+---
+# OLS property #2: Lowest variance
+
+### Under a key set of assumptions (again, let's wait a couple slides), OLS is the estimator with the **lowest variance**
+
+#### Lowest variance:
+
+Just as we discussed when defining summary statistics, the central tendencies (means) of distributions are not the only things that matter. We also care about the **variance** of an estimator.
+
+$\rightarrow$ Again, think about the distribution of $\hat \beta$ values as the distribution of regression results you would get if you could draw many random samples from the population and generate a new $\hat\beta$ every time. 
+
+---
+# OLS property #2: Lowest variance
+
+
+```{R, variancepdf, echo = F, dev = "svg", fig.height = 5}
+d4 <- tibble(x = seq(-7.5, 7.5, 0.01), y = dnorm(x, mean = 0, sd = 1)) %>%
+  rbind(., tibble(x = seq(7.5, -7.5, -0.01), y = 0))
+d5 <- tibble(x = seq(-7.5, 7.5, 0.01), y = dnorm(x, mean = 0, sd = 2)) %>%
+  rbind(., tibble(x = seq(7.5, -7.5, -0.01), y = 0))
+ggplot() +
+geom_polygon(data = d4, aes(x, y), fill = red_pink, alpha = 0.9) +
+geom_polygon(data = d5, aes(x, y), fill = "darkslategray", alpha = 0.8) +
+geom_hline(yintercept = 0, color = "black") +
+geom_vline(xintercept = 0, size = 1, linetype = "dashed") +
+scale_x_continuous(breaks = 0, labels = TeX("$\\beta$")) +
+theme_simple +
+theme(axis.text.x = element_text(size = 20))
+```
+
+---
+# Properties of OLS
+
+
+**Property 1: Bias.**
+
+**Property 2: Variance.**
+
+**Subtlety: The bias-variance tradeoff.**
+
+Should we be willing to take a bit of bias to reduce the variance?
+
+In much of statistics, we choose unbiased estimators. But other disciplines (especially computer science) will choose estimators that sacrifice some bias in exchange for lower variance. 
+
+--
+
+You'll learn more about these estimators (e.g., ridge regression) in EDS 232 👀
+
+---
+# The bias-variance tradeoff.
+
+```{R, variancebias, echo = F, dev = "svg"}
+d4 <- tibble(x = seq(-7.5, 7.5, 0.01), y = dnorm(x, mean = 0.3, sd = 1)) %>%
+  rbind(., tibble(x = seq(7.5, -7.5, -0.01), y = 0))
+d5 <- tibble(x = seq(-7.5, 7.5, 0.01), y = dnorm(x, mean = 0, sd = 2)) %>%
+  rbind(., tibble(x = seq(7.5, -7.5, -0.01), y = 0))
+ggplot() +
+geom_polygon(data = d4, aes(x, y), fill = red_pink, alpha = 0.9) +
+geom_polygon(data = d5, aes(x, y), fill = "darkslategray", alpha = 0.8) +
+geom_hline(yintercept = 0, color = "black") +
+geom_vline(xintercept = 0, size = 1, linetype = "dashed") +
+scale_x_continuous(breaks = 0, labels = TeX("$\\beta$")) +
+theme_simple +
+theme(axis.text.x = element_text(size = 20))
+```
+
+---
+# OLS: Assumptions
+
+These very nice properties depend on a key set of assumptions:
+
+--
+
+1. The population relationship is linear in parameters with an additive disturbance.
+
+--
+
+2. The $X$ variable is **exogenous**, _i.e._, $\mathop{\boldsymbol{E}}\left[ u \mid X \right] = 0$.
+  + I.e., is there no other variable correlated with $X$ that also affects $Y$
+  + You will talk a lot more about this in EDS 241 👀
+
+--
+
+3. The $X$ variable has variation (and if there are multiple explanatory variables, they are not perfectly collinear)
+  + Recall, $var(x)$ is in the denominator of the OLS slope coefficient estimator!
+  
+---
+# OLS: Assumptions
+
+These very nice properties depend on a key set of assumptions:
+
+1. The population relationship is linear in parameters with an additive disturbance.
+
+2. Our $X$ variable is **exogenous**, _i.e._, $\mathop{\boldsymbol{E}}\left[ u \mid X \right] = 0$.
+
+3. The $X$ variable has variation. 
+
+4. The population disturbance $u$ is independently and identically distributed as a **normal** random variable with mean zero $\left( \mathop{\boldsymbol{E}}\left[ u \right] = 0 \right)$ and variance $\sigma^2$ (_i.e._,  $\mathop{\boldsymbol{E}}\left[ u^2 \right] = \sigma^2$)
+  + Independently distributed and mean zero jointly imply $\mathop{\boldsymbol{E}}\left[ u_i u_j \right] = 0$ for any $i\neq j$
+  + Constant variance means errors cannot vary with $X$ (this is called "homoskedasticity")
+  
+---
+# OLS: Assumptions
+
+Different assumptions guarantee different properties:
+
+- Assumptions (1), (2), and (3) make OLS **unbiased**
+- Assumption (4) gives us an unbiased estimator for the **variance** of our OLS estimator (we will talk more about this when covering _inference_ in a couple weeks)
+
+--
+
+We will discuss the many ways real life may **violate these assumptions**. For instance:
+
+- Non-linear relationships in our parameters/disturbances (or misspecification) $\rightarrow$ e.g., logistic regression
+- Disturbances that are not identically distributed and/or not independent $\rightarrow$ lectures on _inference_
+- Violations of exogeneity (especially omitted-variable bias) $\rightarrow$ mostly covered in EDS 241
+
+---
+# OLS: Assumptions
+
+### Q: Can we test these assumptions?
+
+> A: Some of them.
+
+#### Assumption 1: Linear in parameters. 
+
+You can look at your data to see if this might be reasonable. 
+
+--
+
+```{R, logistic, echo = F, dev = "svg", fig.height=4}
+set.seed(444)
+x = seq(.001, 1, by=.001)
+y = round(x+rnorm(1000, mean=0,sd=.2), 0)
+y = ifelse(y>1, 1, y)
+y = ifelse(y<0, 0, y)
+nldf = as.data.frame(cbind(x,y))
+ggplot(data=nldf,aes(x, y)) +
+geom_point(color = "darkslategrey", alpha = 0.9, size=4) +
+  geom_smooth(method='lm', formula= y~x, color="lightcoral", se=F, size=3) +
+theme_bw() + 
+  theme(
+    line = element_blank(),
+    panel.grid = element_blank(),
+    rect = element_blank(),
+    strip.text = element_blank(),
+    axis.text.x = element_text(size = 16),
+    axis.text.y = element_text(size = 16),
+    axis.title = element_text(size=18,face="bold"),
+    plot.title = element_blank(),
+    legend.position = "none")
+```
+
+---
+# OLS: Assumptions
+
+### Q: Can we test these assumptions?
+
+> A: Some of them.
+
+#### Assumption 1: Linear in parameters. 
+
+You can look at your data to see if this might be reasonable. 
+
+- Note: this assumption does not require your model to be linear in $X$! As we discuss later, nonlinear relationships in $X$ _can_ be easily accommodated with OLS:
+
+$$y = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon$$
+
+This equation was estimated using OLS to give the nonlinear relationship on the next slide.
+
+---
+# OLS: Assumptions
+
+### Q: Can we test these assumptions?
+
+> A: Some of them.
+
+####Assumption 1: Linear in parameters. 
+
+You can look at your data to see if this might be reasonable. 
+
+```{R, quadratic, echo = F, dev = "svg", fig.height=4}
+set.seed(444)
+xq = seq(.1,100,by=.1)
+yq = .01*xq + .08*xq^2 + 70*rnorm(1000)
+mod = lm(yq~xq + I(xq^2))
+qdf = as.data.frame(cbind(xq,yq))
+qdf$yhat = mod$coefficients[[1]] + mod$coefficients[[2]]*xq + mod$coefficients[[3]]*xq^2
+ggplot(data=qdf,aes(xq, yq)) +
+geom_point(color = "darkslategrey", alpha = 0.9, size=4) +
+  geom_smooth(method='lm', formula= y~x+I(x^2), color="lightcoral", se=F, size=3) +
+theme_empty
+```
+---
+# OLS: Assumptions
+
+### Q: Can we test these assumptions?
+
+> A: Some of them.
+
+####Assumption 1: Linear in parameters. 
+
+Example of a population relationship that is _not_ linear in parameters:
+
+$Y = e^{\beta_0 + \beta_1 X + u}$
+
+```{R, exponential, echo = F, dev = "svg", fig.height=3}
+set.seed(444)
+xe = seq(0.01,10,by=.01)
+ye = exp(.2*xe +.2*rnorm(1000))
+yhat = exp(.2*xe)
+edf = as.data.frame(cbind(xe,ye,yhat))
+ggplot(data=edf,aes(xe, ye)) +
+geom_point(color = "darkslategrey", alpha = 0.9, size=4) +
+  geom_line(aes(x=xe,y=yhat), color="lightcoral", size=3) +
+theme_empty
+```
+
+---
+# OLS: Assumptions
+
+### Q: Can we test these assumptions?
+
+> A: Some of them.
+
+#### Assumption 2: Exogeneity
+
+$$\mathop{\boldsymbol{E}}\left[ u \mid X \right] = 0$$
+
+
+#### This is not a testable assumption! 
+
+There are a lot of methods designed to probe this assumption, but it's fundamentally untestable since there are infinite possible correlates of $X$ and $Y$ that are unobservable to the researcher.
+
+In general, you should always think about what is in $u$ that may be correlated with $X$.
+
+---
+# OLS: Assumptions
+
+### Q: Can we test these assumptions?
+
+> A: Some of them.
+
+#### Assumption 3: $X$ has variation. 
+
+This is very easy to test:
+
+```{R, rank, echo = F, dev = "svg", fig.height=4}
+set.seed(444)
+xr = 1
+yr = rnorm(100)
+dfr = as.data.frame(cbind(xr,yr))
+ggplot(data=dfr,aes(xr, yr)) +
+geom_point(color = "darkslategrey", alpha = 0.9, size=4) +
+theme_simple
+```
+
+---
+# OLS: Assumptions
+
+### Q: Can we test these assumptions?
+
+> A: Some of them.
+
+#### Assumption 4: The population disturbances $u_i$ are independently and identically distributed as **normal** random variables with mean zero and variance $\sigma^2$ 
+
+--
+
+Use the residuals from your regression to investigate this assumption
+
+--
+
+Step 1: Run linear regression
+$$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i $$
+Step 2: Generate residuals
+
+$$e_i = y_i - \hat y_i$$
+---
+# OLS: Assumptions
+
+### Q: Can we test these assumptions?
+
+> A: Some of them.
+
+#### Assumption 4: The population disturbances $u_i$ are independently and identically distributed as **normal** random variables with mean zero and variance $\sigma^2$ 
+
+--
+
+Use the residuals from your regression to investigate this assumption
+
+Step 3: Plot and investigate residuals [draw these examples]
+  + histogram (are they normal?)
+  + plot of $e_i$ against $X$ (are they uncorrelated? does the variance depend on $X$?)
+
+---
+
+layout: false
+class: clear, middle, inverse
+# Interpreting regression results
+
+---
+# Interpreting OLS results
+
+#### Example: Ozone increases due to temperature (NYC)
+
+```{R, nyc, echo = F, dev = "svg", fig.height=5}
+ggplot(data=airquality,aes(Temp, Ozone)) +
+geom_point(color = "darkslategrey", alpha = 0.9, size=4) +
+  xlab("Temperature (F)") + ylab("Ozone (ppb)") +
+theme_bw() + 
+  theme(
+    line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 16),
+  axis.text.y = element_text(size = 16),
+  axis.title = element_text(size=18,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+---
+# Interpreting OLS results
+
+#### Example: Ozone increases due to temperature (NYC)
+
+We can use `lm(y~x, my_data)` in .mono[R] to run a linear regression of $y$ on $x$, including a constant term.
+
+```{R, lm, echo = T}
+mod <- lm(Ozone ~ Temp, data=airquality)
+```
+
+---
+# Interpreting OLS results
+
+#### Example: Ozone increases due to temperature (NYC)
+
+`summary()` then lets us see the regression results. 
+
+#### How do we interpret these??
+
+---
+# Interpreting OLS results
+
+```{r, echo = T}
+summary(mod)
+```
+
+---
+# Interpreting OLS results
+
+$$ Ozone_i = \beta_0 + \beta_1 Temp_i + \varepsilon_i $$
+```{r, out.width = "70%", echo=FALSE, fig.align='center'}
+knitr::include_graphics("ozone_temp_coeffs.png")
+```
+
+- **Slope**: Change in $y$ for a one unit change in $x$.
+  + Here: On average, we expect to see ozone increase by 2.4 ppb for each 1 degree F increase in temperature.
+
+--
+
+- **Intercept**: Level of $y$ when $x=0$.
+  + Here: On average, we expect Ozone to be -147 ppb when temperature is 0 degrees F. 
+  + **CAREFUL** with extrapolation! This doesn't even make sense! 
+
+---
+# Interpreting OLS results
+
+$$ Ozone_i = \beta_0 + \beta_1 Temp_i + \varepsilon_i $$
+```{r, out.width = "70%", echo=FALSE, fig.align='center'}
+knitr::include_graphics("ozone_temp_coeffs.png")
+```
+
+- Standard error, t-value, and Pr(>t): These all concern **uncertainty** around our parameter estimates. We will tackle these fully after the midterm.
+
+---
+# Interpreting OLS results
+
+Visualizing our predicted model using `geom_smooth()`
+
+> Where is $\hat\beta_0$? Where is $\hat\beta_1$?
+
+```{R, nycfit, echo = F, dev = "svg", fig.height=5}
+ggplot(data=airquality,aes(Temp, Ozone)) +
+geom_point(color = "darkslategrey", alpha = 0.9, size=4) +
+  geom_smooth(method='lm', formula= y~x, color="lightcoral", se=F, size=3) +
+  xlab("Temperature (F)") + ylab("Ozone (ppb)") +
+theme_bw() + 
+  theme(
+    line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 16),
+  axis.text.y = element_text(size = 16),
+  axis.title = element_text(size=18,face="bold"),
+  plot.title = element_blank(),
+  legend.position = "none")
+```
+
+---
+# Interpreting OLS results
+
+### Units matter! 
+
+```{r, echo = T}
+airquality$TempC <- (airquality$Temp - 32)*5/9
+summary(lm(Ozone~TempC, data=airquality))
+```
+
+---
+
+class: center, middle
+
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+Some slides and slide components were borrowed from [Ed Rubin's](https://github.com/edrubin/EC421S20) awesome course materials.
+
+---
+
+layout: false
+class: clear, middle, inverse
+# Extra slides
+
+---
+# OLS, formally
+  
+In simple linear regression, the OLS estimator comes from choosing the $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the sum of squared errors (SSE), _i.e._,
+
+$$ \min_{\hat{\beta}_0,\, \hat{\beta}_1} \text{SSE} $$
+  
+--
+  
+but we already know $\text{SSE} = \sum_i e_i^2$. Now use the definitions of $e_i$ and $\hat{y}$.
+
+$$ e_i^2 = \left( y_i - \hat{y}_i \right)^2 = \left( y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i \right)^2$$ 
+
+this expands to:
+
+$$ e_i^2 = y_i^2 - 2 y_i \hat{\beta}_0 - 2 y_i \hat{\beta}_1 x_i + \hat{\beta}_0^2 + 2 \hat{\beta}_0 \hat{\beta}_1 x_i + \hat{\beta}_1^2 x_i^2$$
+  
+--
+  
+**Recall:** Minimizing a multivariate function requires (**1**) first derivatives equal zero (the *1.super[st]-order conditions*) and (**2**) second-order conditions (concavity).
+
+---
+# OLS, formally
+  
+We're getting close. We need to **minimize SSE**. We've showed how SSE relates to our sample (our data: $x$ and $y$) and our estimates (_i.e._, $\hat{\beta}_0$ and $\hat{\beta}_1$).
+
+$$ \text{SSE} = \sum_i e_i^2 = \sum_i \left( y_i^2 - 2 y_i \hat{\beta}_0 - 2 y_i \hat{\beta}_1 x_i + \hat{\beta}_0^2 + 2 \hat{\beta}_0 \hat{\beta}_1 x_i + \hat{\beta}_1^2 x_i^2 \right) $$
+  
+For the first-order conditions of minimization, we now take the first derivate of SSE with respect to $\hat{\beta}_0$ and $\hat{\beta}_1$.
+
+$$
+  \begin{aligned}
+\dfrac{\partial \text{SSE}}{\partial \hat{\beta}_0} &= \sum_i \left( 2 \hat{\beta}_0 + 2 \hat{\beta}_1 x_i - 2 y_i \right) = 2n \hat{\beta}_0 + 2 \hat{\beta}_1 \sum_i x_i - 2 \sum_i y_i \\
+&= 2n \hat{\beta}_0 + 2n \hat{\beta}_1 \overline{x} - 2n \overline{y}
+\end{aligned}
+$$
+  
+where $\overline{x} = \frac{\sum x_i}{n}$ and $\overline{y} = \frac{\sum y_i}{n}$ are sample means of $x$ and $y$ (size $n$).
+
+---
+# OLS, formally
+  
+The first-order conditions state that the derivatives are equal to zero, so:
+  
+  $$ \dfrac{\partial \text{SSE}}{\partial \hat{\beta}_0} = 2n \hat{\beta}_0 + 2n \hat{\beta}_1 \overline{x} - 2n \overline{y} = 0 $$
+  
+which implies
+
+$$ \hat{\beta}_0 = \overline{y} - \hat{\beta}_1 \overline{x} $$
+  
+Now for $\hat{\beta}_1$.
+
+---
+# OLS, formally
+  
+Take the derivative of SSE with respect to $\hat{\beta}_1$
+  
+$$
+\dfrac{\partial \text{SSE}}{\partial \hat{\beta}_1} &= \sum_i \left( 2 \hat{\beta}_0 x_i + 2 \hat{\beta}_1 x_i^2 - 2 y_i x_i \right) = 2 \hat{\beta}_0 \sum_i x_i + 2 \hat{\beta}_1 \sum_i x_i^2 - 2 \sum_i y_i x_i $$
+
+$$ = 2n \hat{\beta}_0 \overline{x} + 2 \hat{\beta}_1 \sum_i x_i^2 - 2 \sum_i y_i x_i
+$$
+  
+set it equal to zero (first-order conditions, again)
+
+$$ \dfrac{\partial \text{SSE}}{\partial \hat{\beta}_1} = 2n \hat{\beta}_0 \overline{x} + 2 \hat{\beta}_1 \sum_i x_i^2 - 2 \sum_i y_i x_i = 0 $$
+  
+and substitute in our relationship for $\hat{\beta}_0$, _i.e._, $\hat{\beta}_0 = \overline{y} - \hat{\beta}_1 \overline{x}$. Thus,
+
+$$
+  2n \left(\overline{y} - \hat{\beta}_1 \overline{x}\right) \overline{x} + 2 \hat{\beta}_1 \sum_i x_i^2 - 2 \sum_i y_i x_i = 0
+$$
+  
+---
+# OLS, formally
+  
+Continuing from the last slide
+
+$$ 2n \left(\overline{y} - \hat{\beta}_1 \overline{x}\right) \overline{x} + 2 \hat{\beta}_1 \sum_i x_i^2 - 2 \sum_i y_i x_i = 0 $$
+  
+we multiply out
+
+$$ 2n \overline{y}\,\overline{x} - 2n \hat{\beta}_1 \overline{x}^2 + 2 \hat{\beta}_1 \sum_i x_i^2 - 2 \sum_i y_i x_i = 0 $$
+  
+$$ \implies 2 \hat{\beta}_1 \left( \sum_i x_i^2 - n \overline{x}^2 \right) = 2 \sum_i y_i x_i - 2n \overline{y}\,\overline{x} $$
+  
+$$ \implies \hat{\beta}_1 = \dfrac{\sum_i y_i x_i - 2n \overline{y}\,\overline{x}}{\sum_i x_i^2 - n \overline{x}^2} = \dfrac{\sum_i (x_i - \overline{x})(y_i - \overline{y})}{\sum_i (x_i - \overline{x})^2} $$
+  
+---
+# OLS, formally
+  
+Done!
+  
+We now have (lovely) OLS estimators for the slope
+
+$$ \hat{\beta}_1 = \dfrac{\sum_i (x_i - \overline{x})(y_i - \overline{y})}{\sum_i (x_i - \overline{x})^2} $$
+  
+and the intercept
+
+$$ \hat{\beta}_0 = \overline{y} - \hat{\beta}_1 \overline{x} $$
+  
+And now you know where the *least squares* part of ordinary least squares comes from. 🎊
+
+---
+exclude: true
+
+```{R, printpdfs, echo = F, eval = F}
+pagedown::chrome_print(
+  input = "03-ols.html",
+  output = "03-ols.pdf",
+  timeout = 60
+)
+```
+

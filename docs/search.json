@@ -1069,5 +1069,82 @@
     "title": "Interactive Session 3",
     "section": "6. Functional programming - some sugar in R",
     "text": "6. Functional programming - some sugar in R\nFor loops are a critical skill for any data scientist to understand. However, you may not end up writing many of them from scratch. That’s because there exist a number of useful tools (functions) to make iteration easier for us. Here, we’ll briefly learn about two:\n\nThe apply family of functions for iteration\nMaking iteration {purrr}\n\n\napply\nThe apply functions simplify iteration over elements of a data structure (e.g., a data frame). To use apply() most simply, we need to tell it 3 things:\n\nWhat is the data we’re iterating over?\nAre we iterating across rows (1) or columns (2)?\nWhat function are we applying to each element we’re iterating over?\n\nFor example, let’s say we want to find the mean value of all columns in the mtcars data frame:\n\napply(X = mtcars, MARGIN = 2, FUN = mean)\n\n       mpg        cyl       disp         hp       drat         wt       qsec \n 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 \n        vs         am       gear       carb \n  0.437500   0.406250   3.687500   2.812500 \n\n\n\n\n\n\n\n\nCritical thinking\n\n\n\n\n\nTake a moment to break down what each argument does in the apply() function above. Keep this in mind - we can also write our own function that we’d want to apply to each element!\n\n\n\nThere are also variations on apply, like lapply and sapply, that are worth looking into for specific use cases.\n\n\ndplyr::across(), group_by() and summarize() in combo\nIf the takeaway is “Whoa, there are a lot of options…” - YES. There are many existing functions that can help you loop over elements of your data and apply a function.\nHere’ we’ll learn some of my favorites - to loop over columns and by group - and return a nice table of values.\n\npenguins %&gt;% \n  group_by(species) %&gt;% \n  summarize(across(where(is.numeric), mean, na.rm = TRUE))\n\nWarning: There was 1 warning in `summarize()`.\nℹ In argument: `across(where(is.numeric), mean, na.rm = TRUE)`.\nℹ In group 1: `species = Adelie`.\nCaused by warning:\n! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.\nSupply arguments directly to `.fns` through an anonymous function instead.\n\n  # Previously\n  across(a:b, mean, na.rm = TRUE)\n\n  # Now\n  across(a:b, \\(x) mean(x, na.rm = TRUE))\n\n\n# A tibble: 3 × 6\n  species   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g  year\n  &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;\n1 Adelie              38.8          18.3              190.       3701. 2008.\n2 Chinstrap           48.8          18.4              196.       3733. 2008.\n3 Gentoo              47.5          15.0              217.       5076. 2008.\n\n\n\n\n{purrr}\nThe documentation for ?purrr::map() is titled “Apply a function to each element of a list or atomic vector.” Which should ring your for loop brain bells.\nThere are a number of functions within the purrr::map() family to best suit your specific needs.\nThe equivalent map() approach to the example above (finding the mean of each column in the mtcars data frame) is as follows:\n\nmap(.x = mtcars, .f = mean)\n\n$mpg\n[1] 20.09062\n\n$cyl\n[1] 6.1875\n\n$disp\n[1] 230.7219\n\n$hp\n[1] 146.6875\n\n$drat\n[1] 3.596563\n\n$wt\n[1] 3.21725\n\n$qsec\n[1] 17.84875\n\n$vs\n[1] 0.4375\n\n$am\n[1] 0.40625\n\n$gear\n[1] 3.6875\n\n$carb\n[1] 2.8125\n\n# Or, to return the output in a data frame (instead of a list):\nmap_df(.x = mtcars, .f = mean)\n\n# A tibble: 1 × 11\n    mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb\n  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1  20.1  6.19  231.  147.  3.60  3.22  17.8 0.438 0.406  3.69  2.81\n\n\n\nEnd Interactive Session 3"
+  },
+  {
+    "objectID": "course-materials/slides/week0/week0-slides.html#why-are-we-here",
+    "href": "course-materials/slides/week0/week0-slides.html#why-are-we-here",
+    "title": "Week 0: Course Intro and Motivation",
+    "section": "Why are we here?",
+    "text": "Why are we here?\nWhat is statistics? Why do we need it as environmental data scientists?"
+  },
+  {
+    "objectID": "course-materials/slides/week0/week0-slides.html#details",
+    "href": "course-materials/slides/week0/week0-slides.html#details",
+    "title": "Week 0: Course Intro and Motivation",
+    "section": "Details",
+    "text": "Details\nInto the syllabus weeds 🌱"
+  },
+  {
+    "objectID": "course-materials/slides/week0/week0-slides.html#getting-started-sample-vs.-population",
+    "href": "course-materials/slides/week0/week0-slides.html#getting-started-sample-vs.-population",
+    "title": "Week 0: Course Intro and Motivation",
+    "section": "Getting started: Sample vs. population",
+    "text": "Getting started: Sample vs. population\n\nWhat is a sample? What is a population?\nHow are samples constructed?\nStudy design: how are samples constructed to fit a question?"
+  },
+  {
+    "objectID": "course-materials/slides/week0/week0-slides.html#today",
+    "href": "course-materials/slides/week0/week0-slides.html#today",
+    "title": "Week 0: Course Intro & Motivation",
+    "section": "Today",
+    "text": "Today\n\nWhy are we here?\nWhat is statistics? Why do we need it as environmental data scientists?\n\n\nDetails\nInto the syllabus weeds 🌱\n\n\n\nGetting started: Sample vs. population\n\nWhat is a sample? What is a population?\nHow are samples constructed?\nStudy design: how are samples constructed to fit a question?"
+  },
+  {
+    "objectID": "course-materials/slides/week0/week0-slides.html#why-are-we-we-here",
+    "href": "course-materials/slides/week0/week0-slides.html#why-are-we-we-here",
+    "title": "Week 0: Course Intro & Motivation",
+    "section": "Why are we we here?",
+    "text": "Why are we we here?\n\nStatistics:\nThe science of collecting, manipulating, and analyzing empirical data\n\n\nStatistics enables us to use environmental data to follow the scientific method"
+  },
+  {
+    "objectID": "course-materials/slides/week0/week0-slides.html#the-scientific-method-example",
+    "href": "course-materials/slides/week0/week0-slides.html#the-scientific-method-example",
+    "title": "Week 0: Course Intro & Motivation",
+    "section": "The scientific method: Example",
+    "text": "The scientific method: Example\n\nStep one: Make an observation (cool, don’t need stats)\n\n\nEx: When Mt. Pinatubo erupted in 1991, much less sunlight was available for plants…\n20 Mt of sulfur dioxide \\(\\longrightarrow\\) increased stratospheric sulfate aerosols, decreased sunlight reaching Earth’s surface"
+  },
+  {
+    "objectID": "course-materials/week0.html",
+    "href": "course-materials/week0.html",
+    "title": "Course introduction",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse Intro & Motivation\nNone"
+  },
+  {
+    "objectID": "course-materials/week0.html#class-materials",
+    "href": "course-materials/week0.html#class-materials",
+    "title": "Course introduction",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse Intro & Motivation\nNone"
+  },
+  {
+    "objectID": "course-materials/week0.html#end-of-day-practice",
+    "href": "course-materials/week0.html#end-of-day-practice",
+    "title": "Course introduction",
+    "section": "End-of-day practice",
+    "text": "End-of-day practice\nComplete the following tasks / activities before heading home for the day!\n\n Day 1 Practice: Project organization, data import, file paths"
+  },
+  {
+    "objectID": "course-materials/week0.html#additional-resources",
+    "href": "course-materials/week0.html#additional-resources",
+    "title": "Course introduction",
+    "section": "Additional Resources",
+    "text": "Additional Resources\nSee the syllabus"
+  },
+  {
+    "objectID": "course-materials/week0.html#notes",
+    "href": "course-materials/week0.html#notes",
+    "title": "Course introduction",
+    "section": "Notes",
+    "text": "Notes\n\nProf Czapanskiy will be gone week 0 and week 1. Your TA, Leo, will cover during this time."
   }
 ]
