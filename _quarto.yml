@@ -13,7 +13,7 @@ website:
       - text: syllabus
         href: https://docs.google.com/document/d/14WaSESgCsRoDvpfr6UMWIGT9tYXEKnlhup5KK9sarWM/edit
         target: _blank
-      - text: daily materials
+      - text: class materials
         menu:
           - text: week 0 (9/24)
             href: course-materials/week0.qmd
