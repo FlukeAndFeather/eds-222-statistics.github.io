@@ -429,9 +429,9 @@
   {
     "objectID": "course-materials/week8.html#class-materials",
     "href": "course-materials/week8.html#class-materials",
-    "title": "Grammar of graphics",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 8 / morning\nThe grammar of graphics & basic graph considerations\nData visualization in ggplot2\n\n\nday 8 / afternoon\nData visualization basics - responsible, clear, awesome\nData viz continued"
+    "title": "Spatial interpolation and kriging",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
   },
   {
     "objectID": "course-materials/week8.html#end-of-day-practice",
@@ -450,9 +450,9 @@
   {
     "objectID": "course-materials/week6.html#class-materials",
     "href": "course-materials/week6.html#class-materials",
-    "title": "Tidy data",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 6 / morning\nTidy data: what, why, how?\nTidying data (pivot, separate) basics with tidyr and pandas\n\n\nday 6 / afternoon\nData tidying and wrangling continued: dplyr and pandas\nData wrangling continued - dplyr and pandas"
+    "title": "Nonlinear models",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic Regression (and other nonlinear models)\nLogistic regression in R\nChapter 9 in IMS"
   },
   {
     "objectID": "course-materials/week6.html#end-of-day-practice",
@@ -471,9 +471,9 @@
   {
     "objectID": "course-materials/week4.html#class-materials",
     "href": "course-materials/week4.html#class-materials",
-    "title": "Introduction to functions",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 4 / morning\nIntroduction to writing functions in R & Python\nFunctions 101: basics\n\n\nday 4 / afternoon\nFunctions continued: planning, adding useful messages, more advanced functions and outputs\nFunctions 102: beyond basics"
+    "title": "Multiple regression and interactions",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nOrdinary least squares, continued\nMore ordinary least squares in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
   },
   {
     "objectID": "course-materials/week4.html#end-of-day-practice",
@@ -648,14 +648,14 @@
     "href": "course-materials/week0.html#notes",
     "title": "Course introduction",
     "section": "Notes",
-    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. For week 0, please watch the recorded lecture, complete the reading, and answer the reading quiz on Canvas."
+    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. For week 0, please watch the recorded lecture, complete the reading, and answer the reading quiz on Canvas.\nHomework assignment 1 will be posted Thursday September 26"
   },
   {
     "objectID": "course-materials/week10.html#class-materials",
     "href": "course-materials/week10.html#class-materials",
-    "title": "Collaboration tools",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 10 / morning\n\nR packages revisited, tables in R, a taste of git collaboration\n\n\nday 10 / afternoon\nCourse wrap-up"
+    "title": "Time series analysis",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
   },
   {
     "objectID": "course-materials/week10.html#end-of-day-practice",
@@ -695,9 +695,9 @@
   {
     "objectID": "course-materials/week5.html#class-materials",
     "href": "course-materials/week5.html#class-materials",
-    "title": "Testing, documentation, and sharing",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 5 / morning\nFunctions continued: testing, documentation, sharing\nFunctions 103: testing & documenting, making your first package\n\n\nday 5 / afternoon\nFinding & using external packages\nFind & explore packages, documentation, accessing from repos"
+    "title": "Midterm",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
   },
   {
     "objectID": "course-materials/week5.html#end-of-day-practice",
@@ -716,9 +716,9 @@
   {
     "objectID": "course-materials/week7.html#class-materials",
     "href": "course-materials/week7.html#class-materials",
-    "title": "Data wrangling",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 7 / morning\nData wrangling continued - more tidying, relational data & types of joins\nData wrangling continued: joins\n\n\nday 7 / afternoon\nData wrangling continued - working with dates & times, wrangling strings\nData wrangling continued: dates, times, strings"
+    "title": "Inference and hypothesis testing",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic Regression (and other nonlinear models)\nLogistic regression in R\nChapters 13, 19.2 in IMS"
   },
   {
     "objectID": "course-materials/week7.html#end-of-day-practice",
@@ -737,9 +737,9 @@
   {
     "objectID": "course-materials/week9.html#class-materials",
     "href": "course-materials/week9.html#class-materials",
-    "title": "Troubleshooting",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 9 / morning\nTroubleshooting 101\nTeach Me How to Google Workshop (with Sam Csik)\n\n\nday 9 / afternoon\nkable tables & alt-text\nMore wrangling tools and practice, kable tables"
+    "title": "Course review and Thanksgiving",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
   },
   {
     "objectID": "course-materials/week9.html#end-of-day-practice",
@@ -1110,14 +1110,14 @@
     "href": "assignments.html",
     "title": "EDS 222 Assignments",
     "section": "",
-    "text": "Homework assignments will be distributed through GitHub classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/7 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 5pm\n\n\n3 (link)\nTuesday 10/22\nFriday 11/8 5pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 5pm"
+    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/7 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 5pm\n\n\n3 (link)\nTuesday 10/22\nFriday 11/8 5pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 5pm"
   },
   {
     "objectID": "assignments.html#homework-assignments",
     "href": "assignments.html#homework-assignments",
     "title": "EDS 222 Assignments",
     "section": "",
-    "text": "Homework assignments will be distributed through GitHub classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/7 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 5pm\n\n\n3 (link)\nTuesday 10/22\nFriday 11/8 5pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 5pm"
+    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/7 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 5pm\n\n\n3 (link)\nTuesday 10/22\nFriday 11/8 5pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 5pm"
   },
   {
     "objectID": "assignments.html#final-project-proposal",
@@ -1279,5 +1279,103 @@
     "title": "Summarizing data",
     "section": "Uni-, bi-, and multi-modal",
     "text": "Uni-, bi-, and multi-modal\n\n(How many “peaks” do you see?)\n\n\n\n\n\n\n\n\n\n\nlayout: false class: clear, middle, inverse # Summary statistics"
+  },
+  {
+    "objectID": "course-materials/week4.html",
+    "href": "course-materials/week4.html",
+    "title": "Multiple regression and interactions",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nOrdinary least squares, continued\nMore ordinary least squares in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+  },
+  {
+    "objectID": "course-materials/week4.html#notes",
+    "href": "course-materials/week4.html#notes",
+    "title": "Multiple regression and interactions",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 3 will be posted Tuesday, October 22nd."
+  },
+  {
+    "objectID": "course-materials/week5.html",
+    "href": "course-materials/week5.html",
+    "title": "Midterm",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
+  },
+  {
+    "objectID": "course-materials/week5.html#notes",
+    "href": "course-materials/week5.html#notes",
+    "title": "Midterm",
+    "section": "Notes",
+    "text": "Notes\n\nMidterm (Thursday) will be in class and closed book"
+  },
+  {
+    "objectID": "course-materials/week6.html",
+    "href": "course-materials/week6.html",
+    "title": "Nonlinear models",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic Regression (and other nonlinear models)\nLogistic regression in R\nChapter 9 in IMS"
+  },
+  {
+    "objectID": "course-materials/week6.html#notes",
+    "href": "course-materials/week6.html#notes",
+    "title": "Nonlinear models",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 3 due Friday, November 8th."
+  },
+  {
+    "objectID": "course-materials/week7.html",
+    "href": "course-materials/week7.html",
+    "title": "Inference and hypothesis testing",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic Regression (and other nonlinear models)\nLogistic regression in R\nChapters 13, 19.2 in IMS"
+  },
+  {
+    "objectID": "course-materials/week7.html#notes",
+    "href": "course-materials/week7.html#notes",
+    "title": "Inference and hypothesis testing",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 4 posted on Tuesday, November 12th."
+  },
+  {
+    "objectID": "course-materials/week10.html",
+    "href": "course-materials/week10.html",
+    "title": "Time series analysis",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
+  },
+  {
+    "objectID": "course-materials/week10.html#notes",
+    "href": "course-materials/week10.html#notes",
+    "title": "Time series analysis",
+    "section": "Notes",
+    "text": "Notes\n\nFinal project presentations will take place next week Tuesday December 10th 0800-1100 in Bren 1424. We will make arrangements for you to sign up for 30 minute slots within that window - you won’t need to be there the entire time."
+  },
+  {
+    "objectID": "course-materials/week9.html",
+    "href": "course-materials/week9.html",
+    "title": "Course review and Thanksgiving",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
+  },
+  {
+    "objectID": "course-materials/week9.html#notes",
+    "href": "course-materials/week9.html#notes",
+    "title": "Course review and Thanksgiving",
+    "section": "Notes",
+    "text": "Notes\n\nCourse review will be held over Zoom to accommodate student travel."
+  },
+  {
+    "objectID": "course-materials/week8.html",
+    "href": "course-materials/week8.html",
+    "title": "Spatial interpolation and kriging",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
+  },
+  {
+    "objectID": "course-materials/week8.html#notes",
+    "href": "course-materials/week8.html#notes",
+    "title": "Spatial interpolation and kriging",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 4 due Friday, November 22nd."
   }
 ]

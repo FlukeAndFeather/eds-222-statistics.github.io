@@ -1,40 +1,16 @@
 ---
-title: "Tidy data"
-subtitle: "Day 6"
-description: "Monday August 19^th^, 2024"
+title: "Nonlinear models"
+subtitle: "Week 6"
+description: "November 4^th^ - November 8^th^"
 ---
-
-```{r}
-#| eval: true
-#| echo: false
-#| out-width: "80%"
-#| fig-align: "center"
-knitr::include_graphics("images/horst-tidy-data.jpeg")
-```
-
-:::{.gray-text .center-text}
-*Artwork by [Allison Horst](https://allisonhorst.com/)*
-:::
-
-<!-- ## Pre-class prep -->
-
-<!-- No pre-class prep before our first day of class! -->
 
 ## Class materials
 
-| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Interactive session |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| day 6 / morning   | [Tidy data: what, why, how?](https://docs.google.com/presentation/d/1V4QCUH64c74m-bgyxMvGeTHutRJcs-04oWlp1qMRr_4/present?usp=sharing){target="_blank"} | [Tidying data (`pivot`, `separate`) basics with `tidyr` and `pandas`](interactive-sessions/interactive-session-6.qmd){target="_blank"} |
-| day 6 / afternoon | [Data tidying and wrangling continued: `dplyr` and `pandas`](https://docs.google.com/presentation/d/1XP6o6sFXqHWhti7iTIxGIhudWEGgo42bjQGNPyg6hgI/present?usp=sharing){target="_blank"} | [Data wrangling continued - `dplyr` and `pandas`](interactive-sessions/interactive-session-6.qmd){target="_blank"} |
-: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|----|----|----|
+| [Logistic Regression (and other nonlinear models)](slides/week6/week6-slides.html){target="_blank"} | [Logistic regression in R](labs/week-6-lab.Rmd){target="_blank} | Chapter 9 in *IMS* |
+: {.hover .bordered tbl-colwidths="[30,35,35]"} 
 
-## End-of-day practice
+## Notes
 
-Complete the following tasks / activities before heading home for the day!
-
-- [{{< fa pencil title="A pencil" >}} **Day 6 Practice:** Tidying & subsetting with `tidyr` and `dplyr`](eod-practice/eod-day6.qmd){target="_blank"}
-
-## Additional Resources
-
-TBD
-
+* Homework assignment 3 due Friday, November 8^th^.

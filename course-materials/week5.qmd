@@ -1,40 +1,16 @@
 ---
-title: "Testing, documentation, and sharing"
-subtitle: "Day 5"
-description: "Friday August 16^th^, 2024"
+title: "Midterm"
+subtitle: "Week 5"
+description: "October 28^th^ - November 1^st^"
 ---
-
-```{r}
-#| eval: true
-#| echo: false
-#| out-width: "80%"
-#| fig-align: "center"
-knitr::include_graphics("images/horst-bugs.png")
-```
-
-:::{.gray-text .center-text}
-*Artwork by [Allison Horst](https://allisonhorst.com/)*
-:::
-
-<!-- ## Pre-class prep -->
-
-<!-- No pre-class prep before our first day of class! -->
 
 ## Class materials
 
-| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Interactive session |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| day 5 / morning   | [Functions continued: testing, documentation, sharing](https://docs.google.com/presentation/d/1alf4uUi5GQU_uwcIdAgtmUDF9lh6OcahXiKOw0jxZXs/present?usp=sharing){target="_blank"} | [Functions 103: testing & documenting, making your first package](interactive-sessions/interactive-session-5.qmd){target="_blank"} |
-| day 5 / afternoon | [Finding & using external packages](https://docs.google.com/presentation/d/1nPYkZXxVYHy9SoY584dAc2ivnic3tGCZ8aWTy3KBbjE/present?usp=sharing){target="_blank"} | [Find & explore packages, documentation, accessing from repos](interactive-sessions/interactive-session-5.qmd){target="_blank"} |
-: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|----|----|----|
+| Midterm review | Midterm exam | No reading |
+: {.hover .bordered tbl-colwidths="[30,35,35]"} 
 
-## End-of-day practice
+## Notes
 
-Complete the following tasks / activities before heading home for the day!
-
-- [{{< fa pencil title="A pencil" >}} **Day 5 Practice:** Loops revisited, functions continued, testing & sourcing scripts, working on your R package](eod-practice/eod-day5.qmd){target="_blank"}
-
-## Additional Resources
-
-TBD
-
+* Midterm (Thursday) will be in class and closed book

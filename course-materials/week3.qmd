@@ -9,7 +9,7 @@ description: "October 14^th^ - October 18^th^"
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
 |----|----|----|
 | [Ordinary least squares, continued](slides/week3/week3-slides.html){target="_blank"} | [More ordinary least squares in R](labs/week-3-lab.Rmd){target="_blank} | Chapter 8 in *IMS* <br /> (Optional) Chapter 10 in *IMS* |
-: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+: {.hover .bordered tbl-colwidths="[30,35,35]"} 
 
 ## Notes
 

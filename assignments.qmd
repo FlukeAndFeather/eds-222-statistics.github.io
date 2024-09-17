@@ -8,7 +8,7 @@ editor:
 
 ## Homework assignments
 
-Homework assignments will be distributed through GitHub classroom. The
+Homework assignments will be distributed through GitHub Classroom. The
 links below will become active on the Date Posted.
 
 | Homework | Date Posted   | Date Due         |
