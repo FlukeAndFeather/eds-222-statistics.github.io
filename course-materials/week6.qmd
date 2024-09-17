@@ -14,3 +14,5 @@ description: "November 4^th^ - November 8^th^"
 ## Notes
 
 * Homework assignment 3 due Friday, November 8^th^.
+
+* Final project proposal is also due Friday, November 8^th^. Submission will be through Canvas.
