@@ -3,7 +3,6 @@ project:
   output-dir: docs
   render:
     - "*.qmd"
-    - "*.rmd"
 
 website:
   navbar:

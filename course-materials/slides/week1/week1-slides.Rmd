@@ -13,6 +13,7 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+
 ```{r Setup, include = F}
 options(htmltools.dir.version = FALSE)
 library(pacman)
@@ -90,9 +91,11 @@ class: clear, middle, inverse
 ### Reminder: OH Thursdays, Pine Room, 3:30-4:30pm
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Types of variables
+
 ---
 
 # Types of variables
@@ -141,6 +144,7 @@ knitr::include_graphics("numerical.jpg")
   + Age group (e.g., <15, 15-64, 65+) (watch out! continuous numerical data can often be stored as a categorical variable!)
 
 ---
+
 # Types of variables
 
 ## Categorical variables
@@ -160,11 +164,13 @@ knitr::include_graphics("categorical.jpg")
 ```
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Probability density functions
 
 ---
+
 # Probability density functions
 
 Remember: when we do statistics, we use _statistics_ from a sample to learn about _parameters_ of a population.
@@ -182,6 +188,7 @@ Many parameters we care about tell us something about what values we might see f
 **Probability density functions** are mathematical functions that tell us: how likely are we to see values of a given range? 
 
 ---
+
 # Probability density functions
 
 **Probability density functions** are mathematical functions that tell us: how likely are we to see values of a given range? 
@@ -191,6 +198,7 @@ knitr::include_graphics("drinkingwater.jpeg")
 ```
 
 ---
+
 # Probability density functions
 
 For _continuous_ variables, the **probability density function (p.d.f.)** tells us the probability that a variable falls within a given range of values. 
@@ -210,6 +218,7 @@ Formally: The **p.d.f.** of a continuous variable $X$ with support (i.e., range 
 3. The probability that $x$ falls between $A$ and $B$ is: $$ Pr(A\leq x \leq B) = \int_A^B f(x)dx $$
 
 ---
+
 # Why isn't this simpler?
 
 > Q: Why can't I just interpret $f(x)$ as the probability that $X=x$?
@@ -231,6 +240,7 @@ Formally: The **p.m.f.** of a discrete variable $X$ with support (i.e., range of
 3. $P(A\leq x \leq B) = \sum_{x=A}^{x=B} f(x)$
 
 ---
+
 # Probability density functions (visual)
 
 P.d.f.'s help us characterize the distribution of our population. The most common/famous ones get names (e.g., normal, Gamma, $t$,...)
@@ -250,7 +260,9 @@ geom_hline(yintercept = 0, color = "black") +
 theme_simple
 ```
 <font size="3"> *This distribution happens to be what's called "standard" normal. We'll get into the weeds later!</font> 
+
 ---
+
 # Probability density functions (visual)
 
 ### Let's look at a **normal** distribution*
@@ -269,7 +281,9 @@ theme_simple
 ```
 
 <font size="3"> *Yep, still a "standard" normal. Details later. </font>
+
 ---
+
 # The normal distribution
 
 There are infinite different normal distributions. They all have the following p.d.f.:
@@ -281,7 +295,9 @@ where $\mu$ is the mean (i.e., average) and $\sigma$ is the standard deviation (
 knitr::include_graphics("normals.png")
 ```
 #### Many results in statistics rely on the assumption that our data are normally distributed. We will return to this distribution **frequently!**
+
 ---
+
 # Shapes of probability distributions
 
 Key terms to describe p.d.f.'s:
@@ -292,6 +308,7 @@ Key terms to describe p.d.f.'s:
 4. A distribution can be **unimodal**, **bimodal**, or **multimodal**
 
 ---
+
 # Shapes of probability distributions
 
 Key terms to describe p.d.f.'s:
@@ -306,6 +323,7 @@ Key terms to describe p.d.f.'s:
   + A distribution with one (unimodal), two (bimodal), or more (multimodal) "peaks"
 
 ---
+
 # Shapes of probability distributions
 
 ## Skew with a long right tail 
@@ -323,6 +341,7 @@ ggplot(data = samp, aes(x=x)) +
 ```
 
 ---
+
 # Shapes of probability distributions
 
 ## Uni-, bi-, and multi-modal
@@ -350,10 +369,13 @@ p_multi <- ggplot(df_modes, aes(x = multi)) +
   xlim(0, 30)+ theme_simple
 plot_grid(p_uni, p_bi, p_multi, nrow = 1)
 ```
+
 ---
+
 layout: false
 class: clear, middle, inverse
 # Summary statistics
+
 ---
 
 # Describing random variables
@@ -386,6 +408,7 @@ plot_grid(g,s, labels = list("population", "sample"))
 ```
 
 ---
+
 # Measures of central tendency
 
 ### We often begin to describe a distribution using measures of **central tendency** (i.e., measures of the "middle").
@@ -396,6 +419,7 @@ Three are most common:
 3. **Mode**
 
 ---
+
 # Mean = expected value = average
 
 In a **population**, the mean is defined as: $$\mathrm{E}[X]=\mu=\int_S xf(x)dx$$
@@ -420,7 +444,9 @@ ggplot(data = samp, aes(x=x)) +
   geom_vline(xintercept=mn, color="black", linetype="solid") +
   geom_text(aes(x=0, label="sample mean", y=10), colour="black", fontface="bold")
 ```
+
 ---
+
 # Median = middle value 
 
 In a **population**, the median is defined as the value $m$ for which half the distribution falls below $m$ and half above $m$: $$P(X\leq m) = \int_{-\infty}^m f(x)dx = \frac{1}{2} = \int_m^{\infty} f(x)dx = P(X\geq m)$$
@@ -448,7 +474,9 @@ ggplot(data = samp, aes(x=x)) +
   geom_vline(xintercept=md, color="seagreen", linetype="solid") +
   geom_text(aes(x=0.3, label="sample median", y=8), colour="seagreen", fontface="bold")
 ```
+
 ---
+
 # Median and mean are not always close
 
 #### Non-normal distribution $\implies$ median and mean can diverge substantially
@@ -473,6 +501,7 @@ ggplot(data = samp, aes(x=x)) +
 ```
 
 ---
+
 # Mode = most frequent value
 
 ### The **mode** is simply the most frequently observed value 
@@ -506,6 +535,7 @@ ggplot(data = samp, aes(x=x)) +
 ```
 
 ---
+
 # Measures of spread
 
 ### Central tendency only gets us so far...we also need measures of **spread**.
@@ -531,6 +561,7 @@ In the sample: $$ s^2 = \frac{\sum_{i \in n}(x_i-\bar{x})^2}{n-1}$$
 #### Units of variance: units of the random variable, _squared_
 
 ---
+
 # Measures of spread: Standard deviation 
 
 Just the square root of the variance!  
@@ -551,6 +582,7 @@ $$var(X) = \mathrm{E}[X^2] - (\mathrm{E}[X])^2$$
 $$var(aX+b) = a^2var(X)$$
 
 ---
+
 # Variance, visually
  
 
@@ -574,6 +606,7 @@ theme(axis.text.x = element_text(size = 20))
 ```
 
 ---
+
 # Variance, visually
 
 #### Back to the normal distributions
@@ -583,7 +616,9 @@ theme(axis.text.x = element_text(size = 20))
 ```{r, out.width = "70%", echo=FALSE, fig.align='center'}
 knitr::include_graphics("normals.png")
 ```
+
 ---
+
 # Measures of spread: Quantiles
 
 ### Quantiles are cut points of a probability distribution
@@ -607,6 +642,7 @@ In our sample, quantiles are cut points of our sample data
 > Answer: There are $q-1$ of the $q$-quantiles
 
 ---
+
 # Example: The normal distribution
 
 Common quantiles have names you have head of, such as _quartiles_ for $q=4$:
@@ -616,7 +652,9 @@ knitr::include_graphics("quantiles_normal.png")
 ```
 
 **Interpretation:** Q1 = first quartile, Q2 = second quartile, etc. The area below the red curve is the same below Q1 as it is between Q1 and Q2, between Q2 and Q3, and above Q3. 
+
 ---
+
 # The Inter-quartile Range
 
 The **inter-quartile range** (often called the IQR) is the 3rd quartile minus the 1st quartile (i.e., the range of the "middle" 50% of the data)
@@ -635,6 +673,7 @@ knitr::include_graphics("boxplot.png")
 ```
 
 ---
+
 # Common quantiles and interpretation
 
 ### Common quantiles have names you have heard of: 
@@ -649,6 +688,7 @@ $q$ The k_th_ $q$-quantile tells us the value for which $\frac{k}{q}\times 100$%
 
 
 ---
+
 # This sounds a lot like percentiles...
 
 ### Percentiles are simply quantiles for q=100!
@@ -662,6 +702,7 @@ $q$ The k_th_ $q$-quantile tells us the value for which $\frac{k}{q}\times 100$%
 > Exercise: Draw approximately where you think the 1st, 10th, 20th, 50th, 80th, 90th and 99th percentiles would be on a normal distribution. 
 
 ---
+
 # Quantile-Quantile (Q-Q) Plots
 
 ### **Histograms** plot the frequency of our data within bins
@@ -675,6 +716,7 @@ $q$ The k_th_ $q$-quantile tells us the value for which $\frac{k}{q}\times 100$%
 #### Straight line on a Q-Q plot indicates sample and theoretical distributions match
 
 ---
+
 # Q-Q plot: Example
 
 ### Annual flow of the river Nile at Aswan, 1871-1970, in 10^8 m^3
@@ -726,6 +768,7 @@ geom_qq(aes(sample=flow), color = "seagreen", size=6) +
 ]
 
 ---
+
 # Q-Q plot: Example
 
 ### Monthly mean relative sunspot numbers, 1749-1983
@@ -777,6 +820,7 @@ geom_qq(aes(sample=ssn), color = "lightcoral", size=6) +
 > We will continually return to the normal distribution. Always a good idea to check whether your data look normally distributed or not!
 
 ---
+
 # Which statistics are robust to outliers?
 
 - Consider a sample of loans from a bank, each with an associated interest rate $x$. 
@@ -792,6 +836,7 @@ knitr::include_graphics("loan_distribution.png")
 ```
 
 ---
+
 # Which statistics are robust to outliers?
 
 - Consider a sample of loans from a bank, each with an associated interest rate. 
@@ -809,10 +854,13 @@ knitr::include_graphics("robusttable.png")
 ```
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Law of large numbers
+
 ---
+
 # Big data
 
 #### You probably have intuition that a larger sample is better than a smaller one...but why? 
@@ -825,7 +873,9 @@ $$\bar{x} \rightarrow \mu \hskip2mm \text{as} \hskip2mm n \rightarrow \infty $$
 ```{r, out.width = "45%", echo=FALSE, fig.align='center', fig.cap="Source: IMS, Ch. 5.6"}
 knitr::include_graphics("lln.png")
 ```
+
 ---
+
 # Next up
 
 ### Relationships between variables
@@ -844,6 +894,7 @@ Slides created via the R package [**xaringan**](https://github.com/yihui/xaringa
 Some slide components were borrowed from [Ed Rubin's](https://github.com/edrubin/EC421S20) awesome course materials.
 
 ---
+
 exclude: true
 
 ```{R, printpdfs, echo = F, eval = F}

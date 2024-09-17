@@ -1,9 +1,9 @@
 ---
 title: "Inference and hypothesis testing"
 subtitle: "EDS 222"
-author: "Tamma Carleton"
+author: "Max Czapanskiy"
 #institute: ""
-date: "Fall 2023"
+date: "Fall 2024"
 output:
   xaringan::moon_reader:
     css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
@@ -16,15 +16,12 @@ output:
 ```{r Setup, include = F}
 options(htmltools.dir.version = FALSE)
 library(pacman)
-p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp,parallel,gg3D)
+p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr, pagedown, cowplot, latex2exp, parallel, gg3D)
 
-rootdir <- ("~/Dropbox/Teaching/UCSB/EDS_222/EDS222_data")
-source(file.path(rootdir,"labs","_common.R"))
+source(here::here("course-materials/labs/_common.R"))
 
 # Define pink color
 red_pink <- "#e64173"
-# Notes directory
-dir_slides <- "~/Dropbox/Teaching/UCSB/EDS_222/EDS222_code/EDS-222-stats/slides/07-inference/"
 # Knitr options
 opts_chunk$set(
   comment = "#>",
@@ -106,6 +103,7 @@ knitr::include_graphics("The_Scientific_Method.svg")
 ```
 
 ---
+
 name: Overview
 
 # Today
@@ -129,11 +127,13 @@ The Central Limit Theorem, standard errors, Z-scores, p-values
 Confidence intervals 
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Thinking about uncertainty
 
 ---
+
 # Why does uncertainty matter?
 
 ### All our sample statistics (e.g., sample means, regression parameters) are uncertain
@@ -151,6 +151,7 @@ class: clear, middle, inverse
 - This is **natural variability** and it means that all our sample statistics are uncertain estimates of population parameters, even if they are unbiased (e.g., no convenience sampling, no systematic non-response, etc.)
 
 ---
+
 # Why does uncertainty matter?
 
 ### Key question: Is our estimate indicating anything more than sampling variability or "noise"? 
@@ -158,6 +159,7 @@ class: clear, middle, inverse
 - This is the question **statistical inference** and **hypothesis testing** are trying to answer
 
 ---
+
 # Why does uncertainty matter?
 
 ### Example: Gender wage gap 
@@ -178,6 +180,7 @@ class: clear, middle, inverse
 
 
 ---
+
 # Population *vs.* sample
   
 ```{R, gendataset, include = F, cache = T}
@@ -240,6 +243,7 @@ $$ y_i = \beta_0 + \beta_1 x_i + u_i $$
 ]
 
 ---
+
 # Population *vs.* sample
 
 .pull-left[
@@ -288,6 +292,7 @@ $\hat{y}_i = `r round(lm1$coefficients[1], 2)` + `r round(lm1$coefficients[2], 2
 
 
 ---
+
 # Population *vs.* sample
 
 .pull-left[
@@ -337,7 +342,9 @@ $\hat{y}_i = `r round(lm2$coefficients[1], 2)` + `r round(lm2$coefficients[2], 2
 ]
   
 ]
+
 ---
+
 # Population *vs.* sample
 count: false
 
@@ -393,6 +400,7 @@ $\hat{y}_i = `r round(lm3$coefficients[1], 2)` + `r round(lm3$coefficients[2], 2
 ]
 
 ---
+
 # Population *vs.* sample
 
 
@@ -436,11 +444,13 @@ $\hat{y}_i = `r round(lm3$coefficients[1], 2)` + `r round(lm3$coefficients[2], 2
 > Keeping track of uncertainty allows us to test hypotheses about the population using just our sample
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Hypothesis testing: conceptual foundations
 
 ---
+
 # Hypothesis testing 
 
 A **hypothesis test** is a statistical method used to evaluate competing claims about population parameters _based on a sample of data_
@@ -459,6 +469,7 @@ A **hypothesis test** is a statistical method used to evaluate competing claims 
 ] -->
 
 ---
+
 # Hypothesis testing: Example
 
 ### Example: Are ducks moving north? 
@@ -479,6 +490,7 @@ You have a random sample of 100 tagged ducks in Minnesota from 2010 and 2023.
 - $H_A$: The average latitude was not the same in the two years. That is, $\mu_{2023}-\mu_{2010} \neq 0$
 
 ---
+
 # Hypothesis testing: Example
 
 ### Example: Are ducks moving north? 
@@ -495,6 +507,7 @@ Here, the difference in mean latitude between the 2023 sample and the 2010 sampl
 > Hypothesis test asks if this point estimate is actually different from zero once we account for sampling variability
 
 ---
+
 # Hypothesis testing: Rejecting the null 
 
 ### How do we choose between $H_0$ and $H_A$? 
@@ -521,11 +534,13 @@ Rejecting the null involves both a **point estimate** and a measure of **uncerta
 
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Hypothesis testing: in practice
 
 ---
+
 # Hypothesis testing in five steps
 
 The general framework for implementing a hypothesis test is:
@@ -549,6 +564,7 @@ The general framework for implementing a hypothesis test is:
 5. Based on #4, either **reject** or **fail to reject** the null
 
 ---
+
 # Hypothesis testing in five steps
 
 The general framework for implementing a hypothesis test is:
@@ -565,6 +581,7 @@ We already know all about these two steps.
 - Data collection and point estimates (e.g., means, regression parameters, variances, etc.) we have studied at length in this class
 
 ---
+
 # Hypothesis testing in five steps
 
 The general framework for implementing a hypothesis test is:
@@ -584,6 +601,7 @@ Ack! What is this? Something about how much noise there is in a sample statistic
 Let's turn to some definitions.
 
 ---
+
 # Sampling distribution
 
 A **sampling distribution** is the distribution of all possible values of a sample statistic from samples of a given size from a given population. 
@@ -599,6 +617,7 @@ A **sampling distribution** is the distribution of all possible values of a samp
   + Sampling distribution = distribution across samples (e.g., gives you _many_ sample means)
 
 ---
+
 # Sampling distribution
 
 For example, recall our regression above, where the population model is:
@@ -612,6 +631,7 @@ $$y_i = 2.53 + 0.57x_i + u_i $$
 - If we could collect 1000 samples and run that regression 1,000 times, we would recover the **sampling distribution** for each coefficient
 
 ---
+
 # Sampling distribution
 
 ### Why do we need a sampling distribution?
@@ -633,6 +653,7 @@ You only have one sample of data! Where does the sampling distribution come from
 **We derive the sampling distribution from applying the Central Limit Theorem** 
 
 ---
+
 # Central Limit Theorem
 
 The **Central Limit Theorem (CLT)** establishes that the sampling distribution of a population parameter is **normal** if the sample size _n_ is sufficiently large and observations are drawn randomly and independently. 
@@ -688,7 +709,9 @@ ggplot(data = samp, aes(x=x)) +
   legend.position = "none") + xlab("sample mean of x")
 ``` 
 ]
+
 ---
+
 # Central Limit Theorem
 
 The **Central Limit Theorem (CLT)** tells us our sampling distribution is normal, but only if _n_ is big enough.
@@ -704,6 +727,7 @@ The **Central Limit Theorem (CLT)** tells us our sampling distribution is normal
 But this is not a hard and fast rule! Be cautious about hypothesis testing and inference with small sample sizes.
 
 ---
+
 # Standard errors
 
 #### So we know the sample statistic is drawn from a normal distribution...
@@ -718,6 +742,7 @@ knitr::include_graphics("normals.png")
 ```
 
 ---
+
 # Standard errors
 
 #### We are testing the likelihood that the null is true
@@ -745,6 +770,7 @@ For example:
 <!-- p-value gives you probability of observing your data given null is true. The standard error gives you a likely range for the statistic if we were actually able to take a bunch of samples -->
 
 ---
+
 # Standard error of the sample mean
 
 #### The standard deviation of your sampling distribution is called the **standard error**
@@ -762,6 +788,7 @@ where $s$ is the sample standard deviation and $n$ is the sample size.
 > Q: What happens to the standard error as sample size increases? Why?
 
 ---
+
 # Standard error for regression slope
 
 #### The standard deviation of your sampling distribution is called the **standard error**
@@ -775,6 +802,7 @@ where $s^2$ is the sample variance of model errors $\hat y_i - y_i$
 > Q: What happens to the standard error as sample size increases? Why?
 
 ---
+
 # SE for comparing two means
 
 #### The standard deviation of your sampling distribution is called the **standard error**
@@ -788,6 +816,7 @@ where $s_k$ is the sample standard deviation in each of the two samples and $n_k
 > In all these cases, the SE is the standard deviation of the sampling distribution!
 
 ---
+
 # Summary: Standard errors
 
 If we could collect many samples from the population, and we computed our statistic for each sample (e.g., mean, slope coefficient), we could construct the **sampling distribution.**
@@ -801,6 +830,7 @@ The **standard error** is our estimate of the the standard deviation of the samp
 **Standard error** measures how dispersed our sample statistic is around the population parameter of interest (highly dispersed = large SE = a lot of uncertainty about the population parameter from our one sample) 
 
 ---
+
 # Hypothesis testing in five steps
 
 The general framework for implementing a hypothesis test is:
@@ -814,6 +844,7 @@ The general framework for implementing a hypothesis test is:
 4. Given this variability, **quantify the probability that your sample statistic differs from the null** by the observed amount, if the null were true
 
 ---
+
 # Hypothesis testing in five steps
 
 #### Step 4: quantify the probability that your sample statistic differs from the null by the observed amount, if the null were true
@@ -829,6 +860,7 @@ The general framework for implementing a hypothesis test is:
 - Yep! But we need a couple more definitions to get all the way there.
 
 ---
+
 # The 68-95-99.7 rule
 
 For a normal distribution:
@@ -862,7 +894,9 @@ text(0, 0.22, "68%", pos = 3)
 lines(X, Y, col = "#888888")
 abline(h = 0, col = "#AAAAAA")
 ```
+
 ---
+
 # Z-score
 
 - The 68-95-99.7 rule is helpful if your point estimate (sample statistic) is exactly 1, 2, or 3 standard deviations from the mean (i.e., the null_
@@ -879,6 +913,7 @@ $$z = \frac{x_i-\mu}{\sigma}$$
 where $\mu$ is the mean and $\sigma$ is the standard deviation
 
 ---
+
 # Z-score for hypothesis testing
 
 - When testing hypotheses, we care about how far our point estimate is from the null.
@@ -893,6 +928,7 @@ knitr::include_graphics("null_observed_example.png")
 ```
 
 ---
+
 # Quantifying probabilities: _p_-value
 
 - The Z-score is also called the **test statistic**
@@ -913,6 +949,7 @@ where $z$ is the $z$-score computed using your point estimate.
 > Question: What feature of the normal distribution lets us simplify this to $2*Pr(Z>|z|)$?
 
 ---
+
 # Quantifying probabilities: _p_-value
 
 $$p-value = Pr(Z < -|z| \hskip2mm \text{or} \hskip2mm Z > |z|) = 2*Pr(Z > |z|)$$
@@ -933,7 +970,9 @@ ggplot(data = tmp, aes(x, y)) +
   annotate(geom="text", x=-3, y=.04, label="p-value / 2", color=red_pink, size=8, fontface="bold") +
   theme_simple 
 ```
+
 ---
+
 # Quantifying probabilities: _p_-value
 
 $$p-value = Pr(Z < -|z| \hskip2mm \text{or} \hskip2mm Z > |z|) = 2*Pr(Z > |z|)$$
@@ -954,7 +993,9 @@ ggplot(data = tmp, aes(x, y)) +
   annotate(geom="text", x=-2.5, y=.08, label="p-value / 2", color=red_pink, size=8, fontface="bold") +
   theme_simple 
 ```
+
 ---
+
 # Hypothesis testing with _p_-values
 
 - _p_-value is the probability of observing a point estimate as extreme as yours if the null were true
@@ -968,6 +1009,7 @@ ggplot(data = tmp, aes(x, y)) +
 #### How do I compute a _p_-value from a test-statistic?
 
 ---
+
 # Hypothesis testing with _p_-values
 
 ### How do I compute a _p_-value from a test-statistic?
@@ -1002,7 +1044,9 @@ text(0, 0.22, "68%", pos = 3)
 lines(X, Y, col = "#888888")
 abline(h = 0, col = "#AAAAAA")
 ```
+
 ---
+
 # Hypothesis testing with _p_-values
 
 - _p_-value is the probability of observing a point estimate as extreme as yours if the null were true
@@ -1023,6 +1067,7 @@ abline(h = 0, col = "#AAAAAA")
 
 
 ---
+
 # A note on the CLT
 
 The **Central Limit Theorem** has done a lot of work for us so far. However, it only holds under the following conditions:
@@ -1064,6 +1109,7 @@ ggplot(df, aes(x = x, y = y, color = distribution, linetype = distribution, size
 ```
 
 ---
+
 # Hypothesis testing in five steps
 
 The general framework for implementing a hypothesis test is:
@@ -1079,6 +1125,7 @@ The general framework for implementing a hypothesis test is:
 5. Based on #4, either **reject** or **fail to reject** the null
 
 ---
+
 # Can we finally test something?
 
 #### Step 5: Based on the _p_-value, either **reject** or **fail to reject** the null
@@ -1094,6 +1141,7 @@ The general framework for implementing a hypothesis test is:
 So...what is a low enough _p_-value to **reject the null**? 
 
 ---
+
 # Can we finally test something?
 
 What is a low enough _p_-value to **reject the null**? 
@@ -1116,6 +1164,7 @@ What is a low enough _p_-value to **reject the null**?
   + Other common $\alpha$s: 0.01, 0.1
 
 ---
+
 # Statistical significance
 
 ### We say a point estimate is "statistically significant" when: 
@@ -1127,6 +1176,7 @@ For example:
 
 
 ---
+
 # Hypothesis testing: Rejecting the null
   
 We can **reject the null** hypothesis _or_ **fail to reject the null** hypothesis. 
@@ -1150,11 +1200,13 @@ Think of this as innocent (null is true) until proven guilty (null is rejected).
 - Failing to reject the null tells us we do not have sufficient evidence to prove there is an effect or a difference
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Constructing confidence intervals
 
 ---
+
 # Why use confidence intervals?
   
 - _p_-values are not enough for us to conclude anything meaningful about an analysis
@@ -1168,7 +1220,9 @@ class: clear, middle, inverse
 A **confidence interval** is a range of plausible values where we may find the true population value.
   + It tells us something about the magnitude of the parameter of interest, as well as our uncertainty around our estimate
   
+
 ---
+
 # Confidence intervals
   
 When the sampling distribution of a point estimate can be modeled as normal, the point estimate we observe will be within 1.96 standard errors of the true value of interest about 95% of the time (think back to the 68-95-99.7 rule). 
@@ -1184,6 +1238,7 @@ We can be 95% confident this interval captures the true value.
 > Also can see this as: `2*pnorm(-1.96) = .05`
 
 ---
+
 # Confidence intervals
   
 You can build a confidence interval for any level of $\alpha$:
@@ -1208,6 +1263,7 @@ For example:
 > Why do the z-scores get larger for higher confidence intervals? 
 
 ---
+
 # A 95% confidence interval visual
   
 ```{r}
@@ -1215,6 +1271,7 @@ knitr::include_graphics("ci95.png")
 ```
 
 ---
+
 # Confidence intervals: Interpretation
 
 A 95% confidence interval tells you there is a **95% chance that your interval includes the true population parameter**. 

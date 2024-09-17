@@ -1,0 +1,1 @@
+Note about the slides. The course's slides were created with xaringan, which does not appear to play nicely with Quarto websites. As a workaround, .Rmd files are excluded from rendering in the website (see _quarto.yml, project>render). When rendering the website, you **must** source render_slides.R. This will render the xaringan slides correctly to the docs/ directory.

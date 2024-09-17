@@ -1,9 +1,9 @@
 ---
 title: "Time series analysis"
 subtitle: "EDS 222"
-author: "Tamma Carleton"
+author: "Max Czapanskiy"
 #institute: ""
-date: "Fall 2023"
+date: "Fall 2024"
 output:
   xaringan::moon_reader:
     css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
@@ -88,6 +88,7 @@ theme_simple <- theme_bw() + theme(
   + Blog posts: 12/15
 
 ---
+
 name: Overview
 
 # Today
@@ -108,11 +109,13 @@ name: Overview
 #### Time series and OLS
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # What are time series data?
 
 ---
+
 # What are time series data?
 
 Up to this point, we focused on .hi-slate[cross-sectional data].
@@ -128,7 +131,9 @@ Today, we focus on a different type of data: .hi[time-series data].
 - Sampled within .pink[one unit/individual] (_e.g._, Oregon).
 - Observe .pink[multiple times] for the same unit (_e.g._, Oregon: 1990–2020).
 - We have $\color{#e64173}{T}$ .pink[time periods], each indexed $t$ in $\left\{1,\,\ldots,\, T \right\}$.
+
 ---
+
 # Time series data: Example
 
 .hi[US monthly births, 1933–2015]: Classic time-series graph
@@ -169,7 +174,9 @@ ylab("Births (100K)") +
 xlab("Time") +
 theme_pander(base_family = "Fira Sans Book", base_size = 20)
 ```
+
 ---
+
 # Time series data: Example
 
 .hi[US monthly births, 1933–2015]: Newfangled time-series graph
@@ -199,7 +206,9 @@ theme(
   axis.ticks = element_blank()
 )
 ```
+
 ---
+
 # Time series data: Example
 
 .hi[US monthly births per 30 days, 1933–2015]: Newfangled time-series graph
@@ -229,7 +238,9 @@ theme(
   axis.ticks = element_blank()
 )
 ```
+
 ---
+
 # You already have (many of) the tools
 
 - Time series data open some **new questions and new challenges** for statistical analysis
@@ -253,6 +264,7 @@ theme(
 - These are **time series data** and we already ran an OLS regression with them!
 
 ---
+
 # You already have (many of) the tools
 
 $$Ozone_t = \beta_0 + \beta_1 Temp_t + \varepsilon_t$$
@@ -274,7 +286,9 @@ theme_bw() +
   legend.position = "none")
 ```
 .footnote[Plot: `geom_smooth()` with `se = TRUE`]
+
 ---
+
 # You already have (many of) the tools
 
 Let _date_ indicate the date, ranging from May, 1 to September 31, 1973. 
@@ -296,6 +310,7 @@ head(airqts)
 - Tip: `make_datetime()` from the `lubridate` package (handy for dates and times)
 
 ---
+
 # You already have (many of) the tools
 
 $$Ozone_t = \beta_0 + \beta_1 date_t + \varepsilon_t$$
@@ -304,6 +319,7 @@ summary(lm(Ozone ~ date, data = airqts))
 ```
 
 ---
+
 # You already have (many of) the tools
 
 $$Ozone_t = \beta_0 + \beta_1 date_t + \varepsilon_t$$
@@ -327,6 +343,7 @@ theme_bw() +
 ```
 
 ---
+
 # You already have (many of) the tools
 
 - Many of the summary statistics, regression, and hypothesis testing tools apply to time series data without much adjustment
@@ -345,10 +362,13 @@ theme_bw() +
   + Threat to existing assumptions: Are our error terms **independent**? Is **exogeneity** harder now? 
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Decomposition
+
 ---
+
 # Time series components
 
 ## Seasonality
@@ -365,6 +385,7 @@ A broader cyclical trend with unknown and/or unequal periods (e.g., business cyc
 Long-term increase or decrease in the data (not necessarily linear!)
 
 ---
+
 # Time series components
 
 #### Often, seasonality, cyclicality and trends occur all at the same time:
@@ -379,6 +400,7 @@ ggplot() + geom_line(aes(x, y), color="seagreen", size=1.5) + theme_empty
 ```
 
 ---
+
 # Time series components
 
 For many time series,<sup>*</sup> we can decompose the data into:
@@ -396,6 +418,7 @@ where $S_t$ is a **seasonal** component, $T_t$ is the cycle _and_ trend componen
 ]
 
 ---
+
 # Decomposition: Moving averages
 
 A key tool in "decomposing" a time series into its component parts is computing a **moving average** 
@@ -413,6 +436,7 @@ where $m = 2k+1$.
 The moving average gives you an estimate of the irregular trend-cycle component $T$ at time _t_ by averaging values of the time series within _k_ periods of _t_ 
 
 ---
+
 # Moving average example
 
 Computing an $m=5$ moving average over the data plotted on the last slide:
@@ -429,6 +453,7 @@ df = df %>% mutate(ma = slider::slide_dbl(y, mean,
 - Option `.complete=TRUE` ensures only moving windows with complete data are computed
 
 ---
+
 # Moving average example
 
 Computing an $m=5$ moving average:
@@ -438,6 +463,7 @@ ggplot(data=df) + geom_line(aes(x, y), color="seagreen", size=1.5, alpha=.8) + g
 ```
 
 ---
+
 # Moving average example
 
 Computing an $m=15$ moving average:
@@ -448,7 +474,9 @@ df = df %>% mutate(ma = slider::slide_dbl(y, mean,
                 .before = 7, .after = 7, .complete = TRUE))
 ggplot(data=df) + geom_line(aes(x, y), color="seagreen", size=1.5, alpha=.8) + geom_line(aes(x,ma), color="lightcoral", size=1) + theme_empty
 ```
+
 ---
+
 # Classical decomposition
 
 ### Step 1: estimate a moving average 
@@ -470,6 +498,7 @@ Simple average over de-trended series for each season $s$
 Whatever is left over
 
 ---
+
 # Classical decomposition
 
 Consider a time series of monthly totals of accidental deaths in the USA:
@@ -489,6 +518,7 @@ ggplot(data=data.frame(USAccDeaths)) + geom_line(aes(x=1:72, y=USAccDeaths), col
 ```
 
 ---
+
 # Classical decomposition
 
 ### Let's decompose the accidental deaths time series.
@@ -505,7 +535,9 @@ decomp = as_tsibble(USAccDeaths) %>%
   components() 
 head(decomp)
 ```
+
 ---
+
 # Classical decomposition
 
 ### You can do this by hand, or...
@@ -521,6 +553,7 @@ as_tsibble(USAccDeaths) %>%
 ```
 
 ---
+
 # Classical decomposition
 
 ### You can do this by hand, or...
@@ -537,6 +570,7 @@ as_tsibble(USAccDeaths) %>%
 
 
 ---
+
 # Decomposition
 
 - As outlined in Hyndman & Athanasopoulos, **classical decomposition has some drawbacks**:
@@ -552,7 +586,9 @@ as_tsibble(USAccDeaths) %>%
   + Robust to outliers
   + use `STL()` in place of `classical_decomposition()`
   
+
 ---
+
 # Decomposition
 
 ## Why decompose a time series? 
@@ -569,11 +605,13 @@ as_tsibble(USAccDeaths) %>%
   + Details are not covered in this class, see Hyndman & Athanasopoulos for an overview and implementation in `R`
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Autocorrelation
 
 ---
+
 # Autocorrelation
 
 Many time series data are **autocorrelated**, meaning past values are correlated with future values (note: also called **serial correlation**)
@@ -587,6 +625,7 @@ That is, $y_t$ may be correlated with $y_{t-1}$, $y_{t-2}$, $y_{t-12}$, etc.
 This matters both for interpreting OLS output (in a few slides), and for understanding our data (helpful for identifying any seasonality).
 
 ---
+
 # Autocorrelation
 
 For example:
@@ -602,6 +641,7 @@ For example:
 - Today's temperature may have **no correlation** with temperatures 7 days ago: $cor(y_t, y_{t-7})=0$
 
 ---
+
 # Autocorrelation
 
 We can describe autocorrelation using an **autocorrelation function** or ACF.
@@ -622,6 +662,7 @@ ggplot(nottdf) + geom_line(aes(x=x, y=temperature), color="seagreen", size=1.5) 
 ```
 
 ---
+
 # Autocorrelation Function (ACF)
 
 ```{r, echo=T, fig.height=2}
@@ -629,6 +670,7 @@ acf(nottdf$temperature, lag.max=12)
 ```
 
 ---
+
 # Autocorrelation Function (ACF)
 
 > `acf()` plots an ACF for you!
@@ -650,6 +692,7 @@ class: clear, middle, inverse
 # Time series and OLS
 
 ---
+
 # Intro to time series and OLS
 
 Our model now looks something like
@@ -680,7 +723,9 @@ $$
 --
 
 where $t-1$ denotes the time period prior to $t$ (*lagged* stream passage or salmon returns).
+
 ---
+
 # Time-series models
 ## Updated OLS assumptions
 
@@ -695,6 +740,7 @@ where $t-1$ denotes the time period prior to $t$ (*lagged* stream passage or sal
 1.  .hi[Harder to satisfy:] The $u_t$ are **normally distributed** and **homoskedastic** with **zero correlation** between $u_t$ and $u_s$, _i.e._, $u_t\overset{\text{iid}}{\sim}\mathop{N}\left( 0,\,\sigma^2 \right)$, $\mathop{\text{Var}} \left( u_t | X \right) = \mathop{\text{Var}} \left( u_t \right) = \sigma^2$, and $\mathop{\text{Cor}} \left( u_t,\,u_s \middle| X \right) = 0$.
 
 ---
+
 # Time-series models
 ## Model options
 
@@ -711,6 +757,7 @@ Time-series modeling boils down to two classes of models.
   - .hi-purple[Autoregressive, distributed-lag] (ADL) models
 
 ---
+
 # Model options
 
 **Option 1:** .hi[Static models]
@@ -732,7 +779,9 @@ We also need to believe current salmon returns do not depend upon previous strea
 --
 
 Can be a very restrictive way to consider time-series data.
+
 ---
+
 # Model options
 
 **Option 2:** .hi-purple[Dynamic models]
@@ -740,6 +789,7 @@ Can be a very restrictive way to consider time-series data.
 .hi-purple[Dynamic models] allow the outcome to depend upon .purple[other periods].
 
 ---
+
 # Model options
 
 **Option 2a:** .hi-purple[Dynamic models] with .purple[lagged explanatory variables]
@@ -769,6 +819,7 @@ Estimate *total* effects by summing lags' coefficients, _e.g._, $\beta_1 + \beta
 *Note:* We still assume current salmon returns don't affect future returns. 
 
 ---
+
 # Model options
 
 Lagged explanatory variables in empirical research:
@@ -785,6 +836,7 @@ include_graphics("lagged_indep_var.png")
 > Q: Can you think of other examples of lagged effects?
 
 ---
+
 # Model options
 
 **Option 2b:** .hi-purple[Autoregressive distributed-lag (ADL) models]
@@ -804,6 +856,7 @@ Here, current passage affects .hi[current] salmon and .hi-purple[future] salmon.
 In addition, .purple[current salmon returns affect future salmon returns]—we're allowing lags of the outcome variable.
 
 ---
+
 # Do you need an ADL?
 
 ## Hint: Autocorrelation Function (ACF)
@@ -813,6 +866,7 @@ acf(nottdf$temperature, lag.max=12)
 ```
 
 ---
+
 # Autoregressive distributed-lag models
 ## Numbers of lags
 
@@ -847,7 +901,9 @@ $$
  & + \beta_4 \text{salmon}_{\color{#FFA500}{t-1}} + \beta_5 \text{salmon}_{\color{#FFA500}{t-2}} + u_t
 \end{aligned}
 $$
+
 ---
+
 # Autoregressive distributed-lag models
 ## Complexity
 
@@ -877,7 +933,9 @@ $$
  &\beta_2 \underbrace{\left( \beta_0 + \beta_1 \text{passage}_{t-1} + \beta_2 \text{salmon}_{t-2} + u_{t-1} \right)}_{\text{salmon}_{t-1}} + u_t
 \end{align}
 $$
+
 ---
+
 # Complexity
 Continuing...
 
@@ -893,7 +951,9 @@ $$
 --
 
 We could then substitute in the equation for $\text{salmon}_{t-2}$, $\text{salmon}_{t-3}$, ...
+
 ---
+
 # Complexity
 Eventually we arrive at
 
@@ -917,6 +977,7 @@ By including just **one lag of the dependent variable**—as in a ADL(1, 0)—we
 .footnote[.pink[†] These lags enter into the equation in a very specific way—not the most flexible specification.]
 
 ---
+
 # Time-series models
 ## Updated OLS assumptions
 
@@ -931,6 +992,7 @@ By including just **one lag of the dependent variable**—as in a ADL(1, 0)—we
 1.  .hi[Harder to satisfy:] The $u_t$ are **normally distributed** and **homoskedastic** with **zero correlation** between $u_t$ and $u_s$, _i.e._, $u_t\overset{\text{iid}}{\sim}\mathop{N}\left( 0,\,\sigma^2 \right)$, $\mathop{\text{Var}} \left( u_t | X \right) = \mathop{\text{Var}} \left( u_t \right) = \sigma^2$, and $\mathop{\text{Cor}} \left( u_t,\,u_s \middle| X \right) = 0$.
 
 ---
+
 # Unbiased coefficients
 
 
@@ -951,7 +1013,9 @@ We can split this assumption into two parts.
 --
 
 We need both of these parts to be true for OLS to be unbiased.
+
 ---
+
 # Unbiased coefficients
 We need both parts of our exogeneity assumption for OLS to be unbiased:
 
@@ -966,6 +1030,7 @@ _I.e._, to guarantee the numerator equals zero, we need $\mathop{\boldsymbol{E}}
 Thus, .hi[OLS is biased for dynamic models with lagged outcome variables].
 
 ---
+
 # Unbiased coefficients
 To see why dynamic models with lagged outcome variables violate our exogeneity assumption, consider two periods of our simple ADL(1, 0) model.
 
@@ -991,7 +1056,9 @@ However, $\color{#e64173}{\text{salmon}_t}$ is a regressor in $(2)$ (lagged depe
 --
 
 This correlation violates the second part of our exogeneity requirement.
+
 ---
+
 # Unbiased coefficients
 
 All is not lost.
@@ -1013,6 +1080,7 @@ $$
 With contemporaneous exogeneity, OLS estimates for the coefficients in a time series model are **consistent** (whew)
 
 ---
+
 # Autocorrelation in the error term
 
 The time series version of our assumption about OLS errors includes the following:
@@ -1068,6 +1136,7 @@ $$
 , *i.e.*, $\mathop{\text{Cov}} \left( x_t,\,u_t \right) \neq 0$.
 
 ---
+
 # Testing for serial/autocorrelation
 
 - Fortunately, it's **easy to test for autocorrelation** to evaluate whether your model is biased (lagged dependent variable) and/or inefficient (lagged explanatory variables)
@@ -1086,6 +1155,7 @@ $$
 - Autocorrelation may arise because your model is **misspecified**. Consider adding additional lags and/or explanatory variables if errors are correlated
 
 ---
+
 # Summary: Time series and OLS
 
 - Our model now has $\color{#e64173}{t}$ subscripts for .hi[time periods].

@@ -1,9 +1,9 @@
 ---
 title: "Multiple Linear Regression and Interactions"
 subtitle: "EDS 222"
-author: "Tamma Carleton"
+author: "Max Czapanskiy"
 #institute: ""
-date: "Fall 2023"
+date: "Fall 2024"
 output:
   xaringan::moon_reader:
     css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
@@ -73,6 +73,7 @@ theme_simple <- theme_bw() + theme(
 - Assignment 3: Posted 10/24 **alongside answer key**. Grading will be pass/fail, due 11/7 at 5pm
 
 ---
+
 # Midterm Exam
 
 ## Two parts:
@@ -90,6 +91,7 @@ theme_simple <- theme_bw() + theme(
   + Be able to interpret probability distributions, scatter plots, Q-Q plots, boxplots, linear regression output (not $p$-values or $t$-statistics)
 
 ---
+
 # Midterm Exam
 
 ## Two parts:
@@ -103,6 +105,7 @@ theme_simple <- theme_bw() + theme(
   + May include some minimal pseudo-coding
 
 ---
+
 name: Overview
 
 # Today
@@ -127,6 +130,7 @@ class: clear, middle, inverse
 # Model fit in multiple regression
 
 ---
+
 # Nonlinear transformations
 
 - Our linearity assumption requires that **parameters enter linearly** (_i.e._, the $\beta_k$ multiplied by variables)
@@ -139,7 +143,9 @@ $$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + u_i$$
 $$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + u_i$$
 
 $$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + u_i$$
+
 ---
+
 # Polynomials
 
 - Consider the relationship between **temperature** and **harmful algal blooms** (this is a [real thing!](https://www.epa.gov/nutrientpollution/climate-change-and-harmful-algal-blooms#:~:text=Warmer%20temperatures%20prevent%20water%20from,warmer%20and%20promoting%20more%20blooms.)).
@@ -157,7 +163,9 @@ $$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + 
 - We might want to estimate the following model:
 
 $$ area_i = \beta_0 + \beta_1 temperature_i + \beta_2 temperature_i^2 + u_i$$
+
 ---
+
 # Polynomials
 
 $$ area_i = \beta_0 + \beta_1 temperature_i + \beta_2 temperature_i^2 + u_i$$
@@ -189,7 +197,9 @@ ggplot(data = blooms_df, aes(x = temp, y = area)) +
   plot.title = element_blank(),
   legend.position = "none")
 ```
+
 ---
+
 # Polynomials
 
 Estimating polynomial regressions in `R`, option 1:
@@ -199,13 +209,16 @@ summary(lm(area~temp+temp2, data=blooms_df))
 ```
 
 ---
+
 # Polynomials
 
 Estimating polynomial regressions in `R`, option 2:
 ```{r, echo = T}
 summary(lm(area~temp+I(temp^2), data=blooms_df))
 ```
+
 ---
+
 # Polynomials
 
 Watch out! Some things are not intuitive:
@@ -214,6 +227,7 @@ summary(lm(area~poly(temp,2), data=blooms_df))
 ```
 
 ---
+
 # Polynomials
 
 Watch out! Some things are not intuitive (need `raw=TRUE` for coefficients to be interpretable -- see helpful Stack Overflow on this [here](https://stackoverflow.com/questions/19484053/what-does-the-r-function-poly-really-do)):
@@ -222,6 +236,7 @@ summary(lm(area~poly(temp,2, raw=TRUE), data=blooms_df))
 ```
 
 ---
+
 # Polynomials
 ```{r, echo = F}
 lm(area ~ temp + I(temp^2), data = blooms_df) %>%
@@ -245,6 +260,7 @@ How do we interpret these coefficients?
 Go back to Algebra II (see [here](http://www.abcte.org/files/previews/math/s4_p2.html) for a refresher): $y=ax^2 + bx + c$. $a$ tells you whether the U-shape faces up or down, and how narrow or wide it is; $b$ tells you whether the U-shape shifts left or right away from the $y$-axis; $c$ simply shifts the U-shape up or down.
 
 ---
+
 # Polynomials
 
 **Don't worry about the Algebra II if it doesn't feel familiar!**
@@ -259,7 +275,9 @@ You can always:
 --
 
 **Key insight: effect of an increase in temperature on algal bloom area depends on the baseline level of temperature!** (true for all nonlinear relationships)
+
 ---
+
 # Nonlinear transformations
 
 Other examples:
@@ -275,6 +293,7 @@ Other examples:
 In all cases, the effect of a change in $x$ on $y$ will vary depending on your baseline level of $x$. This is not true with linear relationships! 
 
 ---
+
 # Nonlinear transformations
 
 **Transformation challenge:** (literally) infinite possibilities. What do we pick?
@@ -297,6 +316,7 @@ theme_empty
 ```
 
 ---
+
 count: false
 # Nonlinear transformations
 
@@ -309,7 +329,9 @@ geom_line(stat = "smooth", method = lm, formula = y ~ 1, color = "orange", size 
 geom_point(size = 2.5, color = "darkslategrey", alpha = 0.5) +
 theme_empty
 ```
+
 ---
+
 count: false
 # Nonlinear transformations
 
@@ -323,7 +345,9 @@ geom_line(stat = "smooth", method = lm, formula = y ~ x, color = "orange", size 
 geom_point(size = 2.5, color = "darkslategrey", alpha = 0.5) +
 theme_empty
 ```
+
 ---
+
 count: false
 # Nonlinear transformations
 
@@ -340,6 +364,7 @@ theme_empty
 ```
 
 ---
+
 count: false
 # Nonlinear transformations
 
@@ -355,7 +380,9 @@ geom_line(stat = "smooth", method = lm, formula = y ~ poly(x, 3), color = "orang
 geom_point(size = 2.5, color = "darkslategrey", alpha = 0.5) +
 theme_empty
 ```
+
 ---
+
 count: false
 # Nonlinear transformations
 
@@ -372,7 +399,9 @@ geom_line(stat = "smooth", method = lm, formula = y ~ poly(x, 4), color = "orang
 geom_point(size = 2.5, color = "darkslategrey", alpha = 0.5) +
 theme_empty
 ```
+
 ---
+
 count: false
 # Nonlinear transformations
 
@@ -393,6 +422,7 @@ theme_empty
 ```
 
 ---
+
 count: false
 # Nonlinear transformations
 
@@ -414,6 +444,7 @@ theme_empty
 ```
 
 ---
+
 # Model fit with multiple regressors
 
 Measures of *goodness of fit* try to analyze how well our model describes (*fits*) the data.
@@ -431,6 +462,7 @@ Recall $\sum_i \left( y_i - \hat{y}_i \right)^2 = \sum_i e_i^2$ is the "sum of s
 $R^2$ literally tells us the share of the variance in $y$ our current models accounts for. Thus $0 \leq R^2 \leq 1$.
 
 ---
+
 # Model fit with multiple regressors
 
 **The problem:** As we add variables to our model, $R^2$ *mechanically* increases.
@@ -471,10 +503,13 @@ Where $k$ is the number of independent variables in the regression model and $n$
 - Don't forget the _theory_ behind your data science! 
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Interactions
+
 ---
+
 # Interactions
 
 Interactions allow the effect of one variable to change based upon the level of another variable.
@@ -490,6 +525,7 @@ Interactions allow the effect of one variable to change based upon the level of 
 4. ??
 
 ---
+
 # Interactions
 
 Previously, we considered a model that allowed Toxics Release Inventory (TRI) census tracts and non-TRI tracts to have different average cancer rates, but the model assumed the effect of UV radiation on cancer was the same for everyone:
@@ -505,6 +541,7 @@ $$ \text{Cancer}_i = \beta_0 + \beta_1 \, \text{UV}_i + \beta_2 \, \text{TRI}_i 
 The multiplication of $UV$ by $TRI$ is called an **interaction term** 
 
 ---
+
 # Interactions
 
 The model where UV radiation has the same effect for all tracts (**<font color="#e64173">non-TRI</font>** and **<font color="#314f4f">TRI</font>**):
@@ -555,6 +592,7 @@ scale_shape_manual("", values = c(16, 1), labels = c("non-TRI", "TRI"))
 ```
 
 ---
+
 # Interactions
 
 The model where UV radiation's effect can differ by TRI status of a tract (**<font color="#e64173">non-TRI</font>** and **<font color="#314f4f">TRI</font>**):
@@ -598,6 +636,7 @@ scale_shape_manual("", values = c(16, 1), labels = c("non-TRI", "TRI"))
 ```
 
 ---
+
 # Interactions
 
 $$ \text{Cancer}_i = \beta_0 + \beta_1 \, \text{UV}_i + \beta_2 \, \text{TRI}_i + \beta_3 \, \text{UV}_i\times\text{TRI}_i + u_i $$
@@ -638,6 +677,7 @@ For example:
 - Other examples?
 
 ---
+
 # Interactions
 
 $$ {y\_i} = \beta\_0 + \beta\_1 {x\_{1i}} + \beta\_2 {x\_{2i}} + \beta\_3 x\_{1i}\times x\_{2i} + u\_i $$
@@ -655,6 +695,7 @@ $$ {y\_i} =  \beta\_0 + (\beta\_1 + \beta\_3 x\_{2i}) {x\_{1i}} + \beta\_2 {x\_{
 For two continuous random variables, we now have infinitely many slopes for each variable, depending on the level of the other independent variable.
 
 ---
+
 # Interactions 
 
 Putting it all in one place...interaction models with two continuous variables:
@@ -682,6 +723,7 @@ $$ {y\_i} = \beta\_0 + \beta\_1 {x\_{1i}} + \beta\_2 {x\_{2i}} + \beta\_3 x\_{1i
 - $\beta_2$ is the effect of $x_2$ on $y$ when $x_1$ is zero
 
 ---
+
 # Interactions in R
 
 This will be the focus of Lab on Thursday. As a preview...just like many other aspects of regression analysis, interactions are easy to implement but difficult to carefully interpret in `R`:
@@ -696,11 +738,13 @@ summary(lm(hwy ~ displ + year + displ:year, data = mpg))
 ```
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Multicollinearity
 
 ---
+
 # Multicollinearity
 
 $$ {y\_i} = \beta\_0 + \beta\_1 {x\_{1i}} + \beta\_2 {x\_{2i}} + \cdots + \beta\_k {x\_{ki}} + u\_i $$
@@ -716,6 +760,7 @@ $$ {y\_i} = \beta\_0 + \beta\_1 {x\_{1i}} + \beta\_2 {x\_{2i}} + \cdots + \beta\
 - Illogical/unexpected coefficients
 
 ---
+
 # Multicollinearity
 
 ### Why might it happen?
@@ -726,6 +771,7 @@ $$ {y\_i} = \beta\_0 + \beta\_1 {x\_{1i}} + \beta\_2 {x\_{2i}} + \cdots + \beta\
 
 
 ---
+
 # Multicollinearity
 
 #### Easy check: `ggpairs()`, `pairs()`, etc.
@@ -735,6 +781,7 @@ knitr::include_graphics("collinearity.png")
 ```
 
 ---
+
 # Multicollinearity
 
 ### What to do about it?

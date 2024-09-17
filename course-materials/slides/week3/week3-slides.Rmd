@@ -1,9 +1,9 @@
 ---
 title: "Ordinary Least Squares, continued"
 subtitle: "EDS 222"
-author: "Tamma Carleton"
+author: "Max Czapanskiy"
 #institute: ""
-date: "Fall 2023"
+date: "Fall 2024"
 output:
   xaringan::moon_reader:
     css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
@@ -81,6 +81,7 @@ theme_simple <- theme_bw() + theme(
 - Reiteration of COVID/illness policy
 
 ---
+
 name: Overview
 
 # Today
@@ -110,6 +111,7 @@ class: clear, middle, inverse
 # Notes on OLS
 
 ---
+
 # Outliers
 
 Because OLS minimizes the sum of the **squared** errors, outliers can play a large role in our estimates.
@@ -125,6 +127,7 @@ Because OLS minimizes the sum of the **squared** errors, outliers can play a lar
 - Do nothing. Outliers are not always bad. Some people are "far" from the average. It may not make sense to try to change this variation.
 
 ---
+
 # Missing data
 
 Similarly, missing data can affect your results.
@@ -149,6 +152,7 @@ class: clear, middle, inverse
 # Measures of model fit
 
 ---
+
 # Measures of model fit
 
 ### Goal: quantify how "well" your regression model fits the data
@@ -183,7 +187,9 @@ theme_empty
 ```
 
 ]
+
 ---
+
 # Coefficient of determination
 
 - We already learned one measure of the strength of a linear relationship: correlation, $r$
@@ -208,6 +214,7 @@ $$
 
 
 ---
+
 # Coefficient of determination
 
 $$
@@ -222,6 +229,7 @@ $$
 - In more complex models, $R^2$ is not the same as the square of the correlation coefficient. You should think of them as related but distinct concepts.
 
 ---
+
 # Coefficient of determination
 
 About 49% of the variation in ozone can be explained with temperature alone!
@@ -231,6 +239,7 @@ knitr::include_graphics("ozone_temp_r2.png")
 ```
 
 ---
+
 # Coefficient of determination
 
 #### Definition: % of variance in $y$ that is explained by $x$ (and any other independent variables)
@@ -251,6 +260,7 @@ knitr::include_graphics("ozone_temp_r2.png")
 - Like OLS in general, $R^2$ is very sensitive to outliers. Again...always look at your data!
 
 ---
+
 # Coefficient of determination 
 
 Here, $R^2=0.94$ for a model of $y = \beta_0 + \beta_1 x + \epsilon$. Does that mean a linear relationship with $x$ is appropriate?
@@ -269,6 +279,7 @@ theme_empty
 ```
 
 ---
+
 # Coefficient of determination 
 
 Here, $R^2=0$ for a model of $y = \beta_0 + \beta_1 x + \epsilon$. Does that mean there is no relationship between these variables?
@@ -293,6 +304,7 @@ class: clear, middle, inverse
 # Indicator/categorical variables
 
 ---
+
 # Categorical variables
 
 We have been talking a lot about **numerical** variables in linear regression...
@@ -314,6 +326,7 @@ We have been talking a lot about **numerical** variables in linear regression...
 #### How do we execute and interpret linear regression with categorical data?
 
 ---
+
 # Categorical variables
 
 We use **dummy** or **indicator** variables in linear regression to capture the influence of a categorical independent variable (_x_) on a continuous dependent variable (_y_).
@@ -332,6 +345,7 @@ $$y_i = \beta_0 + \beta_1 MALE_i + \varepsilon_i $$
 - $\beta_1=$ average _difference_ in wages between males and females
 
 ---
+
 # Categorical variables
 
 #### For a categorical variable with two "levels", the OLS slope coefficient is the _difference_ in means across the two groups
@@ -352,6 +366,7 @@ ggplot(data=df) +
 ```
 
 ---
+
 # Categorical variables
 
 #### What if I have many categories?
@@ -366,6 +381,7 @@ Where **species** can be one of:
 - Gentoo
 
 ---
+
 # Categorical variables
 
 ```{r, echo=T}
@@ -375,6 +391,7 @@ class(penguins$species)
 ```
 
 ---
+
 # Categorical variables
 
 ```{r, echo=T}
@@ -382,6 +399,7 @@ summary(lm(body_mass_g ~ species, data = penguins))
 ```
 
 ---
+
 # Categorical variables
 
 What is going on here?? One _x_ variable turned into multiple slope coefficients? 🤔
@@ -399,6 +417,7 @@ $$y_i = \beta_0 + \beta_1 CHINSTRAP_i +\beta_2 GENTOO_i + \varepsilon_i $$
 where _CHINSTRAP_ and _GENTOO_ are dummy variables for the Chinstrap and Gentoo species, respectively.
 
 ---
+
 # Categorical variables
 
 When your categorical variable takes on $k$ values, .mono[R] will create dummy variables for $k-1$ values, leaving one as the **reference** group:
@@ -417,6 +436,7 @@ To evaluate the outcome for the reference group, **set the dummy variables equal
 
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Multiple linear regression
@@ -442,6 +462,7 @@ $$ \color{#e64173}{y\_i} = \beta\_0 + \beta\_1 \color{#6A5ACD}{x\_{1i}} + \beta\
  We can better explain the variation in $y$, improve predictions, avoid omitted-variable bias (i.e., second assumption needed for unbiased OLS estimates), ...
 
 ---
+
 # More explanatory variables
 
 Multiple linear regression...
@@ -472,6 +493,7 @@ $$ \color{#e64173}{y\_i} = \beta\_0 + \beta\_1 \color{#6A5ACD}{x\_{1i}} + \beta\
 **We will dig into each of these here,** and you will see these questions in other MEDS courses
 
 ---
+
 # Multiple regression
 
 ```{R, gendata, cache = T, include = F}
@@ -524,6 +546,7 @@ scale_shape_manual(
 
 
 ---
+
 # Multiple regression
 
 The intercept and categorical variable $x_2$ control for the groups' means.
@@ -560,6 +583,7 @@ scale_shape_manual(
 ```
 
 ---
+
 # Multiple regression
 
 
@@ -597,6 +621,7 @@ scale_shape_manual(
 
 
 ---
+
 # Multiple regression
 
 More generally, how do we think about multiple explanatory variables?
@@ -647,6 +672,7 @@ theme_bw() + theme(
 ]
 
 ---
+
 # Multiple regression
 
 More generally, how do we think about multiple explanatory variables?
@@ -660,6 +686,7 @@ plot_ly(x=mr_df$x1, y=mr_df$x2, z=mr_df$y, type="scatter3d", mode="markers", col
 ```
 
 ---
+
 # Multiple regression
 
 ### With **many** explanatory variables, we visualizing relationships means thinking about **hyperplanes** 🤯
@@ -668,6 +695,7 @@ $$y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_k x_{ki} + u_i$$
 #### Math notation looks very similar to simple linear regression, but _conceptually_ and _visually_ multiple regression is **very different**
 
 ---
+
 # Multiple regression
 
 ### Interpretation of coefficients
@@ -691,6 +719,7 @@ $$y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_k x_{ki} + u_i$$
 - E.g., how much does ozone increase when temperature rises, _holding NOx emissions fixed_? 
 
 ---
+
 # Tradeoffs
 
 There are tradeoffs to consider as we add/remove variables:
@@ -708,6 +737,7 @@ There are tradeoffs to consider as we add/remove variables:
 - You may still miss important variables—still omitted-variable bias
 
 ---
+
 # Omitted-variable bias
 
 You will study this in much more depth in EDS 241, but here's a primer.
@@ -725,6 +755,7 @@ As it's name suggests, this situation leads to bias in our estimate of $\beta_j$
 **Note:** OVB Is not exclusive to multiple linear regression, but it does require multiple variables affect $y$.
 
 ---
+
 # Omitted-variable bias
 
 **Example**
@@ -789,7 +820,9 @@ theme(
   plot.margin = structure(c(0, 0, 0.1, 0), unit = "lines", valid.unit = 3L, class = "unit"),
 )
 ```
+
 ---
+
 # Omitted-variable bias
 
 Biased regression estimate: $\widehat{\text{Cancer rate}}_i = `r bb0` + `r bb1` \times \text{UV radiation}_i$
@@ -809,6 +842,7 @@ theme(
 ```
 
 ---
+
 # Omitted-variable bias
 
 Recalling the omitted variable: TRI (**<font color="#e64173">non-TRI</font>** and **<font color="#314f4f">TRI</font>**)
@@ -831,6 +865,7 @@ scale_shape_manual("", values = c(16, 1), labels = c("non-TRI", "TRI"))
 ```
 
 ---
+
 # Omitted-variable bias
 
 Recalling the omitted variable: TRI (**<font color="#e64173">non-TRI</font>** and **<font color="#314f4f">TRI</font>**)
@@ -863,6 +898,7 @@ scale_shape_manual("", values = c(16, 1), labels = c("non-TRI", "TRI"))
 ```
 
 ---
+
 # Omitted-variable bias
 
 Unbiased regression estimate: $\widehat{\text{Cancer rate}}_i = `r bu0` + `r bu1` \times \text{UV radiation}_i + `r bu2` \times \text{TRI}_i$

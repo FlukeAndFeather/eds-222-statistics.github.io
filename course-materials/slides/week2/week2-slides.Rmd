@@ -92,10 +92,13 @@ name: Overview
 - Flag on IMS and linear regression
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Relationships between variables
+
 ---
+
 # Two random variables
 
 ### Often we are interested in the _relationship_ between two (or more) random variables.
@@ -137,7 +140,9 @@ geom_point(color = "darkslategray", size = 6) +
 ```
 
 Note: these are simulated data. But the violence-temperature link is real! See [here](https://www.annualreviews.org/doi/abs/10.1146/annurev-economics-080614-115430) for a summary of research.
+
 ---
+
 # Two random variables
 
 ### What metrics can we use to characterize the _relationship_ between two variables? 
@@ -168,7 +173,9 @@ geom_point(color = "darkslategray", size = 6) +
   plot.title = element_blank(),
   legend.position = "none")
 ```
+
 ---
+
 # Covariance 
 
 #### **Variance** indicates how dispersed a distribution is (average squared deviation from the mean)
@@ -187,7 +194,9 @@ $$Cov(X,Y) = E[(X-\mu_x)(Y-\mu_y)] = E[XY]-\mu_x\mu_y$$
 
 In the sample:
 $$s_{xy} = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar x)(y_i - \bar y)$$
+
 ---
+
 # Covariance 
 
 #### **Variance** indicates how dispersed a distribution is (average squared deviation from the mean)
@@ -202,6 +211,7 @@ $$s_{xy} = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar x)(y_i - \bar y)$$
 #### The **sign** of $s_{xy}$ tells us the sign of the linear relationship between $X$ and $Y$, but the **magnitude** depends on the units of the variables and is therefore difficult to interpret
 
 ---
+
 # Covariance
 
 ### Example: positive covariance
@@ -237,6 +247,7 @@ geom_point(color = "darkslategray", size = 6) +
 ```
 
 ---
+
 # Covariance
 
 ### Example: zero covariance
@@ -262,6 +273,7 @@ geom_point(color = "darkslategray", size = 6) +
 
 
 ---
+
 # Covariance
 
 ### Example: Negative covariance
@@ -305,6 +317,7 @@ But now, the magnitude is interpretable:
 
 
 ---
+
 # Correlation
 
 #### **Correlation** allows us to normalize covariance into interpretable units  
@@ -324,6 +337,7 @@ Want to prove that $-1 \leq r_{x,y} \leq 1$ ? Key result: Cauchy-Schwarz Inequal
 ]
 
 ---
+
   
 # Correlation
   
@@ -354,6 +368,7 @@ ggplot(data = df, aes(x = x1, y = y1)) +
 
 
 ---
+
 # Correlation
   
 ### Example: zero correlation
@@ -378,6 +393,7 @@ ggplot(data = df, aes(x = x2, y = y2)) +
 ```
 
 ---
+
 # Correlation
   
 ### Example: Moderate negative correlation
@@ -401,11 +417,13 @@ ggplot(data = df, aes(x = x3, y = y3)) +
 ```
 
 ---
+
 layout: false
 class: clear, middle, inverse
 # Ordinary Least Squares
 
 ---
+
 # Linear regression
 
 Covariance and correlation give us a single summary of the **strength** of the relationship between two random variables $Y$ and $X$...
@@ -427,6 +445,7 @@ $$y = \beta_0 + \beta_1 x + u $$
 (Call these estimates $\hat\beta_0$ and $\hat\beta_1$, respectively)
 
 ---
+
 # Finding a "best fit" line
 
 Consider some sample data.
@@ -460,6 +479,7 @@ theme_bw() + theme(line = element_blank(),
 ```
 
 ---
+
 # Finding a "best fit" line
 
 For any line $\left(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\right)$ $\color{#ffffff}{\bigg|}$
@@ -483,6 +503,7 @@ theme_bw() + theme(line = element_blank(),
 ```
 
 ---
+
 # Finding a "best fit" line
 
 For any line $\left(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\right)$, we can calculate errors: $e_i = y_i - \hat{y}_i$ $\color{#ffffff}{\bigg|}$
@@ -506,6 +527,7 @@ theme_bw() + theme(line = element_blank(),
 ```
 
 ---
+
 # Finding a "best fit" line
 
 For any line $\left(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\right)$, we can calculate errors: $e_i = y_i - \hat{y}_i$ $\color{#ffffff}{\bigg|}$
@@ -529,6 +551,7 @@ theme_bw() + theme(line = element_blank(),
 ```
 
 ---
+
 # Finding a "best fit" line
 
 For any line $\left(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\right)$, we can calculate errors: $e_i = y_i - \hat{y}_i$ $\color{#ffffff}{\bigg|}$
@@ -552,6 +575,7 @@ theme_bw() + theme(line = element_blank(),
 ```
 
 ---
+
 # Ordinary Least Squares
 
 ### OLS chooses a line that minimizes the **sum of squared errors** (SSE):
@@ -570,6 +594,7 @@ Where $i$ indicates one observation in our data. In other words, OLS gives us a 
 #### Note: SSE is also called "sum of squared residuals" or SSR
 
 ---
+
 # Ordinary Least Squares
 
 SSE squares the errors $\left(\sum e_i^2\right)$: bigger errors get bigger penalties. $\color{#ffffff}{\bigg|}$
@@ -594,6 +619,7 @@ theme_bw() + theme(line = element_blank(),
 ```
 
 ---
+
 # Ordinary Least Squares
 
 The OLS estimate is the combination of $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimizes SSE. $\color{#ffffff}{\bigg|}$
@@ -618,6 +644,7 @@ theme_bw() + theme(line = element_blank(),
 ```
 
 ---
+
 # OLS, formally
 
 In simple linear regression, the OLS estimator comes from choosing the $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the sum of squared errors (SSE), _i.e._,
@@ -633,6 +660,7 @@ this expands to:
 $$ e_i^2= y_i^2 - 2 y_i \hat{\beta}_0 - 2 y_i \hat{\beta}_1 x_i + \hat{\beta}_0^2 + 2 \hat{\beta}_0 \hat{\beta}_1 x_i + \hat{\beta}_1^2 x_i^2$$
 
 ---
+
 # OLS, formally
 
 Choose the $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the sum of squared errors (SSE), _i.e._,
@@ -645,6 +673,7 @@ $$  \min_{\hat{\beta}_0,\, \hat{\beta}_1} \sum_i e_i^2 $$
 **See extra slides** if you want the full derivation. Basically, we take the first derivatives of the SSE above with respect to $\hat\beta_0$ and $\hat\beta_1$, set them equal to zero, and solve for $\hat\beta_0$ and $\hat\beta_1$.
 
 ---
+
 # OLS, formally
 
 The OLS estimator for the slope is:
@@ -661,6 +690,7 @@ Note that the expression for $\hat\beta_0$ can be rearranged to show us that our
 
 
 ---
+
 # Let's collect some definitions
 
 True **population** relationship:
@@ -679,6 +709,7 @@ $$ \hat y = \hat\beta_0 + \hat\beta_1 x  $$
 - Estimated **slope** coefficient = $\hat\beta_1$
 
 ---
+
 # Why choose the OLS line?
 
 ### There are many possible ways to define a "best fit" linear relationship. For example:
@@ -687,6 +718,7 @@ $$ \hat y = \hat\beta_0 + \hat\beta_1 x  $$
 - ...
 
 ---
+
 # Why choose the OLS line?
 
 ### There are many possible ways to define a "best fit" linear relationship. 
@@ -703,6 +735,7 @@ $$ \hat y = \hat\beta_0 + \hat\beta_1 x  $$
 - What estimator you use depends on what the goal of your analysis is, but OLS is the best option a LOT of the time
 
 ---
+
 # Why choose the OLS line?
 
 ## Under key assumptions, OLS satisfies two desirable properties:
@@ -715,6 +748,7 @@ $$ \hat y = \hat\beta_0 + \hat\beta_1 x  $$
 Let's dig into each of these for a moment so you can appreciate how amazing OLS is.
 
 ---
+
 # OLS property #1: Unbiasedness
 
 ### Under a key set of assumptions (we'll get into these in a few slides), OLS is **unbiased**
@@ -728,6 +762,7 @@ On average (after *many* samples), does the estimator tend toward the true popul
 $$ \mathop{\text{Bias}}_\beta \left( \hat{\beta} \right) = \mathop{\boldsymbol{E}}\left[ \hat{\beta} \right] - \beta $$
 
 ---
+
 # OLS property #1: Unbiasedness
 
 ### Under a key set of assumptions (we'll get into these in a few slides), OLS is **unbiased**
@@ -745,6 +780,7 @@ $\rightarrow$ You should think about the distribution of $\hat \beta$ values as 
 $\rightarrow$ In two weeks we'll talk a lot more about uncertainty in and distributions of estimators like $\hat\beta$.
 
 ---
+
 # OLS property #1: Unbiasedness
 
 
@@ -787,6 +823,7 @@ theme(axis.text.x = element_text(size = 40))
 Distributions show probability density function of $\hat\beta$ estimates recovered from many different randomly drawn samples. 
 
 ---
+
 # OLS property #2: Lowest variance
 
 ### Under a key set of assumptions (again, let's wait a couple slides), OLS is the estimator with the **lowest variance**
@@ -800,6 +837,7 @@ $$ \mathop{\text{Var}} \left( \hat{\beta} \right) = \mathop{\boldsymbol{E}}\left
 Lower variance estimators mean we get estimates closer to the mean in each sample.
 
 ---
+
 # OLS property #2: Lowest variance
 
 ### Under a key set of assumptions (again, let's wait a couple slides), OLS is the estimator with the **lowest variance**
@@ -811,6 +849,7 @@ Just as we discussed when defining summary statistics, the central tendencies (m
 $\rightarrow$ Again, think about the distribution of $\hat \beta$ values as the distribution of regression results you would get if you could draw many random samples from the population and generate a new $\hat\beta$ every time. 
 
 ---
+
 # OLS property #2: Lowest variance
 
 
@@ -830,6 +869,7 @@ theme(axis.text.x = element_text(size = 20))
 ```
 
 ---
+
 # Properties of OLS
 
 
@@ -848,6 +888,7 @@ In much of statistics, we choose unbiased estimators. But other disciplines (esp
 You'll learn more about these estimators (e.g., ridge regression) in EDS 232 👀
 
 ---
+
 # The bias-variance tradeoff.
 
 ```{R, variancebias, echo = F, dev = "svg"}
@@ -866,6 +907,7 @@ theme(axis.text.x = element_text(size = 20))
 ```
 
 ---
+
 # OLS: Assumptions
 
 These very nice properties depend on a key set of assumptions:
@@ -885,7 +927,9 @@ These very nice properties depend on a key set of assumptions:
 3. The $X$ variable has variation (and if there are multiple explanatory variables, they are not perfectly collinear)
   + Recall, $var(x)$ is in the denominator of the OLS slope coefficient estimator!
   
+
 ---
+
 # OLS: Assumptions
 
 These very nice properties depend on a key set of assumptions:
@@ -900,7 +944,9 @@ These very nice properties depend on a key set of assumptions:
   + Independently distributed and mean zero jointly imply $\mathop{\boldsymbol{E}}\left[ u_i u_j \right] = 0$ for any $i\neq j$
   + Constant variance means errors cannot vary with $X$ (this is called "homoskedasticity")
   
+
 ---
+
 # OLS: Assumptions
 
 Different assumptions guarantee different properties:
@@ -917,6 +963,7 @@ We will discuss the many ways real life may **violate these assumptions**. For i
 - Violations of exogeneity (especially omitted-variable bias) $\rightarrow$ mostly covered in EDS 241
 
 ---
+
 # OLS: Assumptions
 
 ### Q: Can we test these assumptions?
@@ -953,6 +1000,7 @@ theme_bw() +
 ```
 
 ---
+
 # OLS: Assumptions
 
 ### Q: Can we test these assumptions?
@@ -970,6 +1018,7 @@ $$y = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon$$
 This equation was estimated using OLS to give the nonlinear relationship on the next slide.
 
 ---
+
 # OLS: Assumptions
 
 ### Q: Can we test these assumptions?
@@ -992,7 +1041,9 @@ geom_point(color = "darkslategrey", alpha = 0.9, size=4) +
   geom_smooth(method='lm', formula= y~x+I(x^2), color="lightcoral", se=F, size=3) +
 theme_empty
 ```
+
 ---
+
 # OLS: Assumptions
 
 ### Q: Can we test these assumptions?
@@ -1018,6 +1069,7 @@ theme_empty
 ```
 
 ---
+
 # OLS: Assumptions
 
 ### Q: Can we test these assumptions?
@@ -1036,6 +1088,7 @@ There are a lot of methods designed to probe this assumption, but it's fundament
 In general, you should always think about what is in $u$ that may be correlated with $X$.
 
 ---
+
 # OLS: Assumptions
 
 ### Q: Can we test these assumptions?
@@ -1057,6 +1110,7 @@ theme_simple
 ```
 
 ---
+
 # OLS: Assumptions
 
 ### Q: Can we test these assumptions?
@@ -1076,7 +1130,9 @@ $$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i $$
 Step 2: Generate residuals
 
 $$e_i = y_i - \hat y_i$$
+
 ---
+
 # OLS: Assumptions
 
 ### Q: Can we test these assumptions?
@@ -1100,6 +1156,7 @@ class: clear, middle, inverse
 # Interpreting regression results
 
 ---
+
 # Interpreting OLS results
 
 #### Example: Ozone increases due to temperature (NYC)
@@ -1122,6 +1179,7 @@ theme_bw() +
 ```
 
 ---
+
 # Interpreting OLS results
 
 #### Example: Ozone increases due to temperature (NYC)
@@ -1133,6 +1191,7 @@ mod <- lm(Ozone ~ Temp, data=airquality)
 ```
 
 ---
+
 # Interpreting OLS results
 
 #### Example: Ozone increases due to temperature (NYC)
@@ -1142,6 +1201,7 @@ mod <- lm(Ozone ~ Temp, data=airquality)
 #### How do we interpret these??
 
 ---
+
 # Interpreting OLS results
 
 ```{r, echo = T}
@@ -1149,6 +1209,7 @@ summary(mod)
 ```
 
 ---
+
 # Interpreting OLS results
 
 $$ Ozone_i = \beta_0 + \beta_1 Temp_i + \varepsilon_i $$
@@ -1166,6 +1227,7 @@ knitr::include_graphics("ozone_temp_coeffs.png")
   + **CAREFUL** with extrapolation! This doesn't even make sense! 
 
 ---
+
 # Interpreting OLS results
 
 $$ Ozone_i = \beta_0 + \beta_1 Temp_i + \varepsilon_i $$
@@ -1176,6 +1238,7 @@ knitr::include_graphics("ozone_temp_coeffs.png")
 - Standard error, t-value, and Pr(>t): These all concern **uncertainty** around our parameter estimates. We will tackle these fully after the midterm.
 
 ---
+
 # Interpreting OLS results
 
 Visualizing our predicted model using `geom_smooth()`
@@ -1201,6 +1264,7 @@ theme_bw() +
 ```
 
 ---
+
 # Interpreting OLS results
 
 ### Units matter! 
@@ -1226,6 +1290,7 @@ class: clear, middle, inverse
 # Extra slides
 
 ---
+
 # OLS, formally
   
 In simple linear regression, the OLS estimator comes from choosing the $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the sum of squared errors (SSE), _i.e._,
@@ -1247,6 +1312,7 @@ $$ e_i^2 = y_i^2 - 2 y_i \hat{\beta}_0 - 2 y_i \hat{\beta}_1 x_i + \hat{\beta}_0
 **Recall:** Minimizing a multivariate function requires (**1**) first derivatives equal zero (the *1.super[st]-order conditions*) and (**2**) second-order conditions (concavity).
 
 ---
+
 # OLS, formally
   
 We're getting close. We need to **minimize SSE**. We've showed how SSE relates to our sample (our data: $x$ and $y$) and our estimates (_i.e._, $\hat{\beta}_0$ and $\hat{\beta}_1$).
@@ -1265,6 +1331,7 @@ $$
 where $\overline{x} = \frac{\sum x_i}{n}$ and $\overline{y} = \frac{\sum y_i}{n}$ are sample means of $x$ and $y$ (size $n$).
 
 ---
+
 # OLS, formally
   
 The first-order conditions state that the derivatives are equal to zero, so:
@@ -1278,6 +1345,7 @@ $$ \hat{\beta}_0 = \overline{y} - \hat{\beta}_1 \overline{x} $$
 Now for $\hat{\beta}_1$.
 
 ---
+
 # OLS, formally
   
 Take the derivative of SSE with respect to $\hat{\beta}_1$
@@ -1298,7 +1366,9 @@ $$
   2n \left(\overline{y} - \hat{\beta}_1 \overline{x}\right) \overline{x} + 2 \hat{\beta}_1 \sum_i x_i^2 - 2 \sum_i y_i x_i = 0
 $$
   
+
 ---
+
 # OLS, formally
   
 Continuing from the last slide
@@ -1313,7 +1383,9 @@ $$ \implies 2 \hat{\beta}_1 \left( \sum_i x_i^2 - n \overline{x}^2 \right) = 2 \
   
 $$ \implies \hat{\beta}_1 = \dfrac{\sum_i y_i x_i - 2n \overline{y}\,\overline{x}}{\sum_i x_i^2 - n \overline{x}^2} = \dfrac{\sum_i (x_i - \overline{x})(y_i - \overline{y})}{\sum_i (x_i - \overline{x})^2} $$
   
+
 ---
+
 # OLS, formally
   
 Done!

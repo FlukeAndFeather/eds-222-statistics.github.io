@@ -32,8 +32,6 @@ opts_chunk$set(
 )
 ```
 
-name: Overview
-
 # Today
 
 ## Why are we here? 
@@ -127,6 +125,7 @@ knitr::include_graphics("proctoretalfig4.png")
 <font size="3"> Source: Proctor et al. (Nature, 2018)</font> 
 
 ---
+
 # Statistics and the scientific method
 
 - Statistics will enable us to **test hypotheses**, **analyze data**, and **draw conclusions** about the world from the process
@@ -138,6 +137,7 @@ knitr::include_graphics("proctoretalfig4.png")
 ```{r, out.width = "40%", echo=FALSE, fig.align='center'}
 knitr::include_graphics("The_Scientific_Method.svg")
 ```
+
 ---
 
 # This course within MEDS
@@ -153,12 +153,14 @@ knitr::include_graphics("The_Scientific_Method.svg")
 - A class in spatial data analysis (👀 EDS 223)
 
 ---
+
 # Syllabus 
 
 Syllabus can always be found on our [course website](https://eds-222-statistics.github.io/).
 
 
 ---
+
 # COVID-19 
 
 - This course is **in-person**, following UCSB guidelines
@@ -202,6 +204,7 @@ Consider a potential research question:
   + Ex: 60 tagged swordfish from a government survey in the Atlantic Ocean
   
 ---
+
 # Parameters and statistics
 <!-- $$\\[1in]$$ --> 
 
@@ -214,6 +217,7 @@ Consider a potential research question:
   + Ex: _average_ mercury content of the 60 swordfish collected in a government survey in the Atlantic Ocean
 
 ---
+
 # Parameters and statistics
 
 #### We use _statistics_ (from a sample) in hopes of learning about _parameters_ (from the population)
@@ -224,6 +228,7 @@ Consider a potential research question:
   + How are they different?
   
 ---
+
 # All samples are not created equal
 
 From _IMS_: Suppose we want to estimate time to graduation for Duke undergraduates in the last five years using a sample of recent students.
@@ -268,6 +273,7 @@ par(par_og) # restore original par
 ```
 
 ---
+
 # All samples are not created equal
   
 Suppose we ask a nutrition major to pick a few of her friends for the sample.
@@ -413,6 +419,7 @@ knitr::include_graphics("clusterrand_sample.png")
 ```
 
 ---
+
 # Study design
 
 #### When we conduct statistical analyses, where do our samples come from?
@@ -432,6 +439,7 @@ knitr::include_graphics("clusterrand_sample.png")
 - **You will talk a lot more about this in EDS 241!**
 
 ---
+
 # [Very] short foray into study design
 
 ```{r sun-causes-cancer, echo=FALSE, out.width = "60%", fig.asp = 0.4}
@@ -465,6 +473,7 @@ par(par_og) # restore original par
   + Follow individuals for 20 years, compare cancer outcomes
   
 ---
+
 # [Very] short foray into study design
 
 ```{r sun-causes-cancer2, echo=FALSE, out.width = "60%", fig.asp = 0.4}
@@ -498,6 +507,7 @@ par(par_og) # restore original par
   + Compare cancer rates for individuals with different sunscreen use habits
   
 ---
+
 # Homework 1 (warmup): Logistics
 
 ### Deadline: 10/09, 5pm 
@@ -509,6 +519,7 @@ par(par_og) # restore original par
 - See MEDS summer coursework for a refresher on how to access Taylor, compute on Taylor, and pull data to/from Taylor (**if you are not a MEDS student** please reach out to Leo and/or Kat Le for help getting access to Taylor)
 
 ---
+
 # Homework 1 (warmup): Logistics
 
 ### Where should I do computation? 
@@ -522,6 +533,7 @@ par(par_og) # restore original par
 - Leo will walk you through all of this in your first Discussion section
 
 ---
+
 # GitHub in this class
 
 GitHub will be used in multiple ways in this class:
@@ -539,12 +551,14 @@ GitHub will be used in multiple ways in this class:
 3. Final projects. You will submit a GitHub repo alongside your final project report. We will not be grading this repository, but expect you to keep your project code here.
 
 ---
+
 class: center, middle
 
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
 
 ---
+
 exclude: true
 
 ```{R, print pdfs, echo = F, eval = F}

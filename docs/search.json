@@ -674,9 +674,9 @@
   {
     "objectID": "course-materials/week3.html#class-materials",
     "href": "course-materials/week3.html#class-materials",
-    "title": "Conditionals and logical operators",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 3 / morning\nConditionals and logical operations, intro to for loops\nRefresh logical operations, write basics for loops in R\n\n\nday 3 / afternoon\nLoops continued - and functions to help\nFor loops with conditions, apply() functions, and across()"
+    "title": "Ordinary least squares, continued",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nOrdinary least squares, continued\nMore ordinary least squares in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
   },
   {
     "objectID": "course-materials/week3.html#end-of-day-practice",
@@ -1139,5 +1139,145 @@
     "title": "Ordinary least squares",
     "section": "Notes",
     "text": "Notes\n\nHomework assignment 2 will be posted on Tuesday, October 8th."
+  },
+  {
+    "objectID": "course-materials/week3.html",
+    "href": "course-materials/week3.html",
+    "title": "Ordinary least squares, continued",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nOrdinary least squares, continued\nMore ordinary least squares in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+  },
+  {
+    "objectID": "course-materials/week3.html#notes",
+    "href": "course-materials/week3.html#notes",
+    "title": "Ordinary least squares, continued",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 2 is due Friday, October 18th."
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#spatial-data-can-generally-split-into",
+    "href": "course-materials/slides/week8/week8-slides.html#spatial-data-can-generally-split-into",
+    "title": "Spatial interpolation and kriging",
+    "section": "Spatial Data can generally split into:",
+    "text": "Spatial Data can generally split into:\n\n.hi[Vector] Data\n: points, lines, and polygons.\n\n–\n\n.hi[Raster] Data\n: a grid of equally sized rectangles."
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#an-alternative-framing-object-view-versus-field-view",
+    "href": "course-materials/slides/week8/week8-slides.html#an-alternative-framing-object-view-versus-field-view",
+    "title": "Spatial interpolation and kriging",
+    "section": "An alternative framing: object view versus field view",
+    "text": "An alternative framing: object view versus field view\n\n.pink[Object View]: The study region (and world) is a series of entities located in space. Examples: Points representing cities. Non-continuous polygons representing cities.\n\n–\n\n.pink[Field View]: Every location within the study region (and world) has a measurable value. Examples: Elevation. Temperature. Wind direction."
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#polynomial-regression",
+    "href": "course-materials/slides/week8/week8-slides.html#polynomial-regression",
+    "title": "Spatial interpolation and kriging",
+    "section": "Polynomial regression",
+    "text": "Polynomial regression\n\nIn one-dimensional space:\n\n\\[ \\hat Z(x_0) = \\hat\\beta_0 + \\hat\\beta_1x_0 + \\hat\\beta_2x_0^2 + ... + \\hat\\beta^px_0^p \\] - In two-dimensional space with \\((x_{0},y_0)\\) the unknown location:\n\\[ \\hat Z(x_0,y_0) = \\hat\\beta_0 + \\hat\\beta_1x_0 + \\hat\\beta_2y_0 + \\hat\\beta_3x_0y_0 + \\hat\\beta_4x_0^2 + \\hat\\beta_5y_0^2 + ... \\]\n–\n\nPros: Easy, analytical expression, continuous & differentiable surface\nCons: Errors can be large, inexact\n\n–\nExact: Predicts a value identical to the measured value.\n–\nInexact: Does not predict a value identical to the measured value."
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#nearest-neighbors-nn",
+    "href": "course-materials/slides/week8/week8-slides.html#nearest-neighbors-nn",
+    "title": "Spatial interpolation and kriging",
+    "section": "Nearest Neighbors (NN)",
+    "text": "Nearest Neighbors (NN)\n–\n\nSimple: Assign value of nearest observation in space\n\n–\n\n\n\n\n\n\n\n\n\n–\n\nCreates what are called “Theissen Polygons”, which allocate space to the nearest sampled point"
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#inverse-distance-weighting",
+    "href": "course-materials/slides/week8/week8-slides.html#inverse-distance-weighting",
+    "title": "Spatial interpolation and kriging",
+    "section": "Inverse distance weighting",
+    "text": "Inverse distance weighting\nBasic idea: weights are a decreasing function of distance from \\(x_0\\) to \\(x_i\\)\n–\n\\[\\hat Z(x_0) = \\sum_{i=1}^m \\frac{Z(x_i)Dist(x_i,x_0)^{-p}}{\\sum_{i=1}^m Dist(x_i,x_0)^{-p}}\\]\nEquivalently:\n\\[\\lambda_i^{IDW} = \\frac{1/Dist(x_i,x_0)^p}{\\sum_{i=1}^m 1/Dist(x_i,x_0)^p}\\]\nwhere \\(p\\) is the “power parameter” determining how fast the weight declines as the distance between the points grows larger"
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#inverse-distance-weighting-1",
+    "href": "course-materials/slides/week8/week8-slides.html#inverse-distance-weighting-1",
+    "title": "Spatial interpolation and kriging",
+    "section": "Inverse distance weighting",
+    "text": "Inverse distance weighting\n\nPros: Smooth, exact\nCons: Difficult/computationally intensive (you need to compute distances for all pairs of points in the region!), all sampled observations influence \\(\\hat Z(x_0)\\), have to choose \\(p\\) somehow, result can be “clumpy”\n\n–"
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#inverse-distance-weighting-2",
+    "href": "course-materials/slides/week8/week8-slides.html#inverse-distance-weighting-2",
+    "title": "Spatial interpolation and kriging",
+    "section": "Inverse distance weighting",
+    "text": "Inverse distance weighting\n\nImplementation in R\n\nlibrary(phylin)\nidw(values, coords, grid, method = \"Shepard\", p = 2, R = 2, N = 15,\n    distFUN = geo.dist, ...)\n\n\nNote the method argument: “Shepard” follows the math on the previous slide\nNote the p argument: Need to specify power parameter"
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#there-are-many-more",
+    "href": "course-materials/slides/week8/week8-slides.html#there-are-many-more",
+    "title": "Spatial interpolation and kriging",
+    "section": "There are many more!",
+    "text": "There are many more!\n\nPiecewise linear interpolation / Delany triangulation\nLocal polynomial regression\nRadial basis function (RBF)\nKriging (of many forms)\nMany new machine-learning based methods\nLearn more in Li and Heap (2014)"
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#hatgammah-pm-delta-frac12nhpmdelta-sum_ijin-nhpmdelta-z_i---z_j2",
+    "href": "course-materials/slides/week8/week8-slides.html#hatgammah-pm-delta-frac12nhpmdelta-sum_ijin-nhpmdelta-z_i---z_j2",
+    "title": "Spatial interpolation and kriging",
+    "section": "\\[\\hat\\gamma(h \\pm \\delta) = \\frac{1}{2N(h\\pm\\delta)} \\sum_{(i,j)\\in N(h\\pm\\delta)} |z_i - z_j|^2\\]",
+    "text": "\\[\\hat\\gamma(h \\pm \\delta) = \\frac{1}{2N(h\\pm\\delta)} \\sum_{(i,j)\\in N(h\\pm\\delta)} |z_i - z_j|^2\\]\nWhy? - You probably don’t have many samples exactly \\(h\\) units apart\n–\nHow?\n\nDraw “donuts” of width \\(\\delta\\) and average distance \\(h\\) around each point\nCompute differences in values for each pair of points, square them\nTake an average!"
+  },
+  {
+    "objectID": "course-materials/slides/week8/week8-slides.html#min_lambda-hskip2mm-e-zx_0-sum_im-lambda_i-zx_i2-hskip2mm-textsubject-tohskip2mm-sum_im-lambda_i-1",
+    "href": "course-materials/slides/week8/week8-slides.html#min_lambda-hskip2mm-e-zx_0-sum_im-lambda_i-zx_i2-hskip2mm-textsubject-tohskip2mm-sum_im-lambda_i-1",
+    "title": "Spatial interpolation and kriging",
+    "section": "\\[min_\\lambda \\hskip2mm E[ (Z(x_0)-\\sum_i^m \\lambda_i Z(x_i))^2 ]\\hskip2mm \\text{subject to}\\hskip2mm \\sum_i^m \\lambda_i = 1\\]",
+    "text": "\\[min_\\lambda \\hskip2mm E[ (Z(x_0)-\\sum_i^m \\lambda_i Z(x_i))^2 ]\\hskip2mm \\text{subject to}\\hskip2mm \\sum_i^m \\lambda_i = 1\\]\nTo solve:\n\nTake derivatives with respect to each \\(\\lambda_i\\)\nSet each first order condition = 0\nSolve system of equations for \\(\\lambda_i^*\\) values that minimize mean squared error"
+  },
+  {
+    "objectID": "course-materials/slides/week1/week1-slides.html",
+    "href": "course-materials/slides/week1/week1-slides.html",
+    "title": "Summarizing data",
+    "section": "",
+    "text": "name: Overview"
+  },
+  {
+    "objectID": "course-materials/slides/week1/week1-slides.html#numerical-variables",
+    "href": "course-materials/slides/week1/week1-slides.html#numerical-variables",
+    "title": "Summarizing data",
+    "section": "Numerical variables",
+    "text": "Numerical variables\n\nObject class numeric in R - Can take on a wide range of possible values - Makes sense to add, subtract, multiply, etc.\n\n–\n\nExamples:\n\nHeight of the tree canopy across the Amazon\nLength of Atlantic swordfish\nDaily average temperature\n\n\n\nDiscrete numerical variables take on only a limited set of values, often counts (e.g., population)\n\n\nContinuous numerical variables: can take on infinite values within a range (e.g., arsenic concentration in groundwater)"
+  },
+  {
+    "objectID": "course-materials/slides/week1/week1-slides.html#numerical-variables-1",
+    "href": "course-materials/slides/week1/week1-slides.html#numerical-variables-1",
+    "title": "Summarizing data",
+    "section": "Numerical variables",
+    "text": "Numerical variables\n\n\n\n\n\nSource: Allison Horst"
+  },
+  {
+    "objectID": "course-materials/slides/week1/week1-slides.html#categorical-variables",
+    "href": "course-materials/slides/week1/week1-slides.html#categorical-variables",
+    "title": "Summarizing data",
+    "section": "Categorical variables",
+    "text": "Categorical variables\n\nObject class factor in R\n\n\nValues correspond to one of a fixed number of categories\nPossible values are called levels\n\n–\n\nExamples:\n\nLand use type\nSpecies of tree\nAge group (e.g., &lt;15, 15-64, 65+) (watch out! continuous numerical data can often be stored as a categorical variable!)"
+  },
+  {
+    "objectID": "course-materials/slides/week1/week1-slides.html#categorical-variables-1",
+    "href": "course-materials/slides/week1/week1-slides.html#categorical-variables-1",
+    "title": "Summarizing data",
+    "section": "Categorical variables",
+    "text": "Categorical variables\n\nNominal variables are unordered descriptions\n\n\nOrdinal variables are categories with a natural ordering\n\n\nBinary variables only take on 0 or 1"
+  },
+  {
+    "objectID": "course-materials/slides/week1/week1-slides.html#categorical-variables-2",
+    "href": "course-materials/slides/week1/week1-slides.html#categorical-variables-2",
+    "title": "Summarizing data",
+    "section": "Categorical variables",
+    "text": "Categorical variables\n\n\n\n\n\nSource: Allison Horst\n\n\n\n\n\nlayout: false class: clear, middle, inverse # Probability density functions"
+  },
+  {
+    "objectID": "course-materials/slides/week1/week1-slides.html#skew-with-a-long-right-tail",
+    "href": "course-materials/slides/week1/week1-slides.html#skew-with-a-long-right-tail",
+    "title": "Summarizing data",
+    "section": "Skew with a long right tail",
+    "text": "Skew with a long right tail\n\n(log-normal sample distribution)"
+  },
+  {
+    "objectID": "course-materials/slides/week1/week1-slides.html#uni--bi--and-multi-modal",
+    "href": "course-materials/slides/week1/week1-slides.html#uni--bi--and-multi-modal",
+    "title": "Summarizing data",
+    "section": "Uni-, bi-, and multi-modal",
+    "text": "Uni-, bi-, and multi-modal\n\n(How many “peaks” do you see?)\n\n\n\n\n\n\n\n\n\n\nlayout: false class: clear, middle, inverse # Summary statistics"
   }
 ]
