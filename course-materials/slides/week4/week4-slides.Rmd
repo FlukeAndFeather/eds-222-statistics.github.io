@@ -19,8 +19,7 @@ library(pacman)
 p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp,parallel,gg3D,xtable)
 # Define pink color
 red_pink <- "#e64173"
-# Notes directory
-dir_slides <- "~/Dropbox/Teaching/UCSB/EDS_222/EDS222_code/EDS-222-stats/slides/05-multiplereg/"
+
 # Knitr options
 opts_chunk$set(
   comment = "#>",

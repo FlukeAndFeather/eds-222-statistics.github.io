@@ -492,9 +492,9 @@
   {
     "objectID": "course-materials/week2.html#class-materials",
     "href": "course-materials/week2.html#class-materials",
-    "title": "Data representations",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 2 / morning\nData representations and types\nCreating and indexing with different data types in R and Python\n\n\nday 2 / afternoon\nCommon data types and structures in EDS\nData in R: accessing / updating elements & casting continued"
+    "title": "Ordinary least squares",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
   },
   {
     "objectID": "course-materials/week2.html#end-of-day-practice",
@@ -513,9 +513,9 @@
   {
     "objectID": "course-materials/week1.html#class-materials",
     "href": "course-materials/week1.html#class-materials",
-    "title": "Intro to programming",
-    "section": "Class materials",
-    "text": "Class materials\n\n\n\n\n\n\n\n\n Session\n Lecture slides\n Interactive session\n\n\n\n\nday 1 / morning\nCourse introduction, programming in EDS, meet our tools\nDon’t fear the Terminal - continuing with some commands, navigation, and more git\n\n\nday 1 / afternoon\nProject oriented workflows, file paths, naming things; good habits from the tidyverse style guide\nMeet here, project organization, adding data import to our workflow"
+    "title": "Summarizing data",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nChapters 4-6 in IMS  Variance (video)"
   },
   {
     "objectID": "course-materials/week1.html#end-of-day-practice",
@@ -634,21 +634,21 @@
     "href": "course-materials/week0.html",
     "title": "Course introduction",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse Intro & Motivation\nNone\nPreface, Chapters 1-2 in IMS  [optional] Gender Shades and video on RCTs"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse introduction\nNone\nPreface, Chapters 1-2 in IMS  [optional] Gender Shades and video on RCTs"
   },
   {
     "objectID": "course-materials/week0.html#class-materials",
     "href": "course-materials/week0.html#class-materials",
     "title": "Course introduction",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse Intro & Motivation\nNone\nPreface, Chapters 1-2 in IMS  [optional] Gender Shades and video on RCTs"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse introduction\nNone\nPreface, Chapters 1-2 in IMS  [optional] Gender Shades and video on RCTs"
   },
   {
     "objectID": "course-materials/week0.html#notes",
     "href": "course-materials/week0.html#notes",
     "title": "Course introduction",
     "section": "Notes",
-    "text": "Notes\n\nProf Czapanskiy will be gone weeks 0 and 1. Your TA, Leo, will cover during this time."
+    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. For week 0, please watch the recorded lecture, complete the reading, and answer the reading quiz on Canvas."
   },
   {
     "objectID": "course-materials/week10.html#class-materials",
@@ -1040,7 +1040,7 @@
     "href": "course-materials/interactive-sessions/interactive-session-7.html#easier-dates-and-times-with-lubridate",
     "title": "Interactive Session 7",
     "section": "4. Easier dates and times with {lubridate}",
-    "text": "4. Easier dates and times with {lubridate}\n\nWitness some lubridate magic:\n\nmy_date &lt;- \"03-15-1998\"\nlubridate::mdy(my_date)\n\n[1] \"1998-03-15\"\n\n\n\nmy_date &lt;- \"11/7/2003\"\nlubridate::mdy(my_date)\n\n[1] \"2003-11-07\"\n\n\n\nmy_date &lt;- \"08-Jun-1974\"\nlubridate::dmy(my_date)\n\n[1] \"1974-06-08\"\n\n\n\nmy_date &lt;- \"19610518\"\nlubridate::ymd(my_date)\n\n[1] \"1961-05-18\"\n\n\nISO 8601 for everyone!\n\n\nWait can it fail?\nYup. What happens if we give lubridate something that doesn’t make sense?\n\nlubridate::mdy(\"1942-08-30\")\n\nWarning: All formats failed to parse. No formats found.\n\n\n[1] NA\n\n# Nope.\n\n\nlubridate::dmy(\"09/12/84\")\n\n[1] \"1984-12-09\"\n\n# Wait...but couldn't that be correct? \n# Sure, you and your computer wouldn't know.\n# SO KNOW YOUR DATE FORMAT.\n\nIn other words, parsing dates can fail in multiple ways:\n\nThe parsing can fail because the values don’t make sense based on the order you gave it (e.g. “wait you’re telling me that the month is 17? Nope.”)\nThe parsing can work, but you messed up with the order - so the code runs, but the date stored is wrong. This is more dangerous.\n\nKNOW YOUR DATA.\n\n\nIt even makes it relatively easy to deal with times & time zones\nSee the Olson Names: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\nUse ymd-hm to convert this to a date time that R will understand.\nQuestion: Why am I using ymd_hm here?\n\ntime &lt;- \"2020-08-12 11:18\"\ntime &lt;- ymd_hm(time)\ntime # Note that the default is UTC\n\n[1] \"2020-08-12 11:18:00 UTC\"\n\nclass(time) # Class is POSIXct\n\n[1] \"POSIXct\" \"POSIXt\" \n\n# Convert to PDT:\nwith_tz(time, \"America/Los_Angeles\")\n\n[1] \"2020-08-12 04:18:00 PDT\"\n\n# Convert to AEST:\nwith_tz(time, \"Australia/Sydney\")\n\n[1] \"2020-08-12 21:18:00 AEST\"\n\n# pull just the time\nmy_time &lt;- lubridate::ymd_hms(time)\nweek(my_time)\n\n[1] 33\n\nday(my_time)\n\n[1] 12\n\nhour(my_time)\n\n[1] 11\n\nminute(my_time)\n\n[1] 18\n\nsecond(my_time)\n\n[1] 0\n\n\n\nMore time examples:\n\n# Get your system time\ncomp_time &lt;- Sys.time()\n\n\n# Convert comp_time to Europe/Belgrade time: \nwith_tz(comp_time, \"Europe/Belgrade\")\n\n[1] \"2024-08-09 07:03:42 CEST\"\n\n\n\n\n\nPulling pieces\nYou can also get information about your dates using nice built-in lubridate functions.\n\nteddy_bday &lt;- lubridate::ymd(\"20170615\")\n\n# Return the date \nteddy_bday\n\n[1] \"2017-06-15\"\n\n\n\n# What day of the week? \nwday(teddy_bday, label = TRUE)\n\n[1] Thu\nLevels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat\n\n# What week of the year? \nweek(teddy_bday)\n\n[1] 24\n\n# Pull the year\nyear(teddy_bday)\n\n[1] 2017\n\n# Month\nmonth(teddy_bday)\n\n[1] 6\n\n\n\n\nDate pieces as new columns\nThis can be useful if you want to group your day in different ways for analyses or exploration. Use lubridate functions, in combination with mutate(), to add new columns containing separate pieces of the date, e.g. year, month, day in three separate columns).\nFor example, let’s just make a little data frame to try this out:\n\nurchin_counts &lt;- tribble(\n  ~date, ~species, ~size_mm,\n  \"10/3/2020\", \"purple\", 55,\n  \"10/4/2020\", \"red\", 48,\n  \"11/17/2020\", \"red\", 67\n)\n\nurchin_counts_ymd &lt;- urchin_counts %&gt;% \n  mutate(date = lubridate::mdy(date)) %&gt;% \n  mutate(year = year(date),\n         month = month(date),\n         day = day(date))\n\nurchin_counts_ymd\n\n# A tibble: 3 × 6\n  date       species size_mm  year month   day\n  &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;\n1 2020-10-03 purple       55  2020    10     3\n2 2020-10-04 red          48  2020    10     4\n3 2020-11-17 red          67  2020    11    17\n\n# And then we could use group_by() to find different summary values by group, for example.\n\n\nFind durations of times\n\nday_1 &lt;- lubridate::ymd(\"2020-01-06\")\nday_2 &lt;- lubridate::ymd(\"2020-05-18\")\nday_3 &lt;- lubridate::ymd(\"2020-05-19\")\n\n# Create a time interval\ntime_interval &lt;- interval(day_1, day_2)\n\n# Check the length in weeks\ntime_length(time_interval, \"week\")\n\n[1] 19\n\n# Check the length in years\ntime_length(time_interval, \"year\")\n\n[1] 0.363388"
+    "text": "4. Easier dates and times with {lubridate}\n\nWitness some lubridate magic:\n\nmy_date &lt;- \"03-15-1998\"\nlubridate::mdy(my_date)\n\n[1] \"1998-03-15\"\n\n\n\nmy_date &lt;- \"11/7/2003\"\nlubridate::mdy(my_date)\n\n[1] \"2003-11-07\"\n\n\n\nmy_date &lt;- \"08-Jun-1974\"\nlubridate::dmy(my_date)\n\n[1] \"1974-06-08\"\n\n\n\nmy_date &lt;- \"19610518\"\nlubridate::ymd(my_date)\n\n[1] \"1961-05-18\"\n\n\nISO 8601 for everyone!\n\n\nWait can it fail?\nYup. What happens if we give lubridate something that doesn’t make sense?\n\nlubridate::mdy(\"1942-08-30\")\n\nWarning: All formats failed to parse. No formats found.\n\n\n[1] NA\n\n# Nope.\n\n\nlubridate::dmy(\"09/12/84\")\n\n[1] \"1984-12-09\"\n\n# Wait...but couldn't that be correct? \n# Sure, you and your computer wouldn't know.\n# SO KNOW YOUR DATE FORMAT.\n\nIn other words, parsing dates can fail in multiple ways:\n\nThe parsing can fail because the values don’t make sense based on the order you gave it (e.g. “wait you’re telling me that the month is 17? Nope.”)\nThe parsing can work, but you messed up with the order - so the code runs, but the date stored is wrong. This is more dangerous.\n\nKNOW YOUR DATA.\n\n\nIt even makes it relatively easy to deal with times & time zones\nSee the Olson Names: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\nUse ymd-hm to convert this to a date time that R will understand.\nQuestion: Why am I using ymd_hm here?\n\ntime &lt;- \"2020-08-12 11:18\"\ntime &lt;- ymd_hm(time)\ntime # Note that the default is UTC\n\n[1] \"2020-08-12 11:18:00 UTC\"\n\nclass(time) # Class is POSIXct\n\n[1] \"POSIXct\" \"POSIXt\" \n\n# Convert to PDT:\nwith_tz(time, \"America/Los_Angeles\")\n\n[1] \"2020-08-12 04:18:00 PDT\"\n\n# Convert to AEST:\nwith_tz(time, \"Australia/Sydney\")\n\n[1] \"2020-08-12 21:18:00 AEST\"\n\n# pull just the time\nmy_time &lt;- lubridate::ymd_hms(time)\nweek(my_time)\n\n[1] 33\n\nday(my_time)\n\n[1] 12\n\nhour(my_time)\n\n[1] 11\n\nminute(my_time)\n\n[1] 18\n\nsecond(my_time)\n\n[1] 0\n\n\n\nMore time examples:\n\n# Get your system time\ncomp_time &lt;- Sys.time()\n\n\n# Convert comp_time to Europe/Belgrade time: \nwith_tz(comp_time, \"Europe/Belgrade\")\n\n[1] \"2024-08-09 21:04:44 CEST\"\n\n\n\n\n\nPulling pieces\nYou can also get information about your dates using nice built-in lubridate functions.\n\nteddy_bday &lt;- lubridate::ymd(\"20170615\")\n\n# Return the date \nteddy_bday\n\n[1] \"2017-06-15\"\n\n\n\n# What day of the week? \nwday(teddy_bday, label = TRUE)\n\n[1] Thu\nLevels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat\n\n# What week of the year? \nweek(teddy_bday)\n\n[1] 24\n\n# Pull the year\nyear(teddy_bday)\n\n[1] 2017\n\n# Month\nmonth(teddy_bday)\n\n[1] 6\n\n\n\n\nDate pieces as new columns\nThis can be useful if you want to group your day in different ways for analyses or exploration. Use lubridate functions, in combination with mutate(), to add new columns containing separate pieces of the date, e.g. year, month, day in three separate columns).\nFor example, let’s just make a little data frame to try this out:\n\nurchin_counts &lt;- tribble(\n  ~date, ~species, ~size_mm,\n  \"10/3/2020\", \"purple\", 55,\n  \"10/4/2020\", \"red\", 48,\n  \"11/17/2020\", \"red\", 67\n)\n\nurchin_counts_ymd &lt;- urchin_counts %&gt;% \n  mutate(date = lubridate::mdy(date)) %&gt;% \n  mutate(year = year(date),\n         month = month(date),\n         day = day(date))\n\nurchin_counts_ymd\n\n# A tibble: 3 × 6\n  date       species size_mm  year month   day\n  &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;\n1 2020-10-03 purple       55  2020    10     3\n2 2020-10-04 red          48  2020    10     4\n3 2020-11-17 red          67  2020    11    17\n\n# And then we could use group_by() to find different summary values by group, for example.\n\n\nFind durations of times\n\nday_1 &lt;- lubridate::ymd(\"2020-01-06\")\nday_2 &lt;- lubridate::ymd(\"2020-05-18\")\nday_3 &lt;- lubridate::ymd(\"2020-05-19\")\n\n# Create a time interval\ntime_interval &lt;- interval(day_1, day_2)\n\n# Check the length in weeks\ntime_length(time_interval, \"week\")\n\n[1] 19\n\n# Check the length in years\ntime_length(time_interval, \"year\")\n\n[1] 0.363388"
   },
   {
     "objectID": "course-materials/interactive-sessions/interactive-session-7.html#wrangling-strings-with-stringr",
@@ -1090,5 +1090,54 @@
     "title": "Interactive Session 6",
     "section": "4. Putting things together",
     "text": "4. Putting things together\nWe’ve learned a bunch of different useful functions for data wrangling in the {tidyverse}. But this may still feel a bit tedious.\nOften, for readability and efficiency, we may want to string together different steps into a sequence. We can do that using the pipe operator (%&gt;% in the tidyverse, or |&gt; is the sparkly new native pipe in R).\nLet’s take our raw data that we initially read in:\n\nhead(wb_indicators)\n\n# A tibble: 6 × 24\n  `Country Name` `Country Code` `Series Name`      `Series Code` `2001 [YR2001]`\n  &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;              &lt;chr&gt;                   &lt;dbl&gt;\n1 Afghanistan    AFG            Access to clean f… EG.CFT.ACCS.…            9.51\n2 Afghanistan    AFG            Access to electri… EG.ELC.ACCS.…           NA   \n3 Afghanistan    AFG            CO2 emissions (kt) EN.ATM.CO2E.…          810   \n4 Afghanistan    AFG            Fossil fuel energ… EG.USE.COMM.…           NA   \n5 Afghanistan    AFG            Level of water st… ER.H2O.FWST.…           NA   \n6 Albania        ALB            Access to clean f… EG.CFT.ACCS.…           42.7 \n# ℹ 19 more variables: `2002 [YR2002]` &lt;dbl&gt;, `2003 [YR2003]` &lt;dbl&gt;,\n#   `2004 [YR2004]` &lt;dbl&gt;, `2005 [YR2005]` &lt;dbl&gt;, `2006 [YR2006]` &lt;dbl&gt;,\n#   `2007 [YR2007]` &lt;dbl&gt;, `2008 [YR2008]` &lt;dbl&gt;, `2009 [YR2009]` &lt;dbl&gt;,\n#   `2010 [YR2010]` &lt;dbl&gt;, `2011 [YR2011]` &lt;dbl&gt;, `2012 [YR2012]` &lt;dbl&gt;,\n#   `2013 [YR2013]` &lt;dbl&gt;, `2014 [YR2014]` &lt;dbl&gt;, `2015 [YR2015]` &lt;dbl&gt;,\n#   `2016 [YR2016]` &lt;dbl&gt;, `2017 [YR2017]` &lt;dbl&gt;, `2018 [YR2018]` &lt;dbl&gt;,\n#   `2019 [YR2019]` &lt;dbl&gt;, `2020 [YR2020]` &lt;lgl&gt;\n\n\nLet’s tidy this up in a single sequence, with the pipe operator between.\nREMEMBER: Look at what you’ve done after every step in a sequence.\n\nwb_tidy &lt;- wb_indicators %&gt;% \n  tidyr::pivot_longer(cols = `2001 [YR2001]`:`2020 [YR2020]`,\n               names_to = \"year\",\n               values_to = \"indicator_value\") %&gt;% \n  tidyr::separate(col = year, into = c(\"year\", \"year_chr\"), sep = \" \") %&gt;% \n  dplyr::select(-'Country Code', -'Series Code', -year_chr) %&gt;% \n  tidyr::drop_na('Series Name') %&gt;% \n  tidyr::pivot_wider(names_from = 'Series Name', values_from = 'indicator_value') %&gt;% \n  dplyr::rename(country = 'Country Name', \n                year = 'year', \n                clean_fuels = 'Access to clean fuels and technologies for cooking (% of population)',\n                access_elec = 'Access to electricity (% of population)',\n                co2 = 'CO2 emissions (kt)',\n                fossil_fuels = 'Fossil fuel energy consumption (% of total)',\n                water_stress = 'Level of water stress: freshwater withdrawal as a proportion of available freshwater resources') %&gt;% \n  dplyr::mutate(year = as.numeric(year))\n  \n\n# Recall you can get the names of columns easily using names(df)\n\n\n\n\n\n\n\nCritical thinking\n\n\n\n\n\nHow long should a piped sequence be before I store the output and start a new piped sequence? Can a piped sequence be too long? Can I always pipe into everything?\n\n\n\n\nEnd Interactive Session 6"
+  },
+  {
+    "objectID": "course-materials/week1.html",
+    "href": "course-materials/week1.html",
+    "title": "Summarizing data",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nChapters 4-6 in IMS  Variance (video)"
+  },
+  {
+    "objectID": "course-materials/week1.html#notes",
+    "href": "course-materials/week1.html#notes",
+    "title": "Summarizing data",
+    "section": "Notes",
+    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. Your TA, Leonardo, will cover lecture and lab this week.\nHomework assignment 1 is due next Monday, October 7th."
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "EDS 222 Assignments",
+    "section": "",
+    "text": "Homework assignments will be distributed through GitHub classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/7 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 5pm\n\n\n3 (link)\nTuesday 10/22\nFriday 11/8 5pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 5pm"
+  },
+  {
+    "objectID": "assignments.html#homework-assignments",
+    "href": "assignments.html#homework-assignments",
+    "title": "EDS 222 Assignments",
+    "section": "",
+    "text": "Homework assignments will be distributed through GitHub classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/7 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 5pm\n\n\n3 (link)\nTuesday 10/22\nFriday 11/8 5pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 5pm"
+  },
+  {
+    "objectID": "assignments.html#final-project-proposal",
+    "href": "assignments.html#final-project-proposal",
+    "title": "EDS 222 Assignments",
+    "section": "Final project proposal",
+    "text": "Final project proposal\nIn addition to the homework assignments, a final project proposal in the form of one short paragraph describing your project is due November 12th (through Canvas)."
+  },
+  {
+    "objectID": "course-materials/week2.html",
+    "href": "course-materials/week2.html",
+    "title": "Ordinary least squares",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
+  },
+  {
+    "objectID": "course-materials/week2.html#notes",
+    "href": "course-materials/week2.html#notes",
+    "title": "Ordinary least squares",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 2 will be posted on Tuesday, October 8th."
   }
 ]

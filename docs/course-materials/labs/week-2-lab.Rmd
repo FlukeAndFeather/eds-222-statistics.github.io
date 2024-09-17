@@ -1,0 +1,186 @@
+---
+title: "EDS 222: Week 2: In-class Lab"
+author: "ANSWER KEY"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_html: default
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+---
+
+# Section 0: Setup
+
+Start by loading packages you need. This week we will be using the Plum Island Ecosystem (PIE) LTER fiddler crabs dataset from the `lterdatasampler` package. Please install the package if you have not already done so.
+
+```{r, echo=FALSE, eval=TRUE}
+# this code chunk installs lterdatasampler only if you don't already have it installed
+if(!require(lterdatasampler)){
+    install.packages("lterdatasampler")
+}
+```
+
+```{r, echo = FALSE, eval = TRUE}
+# You probably already have these packages installed, so let's just load them
+library(tidyverse)
+library(broom)
+library(gt)
+library(openintro)
+library(modelr)
+library(lterdatasampler)
+
+options(scipen = 999) # disable scientific notation
+
+# Set your file path here! Or, set this up as an .Rproj if you'd like.
+rootdir <- ("~/Dropbox/Teaching/UCSB/EDS_222/EDS222_data")
+
+# For labs, we want to see all our code
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Section 1: Visualizing Scatterplots
+
+Using similar concepts from a histogram or a density plot, we can use a scatter plot to visualize the relationship between two variables. It is **always** a good idea to look at a scatter plot when trying to establish the relationship between two variables. A scatter plot is a simple two-dimensional plot in which the two coordinates of each dot represent the values of two variables measured on a single observation. The **dependent** or response variable is typically on the vertical axis and the **independent** or explanatory variable on the horizontal axis.
+
+Here we will use a data frame on Atlantic marsh fiddler crabs that contains records from summer 2016 of fiddler crab body size and other variables obtained across three Long Term Ecological Research (LTER) sites across the Atlantic coast (more information available [here](https://github.com/lter/lterdatasampler)). Specifically, we are going to explore what is called Bergmann's rule:
+
+> "One of the best-known patterns in biogeography is Bergmann's rule. It predicts that organisms at higher latitudes are larger than ones at lower latitudes. Many organisms follow Bergmann's rule, including insects, birds, snakes, marine invertebrates, and terrestrial and marine mammals." (Johnson et al., 2019)
+
+We will try to see if (i) latitude associated with the size of PIE crabs, as Bergmann's rule would suggest; and (ii) latitude is associated with water temperature, as this may help us understand why Bergmann's rule holds.
+
+The `pie_crab` data sample can be called directly once you've loaded the `lterdatasampler` package. Take a look at your variable names and make a scatter plot showing (i) crab body size as a function of latitude and (ii) water temperature as a function of latitude. That is, treat latitude as your independent variable.
+
+1.  Make the two scatter plots described above.
+2.  Discuss whether these two variables appear correlated, what sign you anticipate the correlation to be, and the strength of the correlation you expect.
+
+```{r}
+
+```
+
+# Section 2: Calculating Correlations
+
+Visualizing values of the correlation between two quantities from their scatter plot can be very difficult. Research has shown that people's perception of the strength of these relationships can be influenced by design choices like the size of the graph and the aspect ratio,[^2] among other features. Hence, to more objectively report the relationship between two variables, we use correlation, computing the "correlation coefficient" $r$.[^3] Here, we will compute correlation coefficients for the two relationships plotted above.
+
+[^2]: The *aspect ratio* is the ratio of the width to the height of a figure or image.
+
+[^3]: Note: we just called this "correlation" in lecture, but people use "correlation" and "correlation coefficient" interchangeably. In most cases, this refers to the Pearson's correlation coefficient, as defined in lecture. There are other forms of correlation that are less common, such as rank correlation, but we won't use them in this class.
+
+**Exercise:**
+
+1.  Use the plots from section 1 to write your best estimate of the correlation coefficient between each of the two examples in section 1.
+
+<!-- -->
+
+(i) the size of crab and latitude:
+(ii) water temperature and latitude:
+
+<!-- -->
+
+2.  Use the `cor()` function in `R` to calculate the correlation coefficient between the two variables in (i) and the two in (ii). How close was your guess to the true answer?
+
+```{r}
+
+```
+
+```{r, fig.margin=TRUE}
+
+```
+
+# Section 3: Simple Linear Regression
+
+## Perform Simple Linear Regression
+
+To estimate the linear relationship between the variables explored above, we'll use `lm()` to fit a regression model using Ordinary Least Squares (OLS). The `lm()` function has two required arguments:
+
+(i) a formula that indicates which variable is the dependent variable and which is the independent variable;
+(ii) a data argument that identifies the data frame for the variables in (i).
+
+First let's consider the relationship between crab size and latitude. We assume there is a linear population relationship, specified as:
+
+$$\text{crab size} = \beta_0 + \beta_1 \text{latitude} + \epsilon$$
+
+**Exercise:**
+
+1.  Use `lm()` to estimate $\hat\beta_0$ and $\hat\beta_1$ using this sample of data. Use `summary(lm())` or `gt()` to visualize the regression results.
+
+2.  Interpret your two coefficients, paying careful attention to units.
+
+3.  Is your estimate of $\beta_0$ directly interpretable? What might you be concerned about when interpreting $\beta_0$?
+
+```{r}
+
+```
+
+**Exercises, continued**
+
+4.  Does your model suggest anything about the relationship between crab size and water temperature? Is this evidence that water temperature is driving the Bergmann's rule (i.e. the colder climate is causing the selection of larger organisms)?
+
+> "Bergmann originally hypothesized that the organisms he studied, birds, were larger in the colder, higher latitudes due to heat-conservation. But the heat-conservation hypothesis relies on internal regulation of body temperature and therefore does not apply to ectotherms,[^1] some of which also follow Bergmann's rule. There is likely no universal mechanism underpinning Bergmann's rule, regardless of [ecto- or endothermy](https://www.khanacademy.org/science/ap-biology/ecology-ap/energy-flow-through-ecosystems/a/endotherms-ectotherms). As a result, other mechanisms have been proposed to explain Bergmann's rule, including the starvation-resistant hypothesis, the diet-quality hypothesis, the enemy hypothesis, the resource rule, seasonality hypothesis, and the temperature--size rule (Johnson et al., 2019)."
+
+[^1]: Commonly referred to as "cold-blooded animals", ectotherms are animal that depends on external sources of body heat; such as fishes, amphibians, reptiles, and invertebrates.
+
+5.  [If we have time] Repeat the above steps for the relationship between latitude and water temperature.
+
+```{r}
+
+```
+
+## Visualize Regression [if we have time]
+
+Here, we visualize our simple linear regression models above using the scatter plots from Section 1.
+
+**Exercise:**
+
+Use the `geom_smooth()` function with method argument set to `lm`, which stands for "linear model", to add the best fit OLS line to your scatter plots from Section 1. Use the option `se = FALSE` to turn off estimates of uncertainty. Don't worry, we'll dig into those soon.
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+## Residuals, Sum of Squared Errors
+
+The difference between what was observed in the data and what was predicted from the regression line is what we call an "error" or a "residual." Observations that lie above the regression line exceeded their predicted value and have a *positive residual*. Observations that lie below the regression line are less than their predicted value and have a *negative residual*.
+
+Recall that one of our assumptions needed in order to prove that OLS has the **lowest variance** of all unbiased estimators was that the population error $u$ is: normally distributed, has a mean of zero, and has constant variance. While these assumptions are not directly testable because we can never observe $u$, we can use our regression residuals $e$ to assess the plausibility of these assumptions in the population.
+
+**Exercise:**
+
+Using the regression of crab size on latitude:
+
+1.  Add to the `pie_crab` dataframe a column of predicted total lengths $\hat y_i$ and a column of residuals $e_i = y_i-\hat y_i$.[^4]
+
+[^4]: **Hint:** In `dplyr` you can use `add_predictions(mod)` where `mod` is a regression model to generate a new variable containing your model's predicted values.
+
+```{r}
+
+```
+
+2.  Make a histogram of your residuals. Do they look approximately normally distributed?
+
+```{r}
+
+```
+
+
+3.  Compute the mean of your residuals. Is it basically zero?[^5]
+
+[^5]: **Note:** OLS gives you this one for free. The OLS regression line will always go through the middle of your data, as it aims to minimize squared errors. So, you'll always end up with sample errors that are mean zero. This doesn't necessarily mean that in your population $u$ is mean zero!
+
+```{r}
+
+```
+
+4.  Plot residuals against your independent variable, latitude. Does the variance look approximately constant across all values of latitude?
+
+```{r}
+
+```
+
+

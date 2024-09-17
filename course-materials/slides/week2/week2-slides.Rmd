@@ -1,9 +1,9 @@
 ---
 title: "Ordinary Least Squares"
 subtitle: "EDS 222"
-author: "Tamma Carleton"
+author: "Max Czapanskiy"
 #institute: ""
-date: "Fall 2023"
+date: "Fall 2024"
 output:
   xaringan::moon_reader:
     css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
@@ -19,8 +19,7 @@ library(pacman)
 p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp)
 # Define pink color
 red_pink <- "#e64173"
-# Notes directory
-dir_slides <- "~/Dropbox/Teaching/UCSB/EDS_222/EDS222_code/EDS-222-stats/slides/02-summstats/"
+
 # Knitr options
 opts_chunk$set(
   comment = "#>",
@@ -760,7 +759,7 @@ ggplot(data = tmp, aes(x, y)) +
 geom_polygon(fill = red_pink, alpha = 0.9) +
 geom_hline(yintercept = 0, color = "black") +
 geom_vline(xintercept = 0, size = 1, linetype = "dashed") +
-scale_x_continuous(breaks = 0, labels = TeX("$\\beta$")) +
+scale_x_continuous(breaks = 0, labels = expression("beta")) +
 theme_simple +
 theme(axis.text.x = element_text(size = 40))
 ```
@@ -778,7 +777,7 @@ ggplot(data = tmp, aes(x, y)) +
 geom_polygon(aes(x = x + 2), fill = "darkslategray", alpha = 0.9) +
 geom_hline(yintercept = 0, color = "black") +
 geom_vline(xintercept = 0, size = 1, linetype = "dashed") +
-scale_x_continuous(breaks = 0, labels = TeX("$\\beta$")) +
+scale_x_continuous(breaks = 0, labels = expression(beta)) +
 theme_simple +
 theme(axis.text.x = element_text(size = 40))
 ```
@@ -825,7 +824,7 @@ geom_polygon(data = d4, aes(x, y), fill = red_pink, alpha = 0.9) +
 geom_polygon(data = d5, aes(x, y), fill = "darkslategray", alpha = 0.8) +
 geom_hline(yintercept = 0, color = "black") +
 geom_vline(xintercept = 0, size = 1, linetype = "dashed") +
-scale_x_continuous(breaks = 0, labels = TeX("$\\beta$")) +
+scale_x_continuous(breaks = 0, labels = expression(beta)) +
 theme_simple +
 theme(axis.text.x = element_text(size = 20))
 ```
@@ -861,7 +860,7 @@ geom_polygon(data = d4, aes(x, y), fill = red_pink, alpha = 0.9) +
 geom_polygon(data = d5, aes(x, y), fill = "darkslategray", alpha = 0.8) +
 geom_hline(yintercept = 0, color = "black") +
 geom_vline(xintercept = 0, size = 1, linetype = "dashed") +
-scale_x_continuous(breaks = 0, labels = TeX("$\\beta$")) +
+scale_x_continuous(breaks = 0, labels = expression(beta)) +
 theme_simple +
 theme(axis.text.x = element_text(size = 20))
 ```

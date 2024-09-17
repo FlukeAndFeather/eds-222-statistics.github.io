@@ -3,6 +3,7 @@ project:
   output-dir: docs
   render:
     - "*.qmd"
+    - "*.rmd"
 
 website:
   navbar:
@@ -15,28 +16,30 @@ website:
         target: _blank
       - text: class materials
         menu:
-          - text: week 0 (9/24)
+          - text: week 0 (9/23 - 9/27)
             href: course-materials/week0.qmd
-          - text: week 1 (10/1)
+          - text: week 1 (9/30 - 10/4)
             href: course-materials/week1.qmd
-          - text: week 2 (10/8)
+          - text: week 2 (10/7 - 10/11)
             href: course-materials/week2.qmd
-          - text: week 3 (10/15)
+          - text: week 3 (10/14 - 10/18)
             href: course-materials/week3.qmd
-          - text: week 4 (10/22)
+          - text: week 4 (10/21 - 10/25)
             href: course-materials/week4.qmd
-          - text: week 5 (10/29)
+          - text: week 5 (10/28 - 11/1)
             href: course-materials/week5.qmd
-          - text: week 6 (11/5)
+          - text: week 6 (11/4 - 11/8)
             href: course-materials/week6.qmd
-          - text: week 7 (11/12)
+          - text: week 7 (11/11 - 11/15)
             href: course-materials/week7.qmd
-          - text: week 8 (11/19)
+          - text: week 8 (11/18 - 11/22)
             href: course-materials/week8.qmd
-          - text: week 9 (11/26)
+          - text: week 9 (11/25 - 11/29)
             href: course-materials/week9.qmd
-          - text: week 10 (12/3)
+          - text: week 10 (12/2 - 12/6)
             href: course-materials/week10.qmd
+      - href: assignments.qmd
+        text: assignments
       - icon: github
         href: https://github.com/eds-222-statistics
         target: _blank

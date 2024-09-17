@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Tuesday August 13th, 2024">
+<meta name="description" content="October 7th - October 11th">
 
-<title>Data representations</title>
+<title>Ordinary least squares</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -105,50 +105,54 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-class-materials">    
         <li>
     <a class="dropdown-item" href="../course-materials/week0.html">
- <span class="dropdown-text">week 0 (9/24)</span></a>
+ <span class="dropdown-text">week 0 (9/23 - 9/27)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week1.html">
- <span class="dropdown-text">week 1 (10/1)</span></a>
+ <span class="dropdown-text">week 1 (9/30 - 10/4)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week2.html">
- <span class="dropdown-text">week 2 (10/8)</span></a>
+ <span class="dropdown-text">week 2 (10/7 - 10/11)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week3.html">
- <span class="dropdown-text">week 3 (10/15)</span></a>
+ <span class="dropdown-text">week 3 (10/14 - 10/18)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week4.html">
- <span class="dropdown-text">week 4 (10/22)</span></a>
+ <span class="dropdown-text">week 4 (10/21 - 10/25)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week5.html">
- <span class="dropdown-text">week 5 (10/29)</span></a>
+ <span class="dropdown-text">week 5 (10/28 - 11/1)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week6.html">
- <span class="dropdown-text">week 6 (11/5)</span></a>
+ <span class="dropdown-text">week 6 (11/4 - 11/8)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week7.html">
- <span class="dropdown-text">week 7 (11/12)</span></a>
+ <span class="dropdown-text">week 7 (11/11 - 11/15)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week8.html">
- <span class="dropdown-text">week 8 (11/19)</span></a>
+ <span class="dropdown-text">week 8 (11/18 - 11/22)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week9.html">
- <span class="dropdown-text">week 9 (11/26)</span></a>
+ <span class="dropdown-text">week 9 (11/25 - 11/29)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../course-materials/week10.html">
- <span class="dropdown-text">week 10 (12/3)</span></a>
+ <span class="dropdown-text">week 10 (12/2 - 12/6)</span></a>
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../assignments.html"> 
+<span class="menu-text">assignments</span></a>
+  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/eds-222-statistics" target="_blank"> <i class="bi bi-github" role="img">
 </i> 
@@ -165,11 +169,11 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Data representations</h1>
-            <p class="subtitle lead">Day 2</p>
+      <h1 class="title">Ordinary least squares</h1>
+            <p class="subtitle lead">Week 2</p>
                   <div>
         <div class="description">
-          Tuesday August 13<sup>th</sup>, 2024
+          October 7<sup>th</sup> - October 11<sup>th</sup>
         </div>
       </div>
                 </div>
@@ -193,8 +197,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#class-materials" id="toc-class-materials" class="nav-link active" data-scroll-target="#class-materials">Class materials</a></li>
-  <li><a href="#end-of-day-practice" id="toc-end-of-day-practice" class="nav-link" data-scroll-target="#end-of-day-practice">End-of-day practice</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
   </ul>
 </nav>
     </div>
@@ -205,20 +208,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/horst-data-types.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="gray-text center-text">
-<p><em>Artwork by <a href="https://allisonhorst.com/">Allison Horst</a></em></p>
-</div>
-<!-- ## Pre-class prep -->
-<!-- No pre-class prep before our first day of class! -->
 <section id="class-materials" class="level2">
 <h2 class="anchored" data-anchor-id="class-materials">Class materials</h2>
 <table class="table-hover table-bordered caption-top table">
@@ -229,35 +218,25 @@ ul.task-list li input[type="checkbox"] {
 </colgroup>
 <thead>
 <tr class="header">
-<th><i class="fa-solid fa-calendar-day" title="A calendary with one day highlighted" aria-label="calendar-day"></i> Session</th>
 <th><i class="fa-solid fa-person-chalkboard" title="A person motioning at a chalkboard" aria-label="person-chalkboard"></i> Lecture slides</th>
-<th><i class="fa-solid fa-laptop-code" title="A laptop with on-screen code" aria-label="laptop-code"></i> Interactive session</th>
+<th><i class="fa-solid fa-laptop-code" title="A laptop with on-screen code" aria-label="laptop-code"></i> Lab activity</th>
+<th><i class="fa-solid fa-book-open-reader" title="A person holding an open book" aria-label="book-open-reader"></i> Reading</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>day 2 / morning</td>
-<td><a href="https://docs.google.com/presentation/d/1P8-NoqJz0dvKRBhSEiI73XHMzQy2vvlpj9P9a9c1Dtc/present?usp=sharing" target="_blank">Data representations and types</a></td>
-<td><a href="../course-materials/interactive-sessions/interactive-session-2a.html" target="_blank">Creating and indexing with different data types in R and Python</a></td>
-</tr>
-<tr class="even">
-<td>day 2 / afternoon</td>
-<td><a href="https://docs.google.com/presentation/d/14h2Re_ceXFlRzSWlToOE3GnJiOJUuPK_YgJ_xggY7MI/present?usp=sharing" target="_blank">Common data types and structures in EDS</a></td>
-<td><a href="../course-materials/interactive-sessions/interactive-session-2b.html" target="_blank">Data in R: accessing / updating elements &amp; casting continued</a></td>
+<td><a href="slides/week2/week2-slides.html" target="_blank">Ordinary least squares</a></td>
+<td><a href="labs/week-2-lab.Rmd" target="&quot;_blank">Ordinary least squares in R</a></td>
+<td>Chapter 7 in <em>IMS</em> <br> <a href="https://dlsun.github.io/probability/covariance.html" target="_blank">Covariance (video)</a> <br> <a href="https://www.econometrics-with-r.org/4-lrwor.html" target="_blank">Linear regression with one regressor (video)</a></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="end-of-day-practice" class="level2">
-<h2 class="anchored" data-anchor-id="end-of-day-practice">End-of-day practice</h2>
-<p>Complete the following tasks / activities before heading home for the day!</p>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
 <ul>
-<li><a href="../course-materials/eod-practice/eod-day2.html" target="_blank"><i class="fa-solid fa-pencil" title="A pencil" aria-label="pencil"></i> <strong>Day 2 Practice:</strong> Exploring data types, indexing, importing, and plotting</a></li>
+<li>Homework assignment 2 will be posted on Tuesday, October 8<sup>th</sup>.</li>
 </ul>
-</section>
-<section id="additional-resources" class="level2">
-<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
-<p>TBD</p>
 
 
 </section>

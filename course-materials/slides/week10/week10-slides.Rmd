@@ -16,15 +16,12 @@ output:
 ```{r Setup, include = F}
 options(htmltools.dir.version = FALSE)
 library(pacman)
-p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp,gg3D,lubridate,slider, feasts, tsibble)
-
-rootdir <- ("~/Dropbox/Teaching/UCSB/EDS_222/EDS222_data")
-source(file.path(rootdir,"labs","_common.R"))
+p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp,gg3D,lubridate,slider, feasts, tsibble, readr,
+tidyr)
 
 # Define pink color
 red_pink <- "#e64173"
-# Notes directory
-dir_slides <- "~/Dropbox/Teaching/UCSB/EDS_222/EDS222_code/EDS-222-stats/slides/08-timeseries/"
+
 # Knitr options
 opts_chunk$set(
   comment = "#>",
@@ -811,7 +808,7 @@ In addition, .purple[current salmon returns affect future salmon returns]—we'r
 
 ## Hint: Autocorrelation Function (ACF)
 
-```{r, echo=F, fig.height=1}
+```{r, echo=F, fig.height=2}
 acf(nottdf$temperature, lag.max=12)
 ```
 

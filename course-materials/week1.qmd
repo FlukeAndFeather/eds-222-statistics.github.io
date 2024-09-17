@@ -1,40 +1,18 @@
 ---
-title: "Intro to programming"
-subtitle: "Day 1"
-description: "Monday August 12^th^, 2024"
+title: "Summarizing data"
+subtitle: "Week 1"
+description: "September 30^th^ - October 4^th^"
 ---
-
-```{r}
-#| eval: true
-#| echo: false
-#| out-width: "80%"
-#| fig-align: "center"
-knitr::include_graphics("images/horst-welcome.png")
-```
-
-:::{.gray-text .center-text}
-*Artwork by [Allison Horst](https://allisonhorst.com/)*
-:::
-
-<!-- ## Pre-class prep -->
-
-<!-- No pre-class prep before our first day of class! -->
 
 ## Class materials
 
-| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Interactive session |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| day 1 / morning   | [Course introduction, programming in EDS, meet our tools](https://docs.google.com/presentation/d/1rQhErlT1nBF1xs9bzPWRMzGBeSTnNuSDV5vW7eYEswo/present?usp=sharing){target="_blank"} | [Don't fear the Terminal - continuing with some commands, navigation, and more git](interactive-sessions/interactive-session-1a.qmd){target="_blank"} |
-| day 1 / afternoon | [Project oriented workflows, file paths, naming things;](https://docs.google.com/presentation/d/10AOZ2Qkl011zhhICHGLG5nR6pfumvAC8Ce-_dg-DXfs/present?usp=sharing){target="_blank"} good habits from the [tidyverse style guide](https://style.tidyverse.org/){target="_blank"} | [Meet `here`, project organization, adding data import to our workflow](interactive-sessions/interactive-session-1b.qmd){target="_blank"} |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|----|----|----|
+| [Summarizing data](slides/week1/week1-slides.html){target="_blank"} | [Summarizing data in R](labs/week-1-lab.Rmd){target="_blank} | Chapters 4-6 in *IMS* <br /> [Variance (video)](https://dlsun.github.io/probability/variance.html#theory-25){target="_blank"}
 : {.hover .bordered tbl-colwidths="[20,40,40]"} 
 
-## End-of-day practice
+## Notes
 
-Complete the following tasks / activities before heading home for the day!
+* Prof Czapanskiy will be away weeks 0 and 1. Your TA, Leonardo, will cover lecture and lab this week.
 
-- [{{< fa pencil title="A pencil" >}} **Day 1 Practice:** Project organization, data import, file paths](eod-practice/eod-day1.qmd){target="_blank"}
-
-## Additional Resources
-
-TBD
-
+* Homework assignment 1 is due next Monday, October 7^th^.

@@ -18,13 +18,9 @@ options(htmltools.dir.version = FALSE)
 library(pacman, dplyr)
 p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp,parallel,gg3D)
 
-rootdir <- ("~/Dropbox/Teaching/UCSB/EDS_222/EDS222_data")
-source(file.path(rootdir,"labs","_common.R"))
-
 # Define pink color
 red_pink <- "#e64173"
-# Notes directory
-dir_slides <- "~/Dropbox/Teaching/UCSB/EDS_222/EDS222_code/EDS-222-stats/slides/06-nonlinearmodels/"
+
 # Knitr options
 opts_chunk$set(
   comment = "#>",
@@ -66,8 +62,6 @@ theme_axes <- theme_empty + theme(
   axis.title = element_text(size = 18),
   plot.margin = structure(c(0, 0, 0.1, 0), unit = "lines", valid.unit = 3L, class = "unit"),
 )
-
-source("../../labs/_common.R")
 
 ```
 
@@ -716,7 +710,7 @@ resume_names_full <- resume %>%
   select(firstname, race, gender) %>% 
   distinct(firstname, .keep_all = TRUE) %>% 
   arrange(firstname) %>%
-  rownames_to_column() %>% 
+  as_tibble(rownames = "rowname") %>% 
   mutate(
     rowname = as.numeric(rowname), 
     column = cut(rowname, breaks = c(0, 12, 24, 36)),
