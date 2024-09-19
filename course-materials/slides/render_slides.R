@@ -5,7 +5,7 @@ slides_rmd <- dir("course-materials/slides",
                   full.names = TRUE)
 
 # Render each to docs/course-materials/slides
-for (s in slides_rmd[-1]) {
+for (s in slides_rmd) {
   # Is there an existing output, and is it more recent than the source file?
   s_html <- file.path("docs",
                       dirname(s),
