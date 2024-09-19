@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Logistic Regression (and other nonlinear models)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Max Czapanskiy" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my-css.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Logistic Regression (and other nonlinear models)
+]
+.subtitle[
+## EDS 222
+]
+.author[
+### Max Czapanskiy
+]
+.date[
+### Fall 2024
+]
+
+---
+
+
+
+
+&lt;style type="text/css"&gt;
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+&lt;/style&gt;
+
+# Announcements/check-in
+
+---
+
+# Final project
+
+
+### Goal:
+
+Apply **some of** the statistical concepts you have learned in this course to **answer an environmental data science question**.&lt;sup&gt;*&lt;/sup&gt; 
+
+--
+
+### Two parts:
+
+Deliverable 1: Technical blog post. Some examples:
+  + [G-FEED](http://www.g-feed.com/2020/09/indirect-mortality-from-recent.html)
+  + [emLab](https://emlab.ucsb.edu/blog/summertime-blues)
+  + [MEDS '22, ex. 1](https://cullen-molitor.github.io/posts/2021-12-05-species-density-sst-lagsst/)
+  + [MEDS '22, ex. 2](https://jake-eisaguirre.github.io/posts/2021-11-29-mpasandkelp/)
+  + [MEDS '22, ex. 3](https://hdolinh.github.io/posts/2021-11-14-stats-final/)
+
+---
+
+# Final project
+
+
+### Goal:
+
+Apply **some of** the statistical concepts you have learned in this course to **answer an environmental data science question**.&lt;sup&gt;*&lt;/sup&gt; 
+
+--
+
+### Two parts:
+  
+Deliverable 2: Three-minute in-class presentation during final exam slot (8-11am, 12/10)
+
+
+.footnote[
+[*]: Your project _must_ include concepts from the second half of the course.
+] 
+
+---
+
+# Final project
+
+### Proposal: 
+
+Short paragraph (4-5 sentences) describing your proposed project. Motivate the question, describe possible data sources, suggest possible analyses. 
+
+**Email Max your proposal** at maxczap@ucsb.edu by 5pm on November 8th. 
+
+---
+
+# Final project
+
+Full guidelines on our [Resources Page](https://tcarleton.github.io/EDS-222-stats/resources.html)
+
+### Some example topics:
+
+- Are political views on climate change associated with recent natural disaster exposure? 
+
+--
+
+- Detecting trends in water quality for indigenous communities in Chile
+
+--
+
+- Spatial patterns of deforestation during COVID-19
+
+--
+
+- Are there gendered health effects of wildfire smoke?
+
+---
+
+name: Overview
+
+# Today
+
+#### More on nonlinear relationships with linear regression models
+Log-linear, log-log regressions
+
+--
+
+#### Logistic regression
+How do we model binary outcomes? 
+
+---
+
+layout: false
+class: clear, middle, inverse
+# Nonlinear relationships in linear regression models
+
+---
+
+# Nonlinear transformations
+
+- Our linearity assumption requires that **parameters enter linearly** (_i.e._, the `\(\beta_k\)` multiplied by variables)
+- We allow nonlinear relationships between `\(y\)` and the explanatory variables `\(x\)`.
+
+**Example: Polynomials**
+
+`$$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + u_i$$`
+
+`$$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + u_i$$`
+
+`$$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + u_i$$`
+
+...
+
+---
+
+# Polynomials
+
+- Recall the relationship between **temperature** and **harmful algal blooms**:
+
+$$ area_i = \beta_0 + \beta_1 temperature_i + \beta_2 temperature_i^2 + u_i$$
+
+&lt;img src="week6-slides_files/figure-html/polys-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Polynomials
+
+Estimating polynomial regressions in `R`:
+
+```r
+blooms_df = blooms_df %&gt;% mutate(temp2 = temp^2)
+summary(lm(area~temp+temp2, data=blooms_df))
+```
+
+```
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = area ~ temp + temp2, data = blooms_df)
+#&gt; 
+#&gt; Residuals:
+#&gt;      Min       1Q   Median       3Q      Max 
+#&gt; -12.5966  -2.0923  -0.1423   1.9951   9.4874 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)  0.06363    0.29249   0.218    0.828    
+#&gt; temp         0.62544    0.44007   1.421    0.156    
+#&gt; temp2        1.92118    0.14160  13.567   &lt;2e-16 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 3.021 on 997 degrees of freedom
+#&gt; Multiple R-squared:  0.7772,	Adjusted R-squared:  0.7768 
+#&gt; F-statistic:  1739 on 2 and 997 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+
+# Other nonlinear-in-X regressions
+
+- **Polynomials** and **interactions:** `\(y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{1i}^2 + \beta_3 x_{2i} + \beta_4 x_{2i}^2 + \beta_5 \left( x_{1i} x_{2i} \right) + u_i\)` (more on this today)
+
+- **Exponentials** `\(\log(y_i) = \beta_0 + \beta_2 e^{x_{2i}} + u_i\)` 
+
+- **Logs:** `\(\log(y_i) = \beta_0 + \beta_1 x_{1i} + u_i\)` (Today!)
+
+- **Indicators** and **thresholds:** `\(y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 \, \mathbb{I}(x_{1i} \geq 100) + u_i\)`
+
+--
+
+In all cases, the effect of a change in `\(x\)` on `\(y\)` will vary depending on your baseline level of `\(x\)`. This is not true with linear relationships! 
+
+
+---
+
+# Log-linear specification
+
+You will frequently see logged&lt;sup&gt;*&lt;/sup&gt;  outcome variables with linear (non-logged) explanatory variables, _e.g._,
+
+$$ \log(\text{area}_i) = \beta_0 + \beta_1 \, \text{temperature}_i + u_i $$
+
+This specification changes our interpretation of the slope coefficients.
+
+--
+
+**Interpretation**
+
+- A one-unit increase in our explanatory variable increases the outcome variable by approximately `\(\beta_1\times 100\)` percent.
+
+- *Example:* If `\(\beta_1 = 0.03\)`, an additional degree of warming increases algal bloom area by approximately 3 percent.
+
+.footnote[
+[*]: When I say "log", I mean "natural log", i.e. `\(ln(x) = log_e(x)\)`.
+] 
+
+---
+
+# Review: Percent changes
+
+- What is a percent change again, anyway?
+
+--
+
+- Local gasoline prices were $5/gallon, but last month increased by 12%. How much are they now?
+
+--
+
+$$ 5(1+0.12) = 5\times1.12 = 5.6$$ 
+--
+
+Can also write this as `$$0.12 = \frac{5.6-5}{5}$$`
+
+--
+
+Generally, we have that when `\(y\)` increases by `\(r\)` percent, our new value is `\(y(1+r)\)`.
+
+$$ r = \frac{y_2 - y_1}{y_1}$$
+
+---
+
+# Log differences as percent changes?
+
+Near `\(y=1\)`, `\(log(y)\)` is approximately slope 1, i.e. `\(log(y) \approx y-1\)`
+
+
+&lt;img src="week6-slides_files/figure-html/logs-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Log differences as percent changes?
+
+Near `\(y=1\)`, `\(log(y)\)` is approximately slope 1, i.e. `\(log(y) \approx y-1\)`
+
+Therefore, `\(log(1+r) \approx r\)` **when `\(r\)` is small!** (so that you're still close to 1 on the x-axis)
+
+--
+
+This lets us show that:
+
+`$$log(y(1+r))  =  log(y) + log(1+r) \approx log(y) + r$$`
+
+So when we see `\(log(y)\)` go up by `\(r\)`, we can say that represents an `\(r \times 100\)` percent change in `\(y\)`!
+
+--
+
+For example: `\(y\)` is increased by 5% means `\(y\)` increases to `\(y(1.05)\)`. The log of `\(y\)` changes from `\(log(y)\)` to approximately `\(log(y) + 0.05\)`.  Increasing `\(y\)` by 5% is therefore (almost) equivalent to adding 0.05 to `\(log(y)\)`.
+
+---
+
+# Log-linear specification
+
+Back to our log-linear model
+
+$$ \log(y_i) = \beta_0 + \beta_1 \, x_i + u $$
+
+A one unit change in `\(x\)` causes a `\(\beta_1\)` unit change in `\(log(y)\)`. 
+
+This is equivalent to a `\(\beta_1\)` **percentage change** in `\(y\)`.
+
+---
+
+# Log-linear specification
+
+Because the log-linear specification comes with a different interpretation, you need to make sure it fits your data-generating process/model.
+
+Does `\(x\)` change `\(y\)` in levels (_e.g._, a 3-unit increase) or percentages (_e.g._, a 10-percent increase)?
+
+--
+
+_I.e._, you need to be sure an exponential relationship makes sense:
+
+$$ \log(y_i) = \beta_0 + \beta_1 \, x_i + u_i \iff y_i = e^{\beta_0 + \beta_1 x_i + u_i} $$
+
+Note: You are using linear regression to estimate a nonlinear-in-parameters relationship. This is the power of taking logs! 
+
+---
+
+# Log-linear specification
+
+&lt;img src="week6-slides_files/figure-html/log linear plot-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Log-log specification
+
+Similarly, log-log models are those where the outcome variable is logged *and* at least one explanatory variable is logged
+
+$$ \log(\text{log}_i) = \beta_0 + \beta_1 \, \log(\text{temperature}_i) + u_i $$
+
+**Interpretation:**
+
+- A one-percent increase in `\(x\)` will lead to a `\(\beta_1\)` percent change in `\(y\)`.
+- Often interpreted as an "elasticity" in economics.
+
+---
+
+# Log-log specification
+
+&lt;img src="week6-slides_files/figure-html/log log plot-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Log-linear with a binary variable
+
+**Note:** If you have a log-linear model with a binary indicator variable, the interpretation for the coefficient on that variable changes.
+
+Consider:
+
+`$$\log(y_i) = \beta_0 + \beta_1 x_{1i} + u_i$$`
+
+for binary variable `\(x_1\)`.
+
+The interpretation of `\(\beta_1\)` is now
+
+- When `\(x_1\)` changes from 0 to 1, `\(y\)` will change by `\(100 \times \left( e^{\beta_1} -1 \right)\)` percent.
+- When `\(x_1\)` changes from 1 to 0, `\(y\)` will change by `\(100 \times \left( e^{-\beta_1} -1 \right)\)` percent.
+
+
+---
+
+# When the approximation fails
+
+The nice interpretation so far relies on the fact that near 1, `\(log(y) \approx y-1\)` 
+  - So, for example, `\(log(y(1+r)) = log(y) + log(1+r) \approx log(y) + r\)`
+
+--
+
+What if `\(r\)` is large? E.g., `\(r\)`=0.8:
+  - `\(log(1*(1.8)) = log(1) + log(1.8) = 0.59 \neq log(1) + 0.8 = 0.8\)`
+
+--
+
+Exact percentage change (use for large predicted changes):
+
+If `\(log(y) = \beta_0 + \beta_1 x + \varepsilon\)`, then the percentage change in `\(y\)` for a one unit change in `\(x\)` is:
+
+$$\text{% change in y} = (e^{\beta_1}-1)\times 100 $$
+--
+
+Note that `\(e^x\)` in `R` is `exp(x)`
+
+---
+
+# When the approximation fails
+
+Example: Suppose in `\(log(y) = \beta_0 + \beta_1 x + \varepsilon\)`, we estimate that `\(\hat\beta_1 = 0.6\)` 
+
+--
+
+This looks like a 1 unit change in `\(x\)` causes a 60% change in `\(y\)`. But the exact percentage change in `\(y\)` is:
+  + `\((e^{0.6}-1)\times 100 = 0.82 \times 100 \implies 82\)` percent change in `\(y\)`
+  + Note that the imprecise approximation for large changes will always be biased _downwards_
+
+--
+
+Can you just change units of `\(x\)`? 
+  + Yes, mechanically you can do this and avoid the issues with approximation
+  + But think hard about your problem! You probably care about understanding the impacts of a meaningful increase in `\(x\)`, not a tiny increase in `\(x\)` 
+  
+
+---
+
+layout: false
+class: clear, middle, inverse
+# Logistic regression
+
+---
+
+# Modeling binary outcomes 
+
+What do you do when your dependent variable takes on just two values? 
+
+&lt;img src="week6-slides_files/figure-html/binary-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Modeling binary outcomes 
+
+What's wrong with running our standard linear regression?
+
+$$\text{species present}_i = \beta_0  + \beta_1 \text{forest cover}_i + \varepsilon_i $$
+&lt;img src="week6-slides_files/figure-html/lpm-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Modeling probabilities
+
+- Our data take on the form `\(y_i = 1\)` or `\(y_i = 0\)`
+
+--
+
+- For each individual `\(i\)`, there is some probability `\(p_i\)` they have `\(y_i=1\)`, so probability `\(1-p_i\)` they have `\(y_i=0\)`
+
+--
+
+- We are interested in how a change in variable `\(x\)` changes the probability of `\(y_i=1\)`
+  + That is, **we model `\(p_i\)`** as a function of independent variables
+  
+--
+
+- Basic idea: we need some transformation of the _probability_ that lets us write:
+
+`$$transformation(p_i) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$`
+
+---
+
+# Modeling probabilities
+
+Basic idea: we need some transformation of the _probability_ that lets us write:
+
+`$$transformation(p_i) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$`
+
+- We want this transformation to ensure that:
+  + we can input a value between 0 and 1 and return a continuous variable (i.e., we want our outcome variable to be a continuous variable)
+  + our predicted probabilities `\(\hat p_i\)` (inverse of the transformation) will fall between 0 and 1
+
+---
+
+# Logistic regression
+
+The **logit function** is the most commonly used nonlinear transformation that ensures predicted probabilities between 0 and 1:
+
+&lt;img src="week6-slides_files/figure-html/logit-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Logistic regression
+
+The **logit function** is the most commonly used nonlinear transformation that ensures predicted probabilities between 0 and 1:
+
+`$$logit(p) = log\left(\frac{p}{1-p}\right)$$`
+
+--
+
+We can then write:
+
+`$$log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$`
+
+The logit function is also called "log odds" because the "odds ratio" is the probability of success, `\(p_i\)`, divided by the probability of failure, `\(1-p_i\)`
+
+--
+
+Because of the properties of the logit function (see last graph), this ensures we will generate predicted probabilities `\(\hat{p}_i\)` that fall between 0 and 1.
+
+---
+
+# Logistic regression
+
+How do we estimate this regression?
+
+`$$log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$`
+
+--
+
+- Can't use linear regression -- we don't have data on `\(p_i\)`! We only see `\(y_i = 1\)` or `\(y_i = 0\)`
+- We use what's called "maximum likelihood estimation" (alternatively, can use gradient descent)
+  + Essentially, this asks: what combination of parameters `\(\beta_0, \beta_1, ...\)` maximizes the likelihood that we would observe the data we have? 
+  + E.g., if you have high `\(x_1\)` values coinciding with many `\(y_i =1\)` values, likely that `\(\beta_1\)` is high and that `\(p_i\)` is high for observations with large `\(x_1\)`
+
+---
+
+# Logistic regression
+
+How do we estimate this regression?
+
+`$$log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$`
+
+All you really need to know on estimation is...
+  + That we use `glm()` instead of `lm()` -- GLM for "generalized linear model" 
+  + Interpreting coefficients is a lot more complicated! (next slide)
+
+---
+
+# Interpreting logistic regression output
+
+`$$log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$`
+
+- `\(\beta_k\)`: effect of a 1-unit change in `\(x_k\)` on the log-odds of `\(y = 1\)` 🤔
+
+--
+
+We need to transform our output to get predicted probabilities back! 
+
+$$
+`\begin{aligned}
+\log\left( \frac{p_i}{1-p_i} \right) &amp;= b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i} \\
+\frac{p_i}{1-p_i} &amp;= e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i &amp;= \left( 1 - p_i \right) e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i &amp;= e^{b_0 + b_1 x_{1,i}  + \cdots + b_k x_{k,i}} - p_i \times e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i + p_i \text{ } e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} &amp;= e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i(1 + e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}}) &amp;= e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}} \\
+p_i &amp;= \frac{e^{b_0 + b_1 x_{1,i}  + \cdots + b_k x_{k,i}}}{1 + e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}}}
+\end{aligned}`
+$$
+
+---
+
+# Interpreting logistic regression output
+
+This means that if you run a regression with many independent variables, you need to plug your estimated `\(\hat\beta\)`'s _and_ the values of all your `\(x\)` variables into this equation to get back a predicted probability for any individual:
+
+`$$p_i = \frac{e^{b_0 + b_1 x_{1,i}  + \cdots + b_k x_{k,i}}}{1 + e^{b_0 + b_1 x_{1,i} + \cdots + b_k x_{k,i}}}$$`
+--
+
+If you want to know the _effect_ of changing just one variable `\(x_j\)` on the probability `\(p_i\)`, you need to compute:
+
+$$
+`\begin{aligned}
+p_i(x_j+1) - p_i(x_j) &amp;= \frac{e^{b_0 + \cdots + b_j (x_{j,i}+1)  + \cdots + b_k x_{k,i}}}{1 + e^{b_0 + \cdots + b_j (x_{j,i}+1) + \cdots + b_k x_{k,i}}} - \frac{e^{b_0 + \cdots + b_j x_{j,i}  + \cdots + b_k x_{k,i}}}{1 + e^{b_0 + \cdots + b_j x_{j,i} + \cdots + b_k x_{k,i}}}
+\end{aligned}`
+$$
+
+--
+
+**Note** that this calculation depends on all the other `\(x\)`'s! And it will vary with the baseline level of `\(x_j\)` 
+
+---
+
+# Logistic regression: Example
+
+- Bertrand and Mullainathan (2003) study discrimination in hiring decisions
+- Authors created many fake resumes, randomly assigning different characteristics (name, sex, race, experience, honors, etc.)
+
+--
+
+- **Outcome variable is binary:** Did the resume get a call back from a (real) potential employer? 
+  + Yes: `\(y_i=1\)`
+  + No: `\(y_i=0\)`
+  
+
+- Manipulated first names to be those that are commonly associated with White or Black individuals
+- Random study design allows estimation of the causal effect of race on callback probability
+
+---
+
+# Logistic regression: Example
+
+
+```r
+resume &lt;- read_csv("bertrand_mullainathan_2003.csv")
+resume_names_full &lt;- resume %&gt;% 
+  select(firstname, race, sex) %&gt;% 
+  distinct(firstname, .keep_all = TRUE) %&gt;% 
+  arrange(firstname) %&gt;%
+  as_tibble(rownames = "rowname") %&gt;% 
+  mutate(
+    rowname = as.numeric(rowname), 
+    column = cut(rowname, breaks = c(0, 12, 24, 36)),
+    race = str_to_title(race),
+    sex = if_else(sex == "f", "female", "male"),
+    column = as.numeric(column)
+    ) %&gt;%
+  select(-rowname) %&gt;%
+  relocate(column)
+resume_names_1 &lt;- resume_names_full %&gt;% 
+  filter(column == 1) %&gt;%
+  select(-column)
+resume_names_2 &lt;- resume_names_full %&gt;% 
+  filter(column == 2) %&gt;%
+  select(-column)
+resume_names_3 &lt;- resume_names_full %&gt;% 
+  filter(column == 3) %&gt;%
+  select(-column)
+resume_names_1 %&gt;%
+  bind_cols(resume_names_2) %&gt;%
+  bind_cols(resume_names_3) %&gt;%
+  kbl(linesep = "", booktabs = TRUE, align = "lllllllll", 
+      col.names = c("first_name", "race", "sex",
+                    "first_name", "race", "sex",
+                    "first_name", "race", "sex"),
+      caption = "List of all 36 unique names along with the commonly inferred race and sex associated with these names.") %&gt;%
+  kable_styling(bootstrap_options = c("striped", "condensed"), 
+                latex_options = c("striped", "hold_position"), full_width = FALSE) %&gt;%
+  column_spec(4, border_left = T) %&gt;% 
+  column_spec(7, border_left = T)
+```
+
+&lt;table class="table table-striped table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;List of all 36 unique names along with the commonly inferred race and sex associated with these names.&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; first_name &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; race &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; sex &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; first_name &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; race &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; sex &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; first_name &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; race &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; sex &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aisha &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Hakim &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Laurie &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Allison &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Jamal &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Leroy &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Anne &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Jay &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Matthew &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Brad &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Jermaine &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Meredith &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Brendan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Jill &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Neil &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Brett &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Kareem &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Rasheed &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Carrie &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Keisha &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Sarah &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Darnell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Kenya &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Tamika &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ebony &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Kristen &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Tanisha &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Emily &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Lakisha &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Todd &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Geoffrey &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Latonya &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Tremayne &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Greg &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; W &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Latoya &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;border-left:1px solid;"&gt; Tyrone &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; male &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# Logistic regression: Example
+
+Variables included in the data (all randomly assigned):
+
+
+```r
+resume &lt;- resume %&gt;%
+  mutate(
+    sex = factor(sex == "m", levels = c(FALSE, TRUE), labels = c("woman", "man")),
+    received_callback = factor(call, levels = c(0, 1), labels = c("No", "Yes")),
+    college_degree = factor(education == 4, levels = c(FALSE, TRUE), labels = c("No", "Yes")),
+    honors = factor(honors),
+    military = factor(military),
+    has_email_address = factor(email, levels = c(0, 1), labels = c("No", "Yes")),
+    race = if_else(race == "black", "Black", "White"),
+    job_city = factor(city, levels = c("b", "c"), labels = c("Boston", "Chicago"))
+    ) %&gt;%
+  select(received_callback, job_city, college_degree, years_experience = yearsexp,
+         honors, military, has_email_address, race, sex)
+```
+
+
+```r
+resume_variables &lt;- tribble(
+  ~variable,           ~description,
+  "received_callback", "Specifies whether the employer called the applicant following submission of the application for the job.",
+  "job_city",          "City where the job was located: Boston or Chicago.",
+  "college_degree",    "An indicator for whether the resume listed a college degree.",
+  "years_experience",  "Number of years of experience listed on the resume.",
+  "honors",            "Indicator for the resume listing some sort of honors, e.g. employee of the month.",
+  "military",          "Indicator for if the resume listed any military experience.",
+  "has_email_address", "Indicator for if the resume listed an email address for the applicant.",
+  "race",              "Race of the applicant, implied by their first name listed on the resume.",
+  "sex",               "Sex of the applicant (limited to only male and female in this study), implied by the first name listed on the resume."
+)
+
+resume_variables[1:5,] %&gt;%
+  kbl(linesep = "", booktabs = TRUE) %&gt;%
+  kable_styling(bootstrap_options = c("striped", "condensed"),
+                latex_options = c("striped",  "font_size"=7), full_width = TRUE) %&gt;%
+  column_spec(1, monospace = TRUE) %&gt;%
+  column_spec(2, width = "30em")
+```
+
+&lt;table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; variable &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; description &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-family: monospace;"&gt; received_callback &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30em; "&gt; Specifies whether the employer called the applicant following submission of the application for the job. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-family: monospace;"&gt; job_city &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30em; "&gt; City where the job was located: Boston or Chicago. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-family: monospace;"&gt; college_degree &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30em; "&gt; An indicator for whether the resume listed a college degree. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-family: monospace;"&gt; years_experience &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30em; "&gt; Number of years of experience listed on the resume. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-family: monospace;"&gt; honors &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30em; "&gt; Indicator for the resume listing some sort of honors, e.g. employee of the month. &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# Logistic regression: Example
+
+Variables included in the data (all randomly assigned):
+
+
+```r
+resume_variables[6:9,] %&gt;%
+  kbl(linesep = "", booktabs = TRUE) %&gt;%
+  kable_styling(bootstrap_options = c("striped", "condensed"),
+                latex_options = c("striped",  "font_size"=7), full_width = TRUE) %&gt;%
+  column_spec(1, monospace = TRUE) %&gt;%
+  column_spec(2, width = "30em")
+```
+
+&lt;table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; variable &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; description &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-family: monospace;"&gt; military &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30em; "&gt; Indicator for if the resume listed any military experience. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-family: monospace;"&gt; has_email_address &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30em; "&gt; Indicator for if the resume listed an email address for the applicant. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-family: monospace;"&gt; race &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30em; "&gt; Race of the applicant, implied by their first name listed on the resume. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-family: monospace;"&gt; sex &lt;/td&gt;
+   &lt;td style="text-align:left;width: 30em; "&gt; Sex of the applicant (limited to only male and female in this study), implied by the first name listed on the resume. &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# Logistic Regression: example
+
+- First, we estimate a single predictor: `race`
+- `race` indicates whether the applicant is White or not (**Note:** `race` is also binary in this case!)
+- We find:
+
+`$$\log \left( \frac{\widehat{p}_i}{1-\widehat{p}_i} \right) = -2.67 + 0.44 \times {\texttt{race_White}}$$`
+
+a.  If a resume is randomly selected from the study and it has a Black associated name, what is the probability it resulted in a callback?
+
+b.  What would the probability be if the resume name was associated with White individuals?
+
+---
+
+# Logistic regression: Example
+
+`$$\log \left( \frac{\widehat{p}_i}{1-\widehat{p}_i} \right) = -2.67 + 0.44 \times {\texttt{race_white}}$$`
+
+
+a.  If a resume is randomly selected from the study and it has a Black associated name, what is the probability it resulted in a callback?
+
+--
+
+**Answer:** If a randomly chosen resume is associated with a Black name, then `race_white` takes the value of 0 and the right side of the model equation equals `\(-2.67\)`. Solving for `\(p_i\)` gives `\(log(\frac{\hat p_i}{1-\hat p_i}) = -2.67 \implies \hat p_i = \frac{e^{-2.67}}{1+e^{-2.67}} = 0.065\)`.   
+
+---
+
+# Logistic regression: Example
+
+`$$\log \left( \frac{\widehat{p}_i}{1-\widehat{p}_i} \right) = -2.67 + 0.44 \times {\texttt{race_white}}$$`
+
+b.  What would the probability be if the resume name was associated with White individuals?
+
+**Answer:** If the resume had a name associated with White individuals, then the right side of the model equation is `\(-2.67+0.44\times 1 = -2.23\)`. This translates into `\(\hat p_i = 0.097\)`.
+
+--
+
+**Conclude:** Being White increases the likelihood of a call back, by 3.2 percentage points.
+
+---
+
+# Logistic regression: Example
+
+**Use the same process** to compute predicted probabilities with multiple independent variables, you just have more calculations!
+
+--
+
+For example, you might estimate:
+
+$$
+`\begin{aligned}
+&amp;log \left(\frac{p}{1 - p}\right) \\
+&amp;= - 2.7162 - 0.4364 \times \texttt{job_city}_{\texttt{Chicago}} \\
+&amp; \quad \quad + 0.0206 \times \texttt{years_experience} \\
+&amp; \quad \quad + 0.7634 \times \texttt{honors} - 0.3443 \times \texttt{military} + 0.2221 \times \texttt{email} \\
+&amp; \quad \quad + 0.4429 \times \texttt{race}_{\texttt{White}} - 0.1959 \times \texttt{sex}_{\texttt{man}} 
+\end{aligned}`
+$$
+
+To predict callback probability for a White individual, you also need to know job location, experience, honors, military experience, whether they have an email, race, and sex!
+
+---
+
+# Logistic regression: Example
+
+For example, you might estimate:
+
+$$
+`\begin{aligned}
+&amp;log \left(\frac{p}{1 - p}\right) \\
+&amp;= - 2.7162 - 0.4364 \times \texttt{job_city}_{\texttt{Chicago}} \\
+&amp; \quad \quad + 0.0206 \times \texttt{years_experience} \\
+&amp; \quad \quad + 0.7634 \times \texttt{honors} - 0.3443 \times \texttt{military} + 0.2221 \times \texttt{email} \\
+&amp; \quad \quad + 0.4429 \times \texttt{race}_{\texttt{White}} - 0.1959 \times \texttt{sex}_{\texttt{man}} 
+\end{aligned}`
+$$
+
+
+Note: the effect of race on call back now varies based on all the other covariates! 
+  + Try it: Effect of being white for Chicago male with 10 years experience, an email, no honors and no military experience _versus_ a female with the same characteristics? 
+
+---
+
+# Multinomial logistic regression
+
+**What if** your outcome variable is categorical, not binary?
+
+--
+
+For example:
+  - Species
+  - Socioeconomic status
+  - Survey responses
+  - ...
+
+--
+
+**Multinomial logistic regression** generalizes the binary logistic regression you've seen here to work for multiple outcome categories
+  - Model predicts the probability an individual will fall into each category
+  - Beyond the scope of this class, but not a far leap from what you've seen here (lots of online resources -- ask me if you're interested!)
+
+---
+
+class: center, middle
+
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+Some slide components were borrowed from [Ed Rubin's](https://github.com/edrubin/EC421S20) awesome course materials.
+
+---
+exclude: true
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,8 +1,3 @@
-# Unstash files if stashed by stash_slides.R
-if (file.exists("temp-slides")) {
-  file.rename("temp_slides", file.path("docs", "course-materials", "slides"))
-}
-
 # Find all .Rmd files in the slides subdirectory
 slides_rmd <- dir("course-materials/slides",
                   pattern = "*.Rmd",
@@ -10,7 +5,7 @@ slides_rmd <- dir("course-materials/slides",
                   full.names = TRUE)
 
 # Render each to docs/course-materials/slides
-for (s in slides_rmd) {
+for (s in slides_rmd[-1]) {
   # Is there an existing output, and is it more recent than the source file?
   s_html <- file.path("docs",
                       dirname(s),
@@ -20,11 +15,10 @@ for (s in slides_rmd) {
     # Clear old output
     s_dir <- file.path("docs", dirname(s))
     unlink(s_dir, recursive = TRUE)
-    dir.create(s_dir)
+    dir.create(s_dir, recursive = TRUE)
     # Render file
     rmarkdown::render(s, envir = new.env())
     # Move outputs
-    dir(dirname(s), full.names = TRUE, pattern = "libs")
     for (o in c("libs", "-slides_files", "-slides.html")) {
       o_path <- dir(dirname(s), full.names = TRUE, pattern = o)
       file.rename(o_path, file.path("docs", o_path))
