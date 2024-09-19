@@ -58,30 +58,6 @@ theme_simple <- theme_bw() + theme(
 )
 ```
 
-
-# Announcements/check-in
-
-- Assignment #1: Grades posted
-  + Please ensure your `.html` file is compiled and pushed to GitHub
-  + Please do not push data to GitHub (generally a good rule to follow)
-  + Sandy to go over some areas of confusion
-
-- Assignment #2: Due 10/20, 5pm
-
---
-
-- Final project guidelines posted (under "Important Links" on homepage and on Resources tab)
-
---
-
-- Practice midterm questions posted sometime this week
-
---
-
-- Reiteration of COVID/illness policy
-
----
-
 name: Overview
 
 # Today

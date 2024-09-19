@@ -79,7 +79,7 @@ knitr::include_graphics("ash-cloud2.jpeg")
 
 # The scientific method: Example
 
-### **Step two:**  Ask a question (easy, also don't need stats)
+### **Step two:**  Ask a question (also don't need stats)
 
 #### Ex: I wonder if these aerosols could decrease crop yields?
 
@@ -510,7 +510,7 @@ par(par_og) # restore original par
 
 # Homework 1 (warmup): Logistics
 
-### Deadline: 10/09, 5pm 
+### Deadline: 10/7, 5pm 
 
 ### Where are the data?
 

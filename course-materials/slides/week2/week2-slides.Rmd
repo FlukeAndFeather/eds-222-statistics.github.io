@@ -85,11 +85,7 @@ name: Overview
 
 --
 
-- Assignment #2: To be posted this week, due 10/20, 5pm 
-
---
-
-- Flag on IMS and linear regression
+- Assignment #2: To be posted this week, due 10/18, 5pm 
 
 ---
 
