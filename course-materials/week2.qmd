@@ -6,10 +6,10 @@ description: "October 7^th^ - October 11^th^"
 
 ## Class materials
 
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
-|----|----|----|
-| [Ordinary least squares](slides/week2/week2-slides.html){target="_blank"} | [Ordinary least squares in R](labs/week-2-lab.Rmd){target="_blank} | Chapter 7 in *IMS* <br /> [Covariance (video)](https://dlsun.github.io/probability/covariance.html){target="_blank"} <br /> [Linear regression with one regressor (video)](https://www.econometrics-with-r.org/4-lrwor.html){target="_blank"}
-: {.hover .bordered tbl-colwidths="[30,35,35]"} 
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa comment-dots title="A message bubble with three dots" >}} Discussion section |  {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|----|----|----|----|
+| [Ordinary least squares](slides/week2/week2-slides.html){target="_blank"} | [Ordinary least squares in R](labs/week-2-lab.Rmd){target="_blank} | Law of Large Numbers, simulation in R | Chapter 7 in *IMS* <br /> [Covariance (video)](https://dlsun.github.io/probability/covariance.html){target="_blank"} <br /> [Linear regression with one regressor (video)](https://www.econometrics-with-r.org/4-lrwor.html){target="_blank"} |
+: {.hover .bordered} 
 
 ## Notes
 

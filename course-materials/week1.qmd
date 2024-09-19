@@ -6,9 +6,9 @@ description: "September 30^th^ - October 4^th^"
 
 ## Class materials
 
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
-|----|----|----|
-| [Summarizing data](slides/week1/week1-slides.html){target="_blank"} | [Summarizing data in R](labs/week-1-lab.Rmd){target="_blank} | Chapters 4-6 in *IMS* <br /> [Variance (video)](https://dlsun.github.io/probability/variance.html#theory-25){target="_blank"}
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa comment-dots title="A message bubble with three dots" >}} Discussion section | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|----|----|----|----|
+| [Summarizing data](slides/week1/week1-slides.html){target="_blank"} | [Summarizing data in R](labs/week-1-lab.Rmd){target="_blank} | [Lab setup and Github Classrooms demo](discussion/week1-discussion.Rmd){target="_blank} | Chapters 4-6 in *IMS* <br /> [Variance (video)](https://dlsun.github.io/probability/variance.html#theory-25){target="_blank"}
 : {.hover .bordered tbl-colwidths="[30,35,35]"} 
 
 ## Notes
