@@ -6,6 +6,7 @@ author: "Max Czapanskiy"
 date: "Fall 2024"
 output:
   xaringan::moon_reader:
+    self_contained: true
     css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
     lib_dir: libs
     nature:
@@ -369,7 +370,7 @@ Note: You are using linear regression to estimate a nonlinear-in-parameters rela
 
 # Log-linear specification
 
-```{r, log linear plot, echo = F, cache = T, dev = "png", fig.height = 6}
+```{r, log linear plot, echo = F, fig.height = 6}
 # Set seed
 set.seed(1234)
 # Sample size
@@ -407,7 +408,7 @@ $$ \log(\text{log}_i) = \beta_0 + \beta_1 \, \log(\text{temperature}_i) + u_i $$
 
 # Log-log specification
 
-```{r, log log plot, echo = F, cache = T, fig.height = 6}
+```{r, log log plot, echo = F, fig.height = 6}
 # Set seed
 set.seed(1234)
 # Sample size
@@ -500,7 +501,7 @@ class: clear, middle, inverse
 
 What do you do when your dependent variable takes on just two values? 
 
-```{r, binary, echo = F, cache = T, out.width = "90%"}
+```{r, binary, echo = F, out.width = "90%"}
 # Set seed
 set.seed(1234)
 n <- 100
@@ -535,7 +536,7 @@ ylab("species presence") +
 What's wrong with running our standard linear regression?
 
 $$\text{species present}_i = \beta_0  + \beta_1 \text{forest cover}_i + \varepsilon_i $$
-```{r, lpm, echo = F, cache = T, out.width = "90%"}
+```{r, lpm, echo = F, out.width = "90%"}
 # Plot
 ggplot(data = log_df, aes(x = x, y = y)) +
 geom_hline(yintercept = 0) +
@@ -594,7 +595,7 @@ $$transformation(p_i) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$
 
 The **logit function** is the most commonly used nonlinear transformation that ensures predicted probabilities between 0 and 1:
 
-```{r, logit, echo = F, cache = T}
+```{r, logit, echo = F}
 logitdf <- tibble(
   logitp = seq(-6, 6, 1),
   p = exp(logitp)/(1+exp(logitp))

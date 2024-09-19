@@ -16,12 +16,9 @@ for (s in slides_rmd) {
     s_dir <- file.path("docs", dirname(s))
     unlink(s_dir, recursive = TRUE)
     dir.create(s_dir, recursive = TRUE)
-    # Render file
+    # Render and move file to docs/
     rmarkdown::render(s, envir = new.env())
-    # Move outputs
-    for (o in c("libs", "-slides_files", "-slides.html")) {
-      o_path <- dir(dirname(s), full.names = TRUE, pattern = o)
-      file.rename(o_path, file.path("docs", o_path))
-    }
+    out_html <- dir(dirname(s), pattern = "-slides.html", full.names = TRUE)
+    file.rename(out_html, file.path("docs", out_html))
   }
 }

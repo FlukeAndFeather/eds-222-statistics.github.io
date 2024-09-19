@@ -6,6 +6,7 @@ author: "Max Czapanskiy"
 date: "Fall 2024"
 output:
   xaringan::moon_reader:
+    self_contained: true
     css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
     lib_dir: libs
     nature:
@@ -16,7 +17,7 @@ output:
 ```{r Setup, include = F}
 options(htmltools.dir.version = FALSE)
 library(pacman)
-p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr, pagedown, cowplot, latex2exp, parallel, gg3D)
+p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr, pagedown, cowplot, latex2exp, parallel)
 
 source(here::here("course-materials/labs/_common.R"))
 
@@ -28,8 +29,6 @@ opts_chunk$set(
   fig.align = "center",
   fig.height = 7,
   fig.width = 10.5,
-  # dpi = 300,
-  # cache = T,
   warning = F,
   message = F,
   dev = "svg"
@@ -168,7 +167,7 @@ class: clear, middle, inverse
 
 # Population *vs.* sample
   
-```{R, gendataset, include = F, cache = T}
+```{R, gendataset, include = F}
 # Set population and sample sizes
 n_p <- 100
 n_s <- 30
@@ -335,7 +334,7 @@ count: false
 
 .pull-left[
   
-```{R, sample3, echo = F, fig.fullwidth = T, dev = "svg"}
+```{R, sample3, echo = F, fig.fullwidth = T}
   ggplot(data = pop_df, aes(x = row, y = col, shape = s3)) +
     geom_point(color = "darkslategray", size = 10) +
     scale_shape_manual(values = c(1, 19)) +
@@ -348,7 +347,7 @@ count: false
 
 .pull-right[
   
-```{R, sample3scatter, echo = F, fig.fullwidth = T, dev = "svg"}
+```{R, sample3scatter, echo = F}
   ggplot(data = pop_df, aes(x = x, y = y)) +
     geom_abline(
       intercept = lm0$coefficients[1], slope = lm0$coefficients[2],
@@ -390,7 +389,7 @@ $\hat{y}_i = `r round(lm3$coefficients[1], 2)` + `r round(lm3$coefficients[2], 2
 
 
 .pull-left[
-```{R, sample3scatterrepeat, echo = F, dev = "png", dpi = 300, cache = T}
+```{R, sample3scatterrepeat, echo = F, dpi = 300}
  ggplot(data = pop_df, aes(x = x, y = y)) +
     geom_abline(
       intercept = lm0$coefficients[1], slope = lm0$coefficients[2],
