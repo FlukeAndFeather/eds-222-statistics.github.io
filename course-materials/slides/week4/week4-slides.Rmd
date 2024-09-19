@@ -58,19 +58,9 @@ theme_simple <- theme_bw() + theme(
 )
 ```
 
-
 # Announcements/check-in
 
-- Midterm review: In Discussion Section this week and in office hours any time
-
-- Extra study resources on our [Resources page](https://tcarleton.github.io/EDS-222-stats/resources.html)
-  + Answer key to practice questions
-  + Example of testing OLS assumptions  
-  + Derivation of omitted variables bias 
-
-- Moving office hours this week for the Mantell Symposium in EJ and Conservation Innovation (please reach out if this is a problem - happy to add time to meet with you as needed)
-  
-- Assignment 3: Posted 10/24 **alongside answer key**. Grading will be pass/fail, due 11/7 at 5pm
+- Midterm review next week
 
 ---
 

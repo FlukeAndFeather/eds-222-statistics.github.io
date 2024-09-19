@@ -70,21 +70,6 @@ theme_simple <- theme_bw() + theme(
 
 # Announcements/check-in
 
-
-- Increasing divergence between course material and IMS textbook (including today's lecture)
-
---
-
-- Change in OH this week (*today* 3:15-4:15pm, Pine Room)
-
---
-
-- Assignment 4 posted this week, likely due 12/01 but will depend on...
-
---
-
-- ...the next few weeks. We might need 2.5 weeks for inference + time series. We will focus on going slow enough to fit it all in (we have slack time built in)
-
 ---
 
 # Today

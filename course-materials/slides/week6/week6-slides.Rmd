@@ -17,7 +17,7 @@ output:
 ```{r Setup, include = F}
 options(htmltools.dir.version = FALSE)
 library(pacman, dplyr)
-p_load(leaflet, ggthemes, viridis, dplyr, magrittr, knitr, kableExtra, pagedown, cowplot, latex2exp, parallel, gg3D, tidyverse)
+p_load(leaflet, ggthemes, viridis, dplyr, magrittr, knitr, kableExtra, pagedown, cowplot, latex2exp, parallel, tidyverse)
 
 # Define pink color
 red_pink <- "#e64173"
@@ -28,11 +28,8 @@ opts_chunk$set(
   fig.align = "center",
   fig.height = 7,
   fig.width = 10.5,
-  # dpi = 300,
-  # cache = T,
   warning = F,
-  message = F,
-  dev = "svg"
+  message = F
 )
 # A blank theme for ggplot
 theme_empty <- theme_bw() + theme(
@@ -76,18 +73,6 @@ theme_axes <- theme_empty + theme(
 
 # Announcements/check-in
 
-- Assignment 03 pass/fail, due **today** (5pm)
-
---
-
-- Assignment 04 after we cover inference/uncertainty (likely assigned next week)
-
---
-
-- Final project proposals, due 11/10 (5pm)
-  + More details in a few slides
-
-
 ---
 
 # Final project
@@ -121,7 +106,7 @@ Apply **some of** the statistical concepts you have learned in this course to **
 
 ### Two parts:
   
-Deliverable 2: Three-minute in-class presentation during final exam slot (4-7pm, 12/12)
+Deliverable 2: Three-minute in-class presentation during final exam slot (8-11am, 12/10)
 
 
 .footnote[
@@ -136,7 +121,7 @@ Deliverable 2: Three-minute in-class presentation during final exam slot (4-7pm,
 
 Short paragraph (4-5 sentences) describing your proposed project. Motivate the question, describe possible data sources, suggest possible analyses. 
 
-**Email Sandy your proposal** at sandysum@ucsb.edu by 5pm on November 10th. 
+**Email Max your proposal** at maxczap@ucsb.edu by 5pm on November 8th. 
 
 ---
 
@@ -205,7 +190,7 @@ $$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + 
 
 $$ area_i = \beta_0 + \beta_1 temperature_i + \beta_2 temperature_i^2 + u_i$$
 
-```{R, polys, dev = "svg", out.width="70%", echo = F}
+```{R, polys, dev = "png", out.width="70%", echo = F}
 # Set seed
 set.seed(1235)
 # Sample size
@@ -312,7 +297,7 @@ $$ r = \frac{y_2 - y_1}{y_1}$$
 Near $y=1$, $log(y)$ is approximately slope 1, i.e. $log(y) \approx y-1$
 
 
-```{R, logs, dev = "svg", out.width = "80%", echo = F}
+```{R, logs, dev = "png", out.width = "80%", echo = F}
 
 x = seq(0.1, 4, by=0.01)
 lny = log(x)
@@ -384,7 +369,7 @@ Note: You are using linear regression to estimate a nonlinear-in-parameters rela
 
 # Log-linear specification
 
-```{r, log linear plot, echo = F, cache = T, dev = "svg", fig.height = 6}
+```{r, log linear plot, echo = F, cache = T, dev = "png", fig.height = 6}
 # Set seed
 set.seed(1234)
 # Sample size
@@ -399,12 +384,11 @@ ggplot(data = ll_df, aes(x = x, y = y)) +
 geom_hline(yintercept = 0) +
 geom_vline(xintercept = 0) +
 geom_point(size = 2, color = "darkslategrey", alpha = 0.5) +
-geom_smooth(color = red_pink, se = F, size=2) +
+geom_smooth(color = red_pink, se = F, size=2, method = "gam", formula = y ~ s(x, bs = "cs")) +
 xlab("x") +
 ylab("y") +
 theme_axes
 ```
-
 
 ---
 
@@ -423,7 +407,7 @@ $$ \log(\text{log}_i) = \beta_0 + \beta_1 \, \log(\text{temperature}_i) + u_i $$
 
 # Log-log specification
 
-```{r, log log plot, echo = F, cache = T, dev = "svg", fig.height = 6}
+```{r, log log plot, echo = F, cache = T, fig.height = 6}
 # Set seed
 set.seed(1234)
 # Sample size
@@ -516,7 +500,7 @@ class: clear, middle, inverse
 
 What do you do when your dependent variable takes on just two values? 
 
-```{r, binary, echo = F, cache = T, dev = "svg", out.width = "90%"}
+```{r, binary, echo = F, cache = T, out.width = "90%"}
 # Set seed
 set.seed(1234)
 n <- 100
@@ -551,7 +535,7 @@ ylab("species presence") +
 What's wrong with running our standard linear regression?
 
 $$\text{species present}_i = \beta_0  + \beta_1 \text{forest cover}_i + \varepsilon_i $$
-```{r, lpm, echo = F, cache = T, dev = "svg", out.width = "90%"}
+```{r, lpm, echo = F, cache = T, out.width = "90%"}
 # Plot
 ggplot(data = log_df, aes(x = x, y = y)) +
 geom_hline(yintercept = 0) +
@@ -610,7 +594,7 @@ $$transformation(p_i) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ...$$
 
 The **logit function** is the most commonly used nonlinear transformation that ensures predicted probabilities between 0 and 1:
 
-```{r, logit, echo = F, cache = T, dev = "svg", out.width = "90%"}
+```{r, logit, echo = F, cache = T}
 logitdf <- tibble(
   logitp = seq(-6, 6, 1),
   p = exp(logitp)/(1+exp(logitp))
