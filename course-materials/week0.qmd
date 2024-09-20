@@ -4,27 +4,32 @@ subtitle: "Week 0"
 description: "Thursday September 26^th^, 2024"
 ---
 
-```{r}
-#| eval: true
-#| echo: false
-#| out-width: "80%"
-#| fig-align: "center"
-```
-
-<!-- ## Pre-class prep -->
-
-<!-- No pre-class prep before our first day of class! -->
-
 ## Class materials
 
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa comment-dots title="A message bubble with three dots" >}} Discussion section | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
-|----|----|----|----|
-| [Course introduction](slides/week0/week0-slides.html){target="_blank"} | None | None | Preface, Chapters 1-2 in *IMS* <br /> [optional] [Gender Shades](http://gendershades.org/){target="_blank"} and video on [RCTs](https://www.youtube.com/watch?v=0zvrGiPkVcs){target="_blank"}
-: {.hover .bordered} 
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa comment-dots title="A message bubble with three dots" >}} Discussion section | {{< fa book-open-reader title="A person holding an open book" >}} Reading                                                                                                                       |
+|----------------------------------------------------------------------------------------|--------------------------------------------------------------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Course introduction](slides/week0/week0-slides.html){target="_blank"}                 | None                                                                     | None                                                                                | Preface, Chapters 1-2 in *IMS* <br /> \[optional\] [Gender Shades](http://gendershades.org/){target="_blank"} and video on [RCTs](https://www.youtube.com/watch?v=0zvrGiPkVcs){target="_blank"} |
+
+: {.hover .bordered}
+
+## Recorded lecture
+
+Prof Czapanskiy is out this week. Please watch the recorded lecture videos below.
+
+### Part 1: Intro and course motivation
+
+{{< video https://vimeo.com/1011386878 >}}
+
+### Part 2: Syllabus
+
+{{< video https://vimeo.com/1011386878 >}}
+
+### Part 3: Populations and samples
+
+{{< video https://vimeo.com/1011386878 >}}
 
 ## Notes
 
-* Prof Czapanskiy will be away weeks 0 and 1. For week 0, please watch the recorded lecture, complete the reading, and answer the reading quiz on Canvas.
+-   Prof Czapanskiy will be away weeks 0 and 1. For week 0, please watch the recorded lecture, complete the reading, and answer the reading quiz on Canvas.
 
-* Homework assignment 1 will be posted Thursday September 26
-
+-   Homework assignment 1 will be posted Thursday September 26

@@ -57,6 +57,11 @@ theme_simple <- theme_bw() + theme(
   # plot.margin = structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit"),
   legend.position = "none"
 )
+modified_time <- Sys.time() %>% 
+  as.numeric() %>% 
+  .POSIXct(tz = "UTC") %>% 
+  format("%Y%m%d%H%M%OS1")
+metathis::meta_tag(metathis::meta(), name = "last_modified", content = modified_time)
 ```
 
 # Announcements/check-in
