@@ -7,7 +7,7 @@ description: "Thursday September 26^th^, 2024"
 ## Class materials
 
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa comment-dots title="A message bubble with three dots" >}} Discussion section | {{< fa book-open-reader title="A person holding an open book" >}} Reading                                                                                                                       |
-|----------------------------------------------------------------------------------------|--------------------------------------------------------------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|---------------|---------------|---------------|----------------------------|
 | [Course introduction](slides/week0/week0-slides.html){target="_blank"}                 | None                                                                     | None                                                                                | Preface, Chapters 1-2 in *IMS* <br /> \[optional\] [Gender Shades](http://gendershades.org/){target="_blank"} and video on [RCTs](https://www.youtube.com/watch?v=0zvrGiPkVcs){target="_blank"} |
 
 : {.hover .bordered}
@@ -22,11 +22,11 @@ Prof Czapanskiy is out this week. Please watch the recorded lecture videos below
 
 ### Part 2: Syllabus
 
-{{< video https://vimeo.com/1011386878 >}}
+{{< video https://vimeo.com/1011447361 >}}
 
 ### Part 3: Populations and samples
 
-{{< video https://vimeo.com/1011386878 >}}
+{{< video https://vimeo.com/1011455914 >}}
 
 ## Notes
 
