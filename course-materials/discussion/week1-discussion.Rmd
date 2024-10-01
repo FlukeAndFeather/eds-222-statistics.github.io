@@ -72,6 +72,9 @@ Take a look at the help files for `source()` and `file.path()` functions. We wil
 # `source()` is a helpful function for calling and running other R scripts.
 ?source
 
+# `file.path` is a helpful function for calling file paths created previously (especially if you store your data on GDrive)
+?file.path
+
 # `here::here()` is a helpful function for creating file paths from directory and file names relative to your RStudio project
 ?here::here
 ```
