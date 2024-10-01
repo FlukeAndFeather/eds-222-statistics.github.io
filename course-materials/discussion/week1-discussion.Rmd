@@ -63,6 +63,7 @@ suppressMessages({
 library(tidyverse)
 library(gt)
 library(openintro)
+library(here)
 ```
 
 Take a look at the help files for `source()` and `file.path()` functions. We will use these a lot in Labs and homework assignments.
