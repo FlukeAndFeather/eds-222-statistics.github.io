@@ -94,7 +94,7 @@ layout: false
 class: clear, middle, inverse
 # Assignment #1 check-in: How's it going?
 
-### Reminder: OH Thursdays, Pine Room, 3:30-4:30pm
+### Reminder: OH Mondays, Pine Room, 3:30-4:30pm
 
 ---
 
