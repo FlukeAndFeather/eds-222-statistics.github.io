@@ -1,0 +1,300 @@
+---
+title: "Probability distributions and law of large numbers"
+subtitle: "EDS 222"
+author: "Leonardo Feitosa"
+#institute: ""
+date: "Fall 2024"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r Setup, include = F}
+options(htmltools.dir.version = FALSE)
+library(pacman)
+p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp)
+# Define pink color
+red_pink <- "#e64173"
+
+# Knitr options
+opts_chunk$set(
+  comment = "#>",
+  fig.align = "center",
+  fig.height = 7,
+  fig.width = 10.5,
+  # dpi = 300,
+  # cache = T,
+  warning = F,
+  message = F,
+  dev = "svg"
+)
+# A blank theme for ggplot
+theme_empty <- theme_bw() + theme(
+  line = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_blank(),
+  plot.margin = structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit"),
+  legend.position = "none"
+)
+theme_simple <- theme_bw() + theme(
+  line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 14),
+  axis.text.y = element_blank(),
+  axis.ticks = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_blank(),
+  # plot.margin = structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit"),
+  legend.position = "none"
+)
+modified_time <- Sys.time() %>% 
+  as.numeric() %>% 
+  .POSIXct(tz = "UTC") %>% 
+  format("%Y%m%d%H%M%OS1")
+metathis::meta_tag(metathis::meta(), name = "last_modified", content = modified_time)
+```
+
+```{r}
+set.seed(123)
+```
+
+
+name: Probability distributions and Law of Large Numbers
+
+#### Moving beyond the normal distribution
+- Binomial, Poisson, Log-normal, Uniform...
+
+--
+
+#### Law of large numbers
+- Theory behind it with examples
+
+
+layout: false
+class: clear, middle, inverse
+# Types of distributions
+
+---
+
+# Types of distributions
+
+## Binomial
+> Applies to binary variables
+- Stems from repeated Bernoulli trials (count of the number of successful drawls of the expected outcome)
+- Outcome corresponds to the 1
+- Example: When sampling for the presence of a species in an area, any presence would be computed as a 1 (positive Bernoulli trial).
+
+--
+
+# Types of distributions
+
+## Binomial
+
+```{r, binomial counts, echo = F, out.width = "70%", echo=FALSE, fig.align='center'}
+dat <- data.frame(dist = rbinom(n = 1000, size = 20, p = 0.7))
+
+ggplot(data = dat) +
+  geom_histogram(aes(x = dist),
+               fill = "cyan4") +
+  labs(x = "X",
+       y = "Count") +
+  theme_bw()
+```
+
+---
+
+### Probability density function - Binomial distribution
+
+```{r, binomial pdf, echo = F}
+dat_pdf <- data.frame(dist = dbinom(0:20, size = 20, p = 0.7))
+
+ggplot(data = dat_pdf) +
+  geom_density(aes(x = dist),
+               fill = "cyan4") +
+  labs(x = "X",
+       y = "Probability Density Curve") +
+  theme_bw()
+```
+
+
+---
+
+# Types of distributions
+
+## Poisson
+> Applies to count data
+- Example: How many individuals of a species can we find in an area?
+- Differs from the Binomial in the fact that the number of Bernoulli trials is not fixed
+- Binomial starts to resemble the Poisson as `n` grows
+
+--
+
+# Types of distributions
+
+## Poisson
+
+```{r, exponential counts, echo = F}
+dat_poi <- data.frame(dist = rpois(n = 1000, lambda = 14))
+
+ggplot(data = dat_poi) +
+  geom_histogram(aes(x = dist),
+                 color = "black",
+                 fill = "cyan4") +
+  labs(x = "X",
+       y = "Count") +
+  theme_bw()
+```
+
+---
+
+### Probability density function - Poisson distribution
+
+```{r, poisson pdf, echo = F}
+poi_pdf <- data.frame(dist = dpois(0:30, lambda = 14))
+
+ggplot(data = poi_pdf) +
+  geom_density(aes(x = dist),
+               fill = "cyan4") +
+  labs(x = "X",
+       y = "Probability Density Curve") +
+  theme_bw()
+```
+
+
+---
+
+# Types of distributions
+
+## Are the Poisson and Binomial distributions discrete or continuous?
+
+--
+
+# Types of distributions
+
+## Exponential
+> Applies to continuous data
+
+--
+
+# Types of distributions
+
+## Exponential
+
+```{r, exponential dist, echo = F}
+exp_data <- data.frame(dist = rexp(n = 10000, rate = 0.2))
+
+ggplot(data = exp_data) +
+  geom_histogram(aes(x = dist),
+                 fill = "cyan4",
+                 color = "black") +
+  labs(x = "",
+       y = "Frequency") +
+  theme_bw()
+```
+
+---
+
+### Probability density function - Exponential distribution
+
+```{r, exponential pdf, echo = F}
+exp_pdf <- data.frame(dist = dexp(0:50, rate = 0.2))
+
+ggplot(data = exp_pdf) +
+  geom_density(aes(x = dist),
+                 fill = "cyan4",
+                 color = "black") +
+  labs(x = "X",
+       y = "Frequency") +
+  theme_bw()
+```
+
+--
+
+# Types of distributions
+
+## Lognormal
+> Applies to continuous data
+
+--
+
+## Probability density function - Lognormal distribution
+```{r, lognormal, echo = F}
+set.seed(1298)
+samp <- as.data.frame(rlnorm(1000))
+  colnames(samp) = "x"
+samp <- samp %>% mutate(x = round(x,digits = 2))
+
+# Plot it
+ggplot(data = samp, aes(x=x)) +
+  geom_density(fill="cyan4") +
+  theme_bw() 
+  
+```
+
+--
+
+# Law of large numbers
+
+> The mean obtained from a large number of independent random samples will converge to the true value, assuming it exists in reality. 
+
+```{r, lln, echo = F}
+set.seed(1234)
+flips <- data.frame(flips = sample(c("heads", "tails"), size = 1000, replace = TRUE),
+                    n_flips = c(1:1000))
+
+ggplot(data = flips) +
+  geom_line(aes(x = n_flips, y = cumsum(flips == "heads")/(1:length(flips)))) +
+  geom_hline(yintercept = 0.5,
+             color = "cyan4") +
+  labs(x = "Number of coin flips",
+       y = "Proportion of heads") +
+  theme_bw()
+```
+
+---
+
+class: center, middle
+
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+Some slide components were borrowed from [The Stat 311 Development Team](https://uw-statistics.github.io/Stat311Tutorial/limit-theorems.html) awesome teaching materials.
+
+---
+
+exclude: true
+
+```{R, printpdfs, echo = F, eval = F}
+pagedown::chrome_print(
+  input = "02-summstats.html",
+  output = "02-summstats.pdf",
+  timeout = 90
+)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
