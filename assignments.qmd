@@ -12,9 +12,9 @@ Homework assignments will be distributed through GitHub Classroom. The
 links below will become active on the Date Posted.
 
 | Homework                                            | Date Posted   | Date Due         |
-|-----------------------------------------------------|---------------|------------------|
-| 1 ([link](https://classroom.github.com/a/1Rml_wbC)) | Thursday 9/26 | Monday 10/7 5pm  |
-| 2 (link)                                            | Tuesday 10/8  | Friday 10/18 5pm |
+|-----------------------------------------|----------------|----------------|
+| 1 ([link](https://classroom.github.com/a/1Rml_wbC)) | Thursday 9/26 | Monday 10/14 5pm |
+| 2 ([link](https://classroom.github.com/a/mlJ3iaU4)) | Tuesday 10/8  | Friday 10/18 5pm |
 | 3 (link)                                            | Tuesday 10/22 | Friday 11/8 5pm  |
 | 4 (link)                                            | Tuesday 11/12 | Friday 11/22 5pm |
 
