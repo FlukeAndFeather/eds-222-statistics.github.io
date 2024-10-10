@@ -63,6 +63,7 @@ suppressMessages({
 library(tidyverse)
 library(gt)
 library(openintro)
+library(here)
 ```
 
 Take a look at the help files for `source()` and `file.path()` functions. We will use these a lot in Labs and homework assignments.
@@ -71,6 +72,9 @@ Take a look at the help files for `source()` and `file.path()` functions. We wil
 # `source()` is a helpful function for calling and running other R scripts.
 ?source
 
+# `file.path` is a helpful function for calling file paths created previously (especially if you store your data on GDrive)
+?file.path
+
 # `here::here()` is a helpful function for creating file paths from directory and file names relative to your RStudio project
 ?here::here
 ```
@@ -78,7 +82,7 @@ Take a look at the help files for `source()` and `file.path()` functions. We wil
 Now, use `source` to run the script `_common.R`, which loads all the packages we'll need for our labs and does some extra stuff we won't use today. You'll `source()` this setup script before running all your labs.
 
 ```{r,include=TRUE}
-source(here::here("_common.R"))
+source(here::here("course-materials", "labs", "_common.R"))
 ```
 
 For labs, we want to see all our code. Set your `knitr` options to `echo=TRUE` so you see all your code and output.
