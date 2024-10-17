@@ -1,0 +1,107 @@
+---
+title: "omitted variable bias"
+author: "Leonardo Feitosa"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+set.seed(1554)
+```
+
+
+# Omitted variable bias ---------------------------------------------------
+
+
+```{r}
+# Generate two *correlated* predictor variables: x1 and x2
+N <- 100
+x1 <- rnorm(N)
+x2 <- 2 + -3 * x1 + rnorm(N, sd = 1)
+```
+
+```{r}
+# Choose our true population parameters
+beta0 <- 5
+beta1 <- 1.5
+beta2 <- -0.5
+sigma <- 2 # uncertainty 
+```
+
+```{r}
+# Simulate y
+y <- beta0 + beta1 * x1 + beta2 * x2 + rnorm(N, sd = sigma)
+
+# create a tibble with response (y) and predictor (x1, x2) variables
+dat <- tibble(y, x1, x2)
+
+```
+
+```{r}
+# Estimate beta1 while ignoring x2
+summary(lm(y ~ x1, dat))
+```
+
+### Estimate of beta1 is 2.9!
+
+
+```{r}
+# Estimate beta1, accounting for x2
+summary(lm(y ~ x1 + x2, dat))
+```
+
+### Estimate of beta1 is 1.3, way closer
+
+
+# What if they're NOT correlated?
+```{r}
+N <- 100
+x1 <- rnorm(N)
+x2 <- rnorm(N) # NO LONGER CORRELATED
+```
+
+```{r}
+# Choose our true population parameters
+beta0 <- 5
+beta1 <- 1.5
+beta2 <- -0.5
+sigma <- 2
+```
+
+```{r}
+# Simulate y
+y <- beta0 + beta1 * x1 + beta2 * x2 + rnorm(N, sd = sigma)
+
+# create a tibble with response (y) and predictor (x1, x2) variables
+dat <- tibble(y, x1, x2)
+```
+
+```{r}
+# Estimate beta1 while ignoring x2
+summary(lm(y ~ x1, dat))
+```
+
+### Estimate of beta1 is 1.4
+
+```{r}
+# Estimate beta1, accounting for x2
+summary(lm(y ~ x1 + x2, dat))
+```
+
+### Estimate is 1.5
+
+# What assumption of OLS is violated by the omitted variable?
+
+- *X* variable is exogenous: $E[\mu | X] = 0$ 
+
+
+
+
+
+
+
+
+
+
