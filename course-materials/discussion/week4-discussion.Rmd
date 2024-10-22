@@ -1,0 +1,116 @@
+---
+title: "week4-discussion"
+author: "Leonardo Feitosa"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+# Polynomial regression and interactions between variables-----------------------
+
+```{r}
+# Let's generate our linear and non-linear variables
+n <- 1000
+
+x1 <- rnorm(n) # linear and normally distributed
+
+x2 <- 2 + 3 + rnorm(n, sd = 2) # non-linear
+```
+
+```{r}
+# establish model paramaters
+beta0 <- 3
+beta1 <- 1.1
+beta2 <- 2
+sigma <- 2
+```
+
+
+```{r}
+#simulate y
+y <- beta0 + beta1 * x1 + beta2 * x2^2 + rnorm(n, sd = sigma)
+
+dat <- tibble(y, x1, x2)
+```
+
+```{r}
+# visualize independent and dependent variables
+ggplot(data = dat, aes(x = x1, y = y)) +
+  geom_point()
+
+ggplot(data = dat, aes(x = x2, y = y)) +
+  geom_point()
+```
+
+## Polynomials
+
+```{r}
+# run regression model with both variables
+
+## First option:
+dat <- dat %>% mutate(x2_new = x2^2)
+
+summary(lm(y ~ x1 + x2_new, data = dat))
+```
+
+```{r}
+## Second option: using the Identitiy `I()` function
+
+summary(lm(y ~ x1 + I(x2^2), data = dat))
+```
+
+```{r}
+# Third option: using the poly() function
+
+summary(lm(y ~ x1 + poly(x2, 2), data = dat))
+```
+
+
+### What went wrong?
+
+```{r}
+# must use `raw = TRUE` within poly for coefficient interpretability
+summary(lm(y ~ x1 + poly(x2, 2, raw = TRUE), data = dat))
+```
+
+
+## Interactions
+```{r}
+# make a linear model with the two predictor variables interacting
+summary(lm(y ~ x1 + I(x2^2) + x1 * I(x2^2), data = dat))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
