@@ -17,7 +17,7 @@ output:
 ```{r Setup, include = F}
 options(htmltools.dir.version = FALSE)
 library(pacman)
-p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp,parallel,gg3D,xtable)
+p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp,parallel,xtable)
 # Define pink color
 red_pink <- "#e64173"
 
@@ -67,6 +67,8 @@ metathis::meta_tag(metathis::meta(), name = "last_modified", content = modified_
 # Announcements/check-in
 
 - Midterm review next week
+- Reading quiz next week - submit a question
+- HW1 back today, regrade due next Tuesday 10/29
 
 ---
 
@@ -84,7 +86,7 @@ metathis::meta_tag(metathis::meta(), name = "last_modified", content = modified_
   
   + You do not need to memorize math rules (e.g., $var(ax+b)=a^2var(x)$)
   
-  + Be able to interpret probability distributions, scatter plots, Q-Q plots, boxplots, linear regression output (not $p$-values or $t$-statistics)
+  + Be able to interpret probability distributions, scatter plots, boxplots, linear regression output (not $p$-values or $t$-statistics)
 
 ---
 
@@ -425,7 +427,7 @@ count: false
 
 **Truth:** $y_i = 2 e^{x} + u_i$
 
-```{R, trans figure 6, dev = "svg", fig.height = 6.5, echo = F}
+```{R, transfigure6, dev = "svg", fig.height = 6.5, echo = F}
 # Plot
 ggplot(data = trans_df, aes(x = x, y = y)) +
 geom_line(stat = "smooth", method = lm, formula = y ~ 1, color = "orange", size = 1.5, alpha = 0.3) +

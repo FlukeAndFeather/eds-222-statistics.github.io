@@ -37,7 +37,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Section 1: Coefficient of Determination in a Regression
 
-In the last class, we estimated a linear relationship between the size of fiddler grabs and latitude, and we recovered OLS estimates of $\hat\beta_0$ (the intercept) and $\hat\beta_1$ (the slope coefficient). From our correlation calculations, we also have a sense of the strength of these linear relationships. Here, we will use a concept that is very closely related to correlation to quantify the overall fit of our linear regression model. 
+In the last class, we estimated a linear relationship between the size of fiddler grabs and latitude, and we recovered OLS estimates of $\hat\beta_0$ (the intercept) and $\hat\beta_1$ (the slope coefficient). From our correlation calculations, we also have a sense of the strength of these linear relationships. Here, we will use a concept that is very closely related to correlation to quantify the overall fit of our linear regression model.
 
 Recall that the coefficient of determination, or $R^2$, is the share of the variance in $y$ that is explained by your regression model. Defining SSE as the sum of squared errors (sum of the square of all our prediction errors) and SST as the total sum of squares (proportional to variance of $y$), we have:
 
@@ -45,14 +45,11 @@ $$R^{2}=1-\frac{S S E}{S S T}=1-\frac{\sum_i e_i^2}{\sum_i(y_i-\bar{y})^2}$$
 
 This is the most commonly cited measure of the fit of a regression model. $R^2$ ranges from 0 (my regression model explains none of the variation in $y$) to 1 (my regression model perfectly explains all variation in $y$).
 
-Recall our regressions from last week: 
+Recall our regressions from last week:
 
-$$\text{crab size} = \beta_0 + \beta_1 \text{latitude} + u$$
-and:
+$$\text{crab size} = \beta_0 + \beta_1 \text{latitude} + u$$ and:
 
-
-$$\text{water temperature} = \beta_0 + \beta_1 \text{latitude} + u$$
-Recall the graphs of these relationships that we made last week:
+$$\text{water temperature} = \beta_0 + \beta_1 \text{latitude} + u$$ Recall the graphs of these relationships that we made last week:
 
 ```{r, echo = F}
 ggplot(data = pie_crab, aes(y = size, x = latitude)) +
@@ -69,19 +66,27 @@ ggplot(data = pie_crab, aes(y = water_temp, x = latitude)) +
 
 **Exercise**
 
-1. Use the function `summary()` after the regression to calculate the $R^2$ for both the crab size and water temperature regressions. Recall that in the `pie_crab` dataset, `size` indicates crab carapace size, `latitude` is latitude of the sampling location, and `water_temp` is the water temperature at the sampling location.
+1.  Use the function `summary()` after the regression to calculate the $R^2$ for both the crab size and water temperature regressions. Recall that in the `pie_crab` dataset, `size` indicates crab carapace size, `latitude` is latitude of the sampling location, and `water_temp` is the water temperature at the sampling location.
 
-2. Which regression model fits the data better? Is this what you expected based on the scatter plots? Why or why not?
+2.  Which regression model fits the data better? Is this what you expected based on the scatter plots? Why or why not?
 
-**Answers** 
+**Answers**
 
 ```{r}
+summary(lm(size ~ latitude, pie_crab))
+summary(lm(water_temp ~ latitude, pie_crab))
 
 ```
 
-3. Calculate $SSE$ and $SST$ for the crab size regression model. Use these values to calculate $R^2$. Do you get the same value from `summary()`?
+3.  Calculate $SSE$ and $SST$ for the crab size regression model. Use these values to calculate $R^2$. Do you get the same value from `summary()`?
 
 ```{r}
+lm_size <- lm(size ~ latitude, pie_crab)
+sse <- sum(residuals(lm_size)^2)
+size_mean <- mean(pie_crab$size)
+sst <- sum((pie_crab$size - size_mean)^2)
+r2 <- 1 - sse / sst
+r2
 
 ```
 
@@ -89,47 +94,53 @@ ggplot(data = pie_crab, aes(y = water_temp, x = latitude)) +
 
 ## Categorical Variables
 
-In this section we will consider a situation where a numerical or a binary variable might not be useful for our needs. 
+In this section we will consider a situation where a numerical or a binary variable might not be useful for our needs.
 
 We will use an example from the automobile industry where which has data on fuel efficiency and automobile characteristics for cars of two vintages: 1999 cars, and 2008 cars. We are interested here to understand how highway fuel economy differs across these two vintages. This is a policy relevant question -- there has been increasing regulatory pressure to improve fuel efficiency in the US vehicle fleet over this time period. Did it work?
 
-The dataset is called `mpg` and is pre-loaded in `R`. 
+The dataset is called `mpg` and is pre-loaded in `R`.
 
-**Step 1: Get your variables ready.** 
+**Step 1: Get your variables ready.**
 
 Note that we want to treat the year of the car as a **categorical** variable, as we just have two years and we want to treat the 1999 cars as one "group" and the 2008 cars as another "group." Take a moment to identify the class of the "year" variable, and then use the `factor()` function to create a new variable called `year_fct` so we can trust `R` will treat it as a categorical variable.
 
 ```{r}
+class(mpg$year)
+mpg$year_fct <- factor(mpg$year)
+mpg
 
 ```
 
-**Step 2: Visualize your data.** 
+**Step 2: Visualize your data.**
 
 As we showed in class, scatter plots are not all that helpful when we have a categorical variable. Use `geom_boxplot()` to plot "highway miles per gallon" (variable is called `hwy`) on the $y$-axis and vintage year on the $x$-axis. Do the distributions of fuel efficiency look different across the two groups?
 
 ```{r}
 
+ggplot(mpg, aes(x = year_fct, y = hwy)) +
+  geom_boxplot()
+
 ```
 
 **Step 3: Run a regression.**
 
-A linear regression will allow us to quantify the difference in average miles per gallon across the two car vintages. Note that in this case with a simple linear regression and one categorical variable with just two values (1999 and 2008), these regression estimates are equivalent to computing means for each group and differencing them. 
+A linear regression will allow us to quantify the difference in average miles per gallon across the two car vintages. Note that in this case with a simple linear regression and one categorical variable with just two values (1999 and 2008), these regression estimates are equivalent to computing means for each group and differencing them.
 
-Here is our regression:
-$$hwy_i=\beta_{0}+\beta_{1} \cdot vintage_i + u$$
-Complete the following:
+Here is our regression: $$hwy_i=\beta_{0}+\beta_{1} \cdot vintage_i + u$$ Complete the following:
 
-1. Using the model specified above, use `lm()` to estimate $\hat\beta_0$ and $\hat\beta_1$ using this sample of data. Make sure you are treating `year` as a categorical variable! Use `summary(lm())`, `gt()` or `kable()` to visualize the regression results.
+1.  Using the model specified above, use `lm()` to estimate $\hat\beta_0$ and $\hat\beta_1$ using this sample of data. Make sure you are treating `year` as a categorical variable! Use `summary(lm())`, `gt()` or `kable()` to visualize the regression results.
 
-2. What does the intercept tell you, in words?  
+2.  What does the intercept tell you, in words?
 
-3. What does the coefficient estimate on the 2008 vintage indicator variable tell you, in words? 
-**Answers:**
+3.  What does the coefficient estimate on the 2008 vintage indicator variable tell you, in words? **Answers:**
+
 ```{r}
+
+summary(lm(hwy ~ year_fct, mpg))
 
 ```
 
-4. Does your model suggest anything about whether fuel efficiency has evolved over time? Why or why not? 
+4.  Does your model suggest anything about whether fuel efficiency has evolved over time? Why or why not?
 
 **Answer:**
 
@@ -139,28 +150,29 @@ In most situations a simple linear regression with one variable might not be use
 
 We can help "control" for this "omitted-variable bias" by adding additional variables to our regression.
 
-**Step 1: Adding in engine size** 
+**Step 1: Adding in engine size**
 
 As we showed in class, scatter plots are useful with numeric variables. The engine size for vehicles is stored as the variable `displ` and it is a numeric variable. Use `geom_point()` to plot "engine displacement, in litres" (variable is called `displ`) on the $x$-axis and "highway miles per gallon" (variable is called `hwy`) on the $y$-axis. Does fuel efficiency look different as engine size increases?
 
 **Answers:**
+
 ```{r}
 
 ```
 
-While we know that fuel economy evolved over time but how did that really happen? Can the credit for better efficiency over time be given to developments in engineering? Or did consumer tastes change? How do we know that the increase in fuel economy was not just due to the cars in 2008 generally having different sized engines than cars in 1999? This problem might seem confusing but it a multiple variable regression can help us unpack it. 
+While we know that fuel economy evolved over time but how did that really happen? Can the credit for better efficiency over time be given to developments in engineering? Or did consumer tastes change? How do we know that the increase in fuel economy was not just due to the cars in 2008 generally having different sized engines than cars in 1999? This problem might seem confusing but it a multiple variable regression can help us unpack it.
 
 **Step 2: Run additional regressions**
 
 To resolve these questions we will need to assess the effects of engine size and vintage simultaneously on fuel efficiency. This means in simple words that we want to understand the effect of vintage on fuel economy, after controlling for (or isolating the effect of) engine size.
 
-To be able to do this, we will modify our model in section 2 as the following: 
+To be able to do this, we will modify our model in section 2 as the following:
 
 $$hwy_i =\beta_{0}+\beta_{1} \cdot displ_i +\beta_{2} \cdot \text vintage_i+\varepsilon_i$$
 
 Complete the following:
 
-1. Using the model specified above, use `lm()` to estimate $\hat\beta_0$, $\hat\beta_1$ and $\hat\beta_2$ using this sample of data. Use `summary(lm())` to print the regression results.
+1.  Using the model specified above, use `lm()` to estimate $\hat\beta_0$, $\hat\beta_1$ and $\hat\beta_2$ using this sample of data. Use `summary(lm())` to print the regression results.
 
 **Answer:**
 
@@ -168,19 +180,19 @@ Complete the following:
 
 ```
 
-2. Interpret your three coefficients, paying careful attention to units. 
+2.  Interpret your three coefficients, paying careful attention to units.
 
 **Answer:**
 
-3. Does your model suggest anything about whether fuel efficiency has evolved over time after controlling for engine size? Why or why not? Why is this different from the results we found in simple linear regression above? 
+3.  Does your model suggest anything about whether fuel efficiency has evolved over time after controlling for engine size? Why or why not? Why is this different from the results we found in simple linear regression above?
 
 **Answer:**
 
 **Step 3: Visualize your regression (parallel slopes)**
 
-This regression includes one "slope" coefficient (coefficient estimate on a numeric variable) and one "indicator" coefficient (coefficient estimate on a categorical variable). This kind of a model is often called "parallel slopes" because the indicator variable's coefficient shifts predictions up and down, while the numeric variable's slope is the same across both groups. We will see that visually here. 
+This regression includes one "slope" coefficient (coefficient estimate on a numeric variable) and one "indicator" coefficient (coefficient estimate on a categorical variable). This kind of a model is often called "parallel slopes" because the indicator variable's coefficient shifts predictions up and down, while the numeric variable's slope is the same across both groups. We will see that visually here.
 
-1. First, use the `geom_point()` function with the `color` argument set to `year` to make a scatter plot of miles per gallon ($y$-axis) against engine size ($x$-axis), in which scatter points are colored differently for each vintage.
+1.  First, use the `geom_point()` function with the `color` argument set to `year` to make a scatter plot of miles per gallon ($y$-axis) against engine size ($x$-axis), in which scatter points are colored differently for each vintage.
 
 **Answer:**
 
@@ -188,7 +200,9 @@ This regression includes one "slope" coefficient (coefficient estimate on a nume
 
 ```
 
-2. Second, add two regression lines to the plot, one that shows the predicted relationship between miles per gallon and engine size for the 1999 vintage, and a second that shows the same predicted relationship but for the 2008 vintage.^[Hint: The variable `.fitted` gives you the predicted (or "fit") values for all observations in the data.]
+2.  Second, add two regression lines to the plot, one that shows the predicted relationship between miles per gallon and engine size for the 1999 vintage, and a second that shows the same predicted relationship but for the 2008 vintage.[^1]
+
+[^1]: Hint: The variable `.fitted` gives you the predicted (or "fit") values for all observations in the data.
 
 Start by storing your regression results in a new way, using `augment()`, which stores fitted values for every observation in your data as a column in a dataframe:
 
@@ -205,6 +219,3 @@ Then, use `geom_line()` and the predictions stored in `augment(mod)` to add the 
 ```{r}
 
 ```
-
-
-
