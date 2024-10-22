@@ -113,10 +113,6 @@ library(palmerpenguins)
 summary(lm(bill_length_mm ~ body_mass_g + species, penguins))
 ```
 
-1. Write the regression equation.
-2. What are the values of the coefficients?
-3. What do the coefficients mean in plain language?
-
 ---
 
 name: Overview
