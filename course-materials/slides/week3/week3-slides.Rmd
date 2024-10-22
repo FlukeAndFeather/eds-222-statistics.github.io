@@ -17,7 +17,7 @@ output:
 ```{r Setup, include = F}
 options(htmltools.dir.version = FALSE)
 library(pacman)
-p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr,pagedown,cowplot,latex2exp,parallel)
+p_load(leaflet, ggplot2, ggthemes, viridis, dplyr, magrittr, knitr, pagedown, cowplot, latex2exp, parallel, purrr)
 # Define pink color
 red_pink <- "#e64173"
 
@@ -85,6 +85,70 @@ name: Overview
 
 #### Multiple linear regression
 - Adding independent variables, interpretation of results
+
+---
+
+# Announcements
+
+- HW deadlines pushed to 11:59pm
+
+- Max's OHs moved to Bren 1424
+
+---
+
+# Review
+
+In plain english, what do the following equations mean?
+
+$$
+cov(X, Y) = E[(X - \mu_x)(Y-\mu_y)]
+$$
+
+$$
+\hat{y} = \hat{\beta_0} + \hat{\beta_1}x
+$$
+
+$$
+SSE = \sum_i e_i^2 = \sum_i(y_i - \hat{y_i})^2
+$$
+
+---
+
+# Review
+
+In the figure below, the semi-transparent points and blue dashed line represent the population and $y = \beta_0 + \beta_1 x$, respectively.
+
+The points in color and associated lines are five samples.
+
+.pull-left[
+
+```{r echo=FALSE, out.width="100%"}
+set.seed(123)
+
+x <- runif(250)
+y <- 3 - 1.2 * x + rnorm(250, sd = 0.75)
+dat <- tibble(x, y)
+
+samples <- map(LETTERS[1:5], \(i) slice_sample(dat, n = 10) %>% mutate(sample = i)) %>% 
+  bind_rows()
+
+ggplot(dat, aes(x, y)) +
+  geom_point(alpha = 0.2) +
+  geom_abline(slope = -1.2, intercept = 3, 
+              color = "cornflowerblue", linewidth = 1.5, linetype = "dashed") +
+  geom_point(aes(color = sample), samples, size = 3) +
+  geom_smooth(aes(color = sample), samples, method = "lm", se = FALSE) +
+  scale_color_brewer(palette = "Dark2") +
+  theme_classic(base_size = 18)
+```
+
+]
+
+.pull-right[
+Q1: What's different in the formula for the solid lines vs. the dashed line?
+
+Q2: If we were to repeat sampling and fitting OLS thousands of times, what would the distribution of the slopes of the solid lines look like?
+]
 
 ---
 

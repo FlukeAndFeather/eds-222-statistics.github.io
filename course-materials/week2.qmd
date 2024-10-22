@@ -14,3 +14,4 @@ description: "October 7^th^ - October 11^th^"
 ## Notes
 
 * Homework assignment 2 will be posted on Tuesday, October 8^th^.
+* Homework assignment 1 is due next Monday, October 14^th^.

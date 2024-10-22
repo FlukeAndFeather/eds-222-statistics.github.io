@@ -1,6 +1,6 @@
 ---
 title: "EDS 222: Week 2: In-class Lab"
-author: "ANSWER KEY"
+author: "YOUR NAME"
 date: "`r Sys.Date()`"
 output:
   tufte::tufte_html: default
@@ -16,14 +16,7 @@ output:
 
 Start by loading packages you need. This week we will be using the Plum Island Ecosystem (PIE) LTER fiddler crabs dataset from the `lterdatasampler` package. Please install the package if you have not already done so.
 
-```{r, echo=FALSE, eval=TRUE}
-# this code chunk installs lterdatasampler only if you don't already have it installed
-if(!require(lterdatasampler)){
-    install.packages("lterdatasampler")
-}
-```
-
-```{r, echo = FALSE, eval = TRUE}
+```{r, include = FALSE, eval = TRUE}
 # You probably already have these packages installed, so let's just load them
 library(tidyverse)
 library(broom)
@@ -33,9 +26,6 @@ library(modelr)
 library(lterdatasampler)
 
 options(scipen = 999) # disable scientific notation
-
-# Set your file path here! Or, set this up as an .Rproj if you'd like.
-rootdir <- ("~/Dropbox/Teaching/UCSB/EDS_222/EDS222_data")
 
 # For labs, we want to see all our code
 knitr::opts_chunk$set(echo = TRUE)
@@ -49,7 +39,7 @@ Here we will use a data frame on Atlantic marsh fiddler crabs that contains reco
 
 > "One of the best-known patterns in biogeography is Bergmann's rule. It predicts that organisms at higher latitudes are larger than ones at lower latitudes. Many organisms follow Bergmann's rule, including insects, birds, snakes, marine invertebrates, and terrestrial and marine mammals." (Johnson et al., 2019)
 
-We will try to see if (i) latitude associated with the size of PIE crabs, as Bergmann's rule would suggest; and (ii) latitude is associated with water temperature, as this may help us understand why Bergmann's rule holds.
+We will try to see if (i) latitude is associated with the size of PIE crabs, as Bergmann's rule would suggest; and (ii) latitude is associated with water temperature, as this may help us understand why Bergmann's rule holds.
 
 The `pie_crab` data sample can be called directly once you've loaded the `lterdatasampler` package. Take a look at your variable names and make a scatter plot showing (i) crab body size as a function of latitude and (ii) water temperature as a function of latitude. That is, treat latitude as your independent variable.
 
@@ -62,11 +52,11 @@ The `pie_crab` data sample can be called directly once you've loaded the `lterda
 
 # Section 2: Calculating Correlations
 
-Visualizing values of the correlation between two quantities from their scatter plot can be very difficult. Research has shown that people's perception of the strength of these relationships can be influenced by design choices like the size of the graph and the aspect ratio,[^2] among other features. Hence, to more objectively report the relationship between two variables, we use correlation, computing the "correlation coefficient" $r$.[^3] Here, we will compute correlation coefficients for the two relationships plotted above.
+Visualizing values of the correlation between two quantities from their scatter plot can be very difficult. Research has shown that people's perception of the strength of these relationships can be influenced by design choices like the size of the graph and the aspect ratio,[^1] among other features. Hence, to more objectively report the relationship between two variables, we use correlation, computing the "correlation coefficient" $r$.[^2] Here, we will compute correlation coefficients for the two relationships plotted above.
 
-[^2]: The *aspect ratio* is the ratio of the width to the height of a figure or image.
+[^1]: The *aspect ratio* is the ratio of the width to the height of a figure or image.
 
-[^3]: Note: we just called this "correlation" in lecture, but people use "correlation" and "correlation coefficient" interchangeably. In most cases, this refers to the Pearson's correlation coefficient, as defined in lecture. There are other forms of correlation that are less common, such as rank correlation, but we won't use them in this class.
+[^2]: Note: we just called this "correlation" in lecture, but people use "correlation" and "correlation coefficient" interchangeably. In most cases, this refers to the Pearson's correlation coefficient, as defined in lecture. There are other forms of correlation that are less common, such as rank correlation, but we won't use them in this class.
 
 **Exercise:**
 
@@ -82,10 +72,6 @@ Visualizing values of the correlation between two quantities from their scatter 
 2.  Use the `cor()` function in `R` to calculate the correlation coefficient between the two variables in (i) and the two in (ii). How close was your guess to the true answer?
 
 ```{r}
-
-```
-
-```{r, fig.margin=TRUE}
 
 ```
 
@@ -106,7 +92,7 @@ $$\text{crab size} = \beta_0 + \beta_1 \text{latitude} + \epsilon$$
 
 1.  Use `lm()` to estimate $\hat\beta_0$ and $\hat\beta_1$ using this sample of data. Use `summary(lm())` or `gt()` to visualize the regression results.
 
-2.  Interpret your two coefficients, paying careful attention to units.
+2.  Interpret your two coefficients, paying careful attention to units. What do $\hat{\beta_0}$ and $\hat{\beta_1}$ represent?
 
 3.  Is your estimate of $\beta_0$ directly interpretable? What might you be concerned about when interpreting $\beta_0$?
 
@@ -118,9 +104,9 @@ $$\text{crab size} = \beta_0 + \beta_1 \text{latitude} + \epsilon$$
 
 4.  Does your model suggest anything about the relationship between crab size and water temperature? Is this evidence that water temperature is driving the Bergmann's rule (i.e. the colder climate is causing the selection of larger organisms)?
 
-> "Bergmann originally hypothesized that the organisms he studied, birds, were larger in the colder, higher latitudes due to heat-conservation. But the heat-conservation hypothesis relies on internal regulation of body temperature and therefore does not apply to ectotherms,[^1] some of which also follow Bergmann's rule. There is likely no universal mechanism underpinning Bergmann's rule, regardless of [ecto- or endothermy](https://www.khanacademy.org/science/ap-biology/ecology-ap/energy-flow-through-ecosystems/a/endotherms-ectotherms). As a result, other mechanisms have been proposed to explain Bergmann's rule, including the starvation-resistant hypothesis, the diet-quality hypothesis, the enemy hypothesis, the resource rule, seasonality hypothesis, and the temperature--size rule (Johnson et al., 2019)."
+> "Bergmann originally hypothesized that the organisms he studied, birds, were larger in the colder, higher latitudes due to heat-conservation. But the heat-conservation hypothesis relies on internal regulation of body temperature and therefore does not apply to ectotherms,[^3] some of which also follow Bergmann's rule. There is likely no universal mechanism underpinning Bergmann's rule, regardless of [ecto- or endothermy](https://www.khanacademy.org/science/ap-biology/ecology-ap/energy-flow-through-ecosystems/a/endotherms-ectotherms). As a result, other mechanisms have been proposed to explain Bergmann's rule, including the starvation-resistant hypothesis, the diet-quality hypothesis, the enemy hypothesis, the resource rule, seasonality hypothesis, and the temperature--size rule (Johnson et al., 2019)."
 
-[^1]: Commonly referred to as "cold-blooded animals", ectotherms are animal that depends on external sources of body heat; such as fishes, amphibians, reptiles, and invertebrates.
+[^3]: Commonly referred to as "cold-blooded animals", ectotherms are animal that depends on external sources of body heat; such as fishes, amphibians, reptiles, and invertebrates.
 
 5.  [If we have time] Repeat the above steps for the relationship between latitude and water temperature.
 
@@ -135,10 +121,6 @@ Here, we visualize our simple linear regression models above using the scatter p
 **Exercise:**
 
 Use the `geom_smooth()` function with method argument set to `lm`, which stands for "linear model", to add the best fit OLS line to your scatter plots from Section 1. Use the option `se = FALSE` to turn off estimates of uncertainty. Don't worry, we'll dig into those soon.
-
-```{r}
-
-```
 
 ```{r}
 
@@ -168,7 +150,6 @@ Using the regression of crab size on latitude:
 
 ```
 
-
 3.  Compute the mean of your residuals. Is it basically zero?[^5]
 
 [^5]: **Note:** OLS gives you this one for free. The OLS regression line will always go through the middle of your data, as it aims to minimize squared errors. So, you'll always end up with sample errors that are mean zero. This doesn't necessarily mean that in your population $u$ is mean zero!
@@ -182,5 +163,3 @@ Using the regression of crab size on latitude:
 ```{r}
 
 ```
-
-

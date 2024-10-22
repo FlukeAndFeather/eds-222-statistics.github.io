@@ -87,11 +87,15 @@ name: Overview
 
 # Announcements/check-in
 
-- Assignment #1: Grading next week, some review in Discussion Section
+- Assignment #1: Due date next Monday 10/14. Fork, not GH classroom.
 
 --
 
-- Assignment #2: To be posted this week, due 10/18, 5pm 
+- Assignment #2: To be posted later today, due 10/18.
+
+--
+
+- Reading quizzes - multiple tries working?
 
 ---
 
@@ -797,7 +801,7 @@ ggplot(data = tmp, aes(x, y)) +
 geom_polygon(fill = red_pink, alpha = 0.9) +
 geom_hline(yintercept = 0, color = "black") +
 geom_vline(xintercept = 0, size = 1, linetype = "dashed") +
-scale_x_continuous(breaks = 0, labels = expression("beta")) +
+scale_x_continuous(breaks = 0, labels = expression(beta)) +
 theme_simple +
 theme(axis.text.x = element_text(size = 40))
 ```

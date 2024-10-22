@@ -19,8 +19,6 @@ Load the following packages:
 ```{r, echo = FALSE, eval = TRUE}
 # You probably already have these packages installed, so let's just load them
 library(tidyverse)
-library(readr)
-library(ggplot2)
 library(modelr)
 library(knitr)
 library(broom)
