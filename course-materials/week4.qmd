@@ -6,9 +6,9 @@ description: "October 21^st^ - October 25^th^"
 
 ## Class materials
 
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
-|----|----|----|
-| [Interactions](slides/week4/week4-slides.html){target="_blank"} | [Interactions in R](labs/week-4-lab.Rmd){target="_blank} | Chapter 8 in *IMS* <br /> (Optional) Chapter 10 in *IMS* |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa comment-dots title="A message bubble with three dots" >}} Discussion section | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|----|----|----|----|
+| [Interactions](slides/week4/week4-slides.html){target="_blank"} | [Interactions in R](labs/week-4-lab.Rmd){target="_blank} | [Continuous variable interactions](discussion/week4-discussion.Rmd){target="_blank} | Chapter 8 in *IMS* <br /> (Optional) Chapter 10 in *IMS* |
 : {.hover .bordered tbl-colwidths="[30,35,35]"} 
 
 ## Notes

@@ -1,0 +1,76 @@
+---
+title: "week4-discussion"
+author: "Leonardo Feitosa"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Interactions between continuous variables
+
+```{r}
+# make a linear model with the two continuous predictor variables interacting
+# Let's say the relationship between elk density and canopy height is mediated by
+# wolf density
+# I.e., when wolves are scarce, elk like open fields (low canopy height). But when
+# wolves are plentiful, elk get scared and retreat to forests (high canopy height) 
+# to hide
+set.seed(54321)
+canopy_height <- rnorm(1e3, 100, sd = 10)
+wolf_density <- rnorm(1e3, 3, sd = 0.5)
+
+beta0 <- 175  # Intercept
+beta1 <- 3.0  # Coefficient for canopy height
+beta2 <- -0.2 # Coefficient for wolf density
+beta3 <- -1.0 # Coefficient for canopy height X wolf density
+# Simulate!
+elk_density <- beta0 + beta1 * canopy_height + beta2 * wolf_density + 
+  beta3 * canopy_height * wolf_density + rnorm(1e3, sd = 0.5)
+
+# Visualize
+yellowstone <- tibble(canopy_height, wolf_density, elk_density)
+ggplot(yellowstone, aes(canopy_height, elk_density, color = wolf_density)) +
+  geom_point(shape = 21) +
+  scale_color_distiller(palette = "Reds") +
+  theme_classic()
+```
+
+```{r}
+# Fit the model
+yellowstone_mod <- lm(
+  elk_density ~ canopy_height + wolf_density + canopy_height : wolf_density,
+  yellowstone
+)
+summary(yellowstone_mod)
+```
+
+What's the $\hat{y}$ line for low, medium, and high wolf densities?
+
+```{r}
+# Model coefficients
+beta0_hat <- coef(yellowstone_mod)[1]
+beta1_hat <- coef(yellowstone_mod)[2]
+beta2_hat <- coef(yellowstone_mod)[3]
+beta3_hat <- coef(yellowstone_mod)[4]
+prediction <- expand_grid(
+  canopy_height = seq(70, 130, length.out = 5),
+  wolf_density = c(1.5, 3, 4.5)
+) %>% 
+  mutate(yhat = beta0_hat + beta1_hat * canopy_height + beta2_hat * wolf_density +
+           beta3_hat * canopy_height * wolf_density)
+
+ggplot(yellowstone, aes(canopy_height, elk_density, color = wolf_density)) +
+  geom_point(shape = 21) +
+  scale_color_distiller(palette = "Reds") +
+  geom_line(aes(y = yhat, group = wolf_density), prediction, linewidth = 2) +
+  theme_classic()
+```
+
+Questions:
+
+* Where would the line for wolf density = 4 be? How about wolf density = 2?
+* What's the slope of canopy height when wolf density is 1.5, 3, and 4.5?
