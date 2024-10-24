@@ -25,6 +25,7 @@ tsibble
 readr
 tidyr
 parallel
+purrr
 palmerpenguins
 plotly
 xtable

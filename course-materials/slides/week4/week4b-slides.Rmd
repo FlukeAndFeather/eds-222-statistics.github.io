@@ -1,0 +1,105 @@
+---
+title: "Regression with interactions review"
+subtitle: "EDS 222"
+author: "Max Czapanskiy"
+#institute: ""
+date: "Fall 2024"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+<style type="text/css">
+.remark-slide-content {
+    font-size: 16px;
+    padding: 1em 4em 1em 4em;
+}
+</style>
+
+```{r Setup, include = F}
+options(htmltools.dir.version = FALSE)
+library(pacman)
+p_load(tidyverse, knitr)
+# Define pink color
+red_pink <- "#e64173"
+
+# Knitr options
+opts_chunk$set(
+  comment = "#>",
+  fig.align = "center",
+  fig.height = 6,
+  fig.width = 8,
+  # dpi = 300,
+  # cache = T,
+  warning = F,
+  message = F,
+  dev = "svg"
+)
+# A blank theme for ggplot
+theme_empty <- theme_bw() + theme(
+  line = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_blank(),
+  plot.margin = structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit"),
+  legend.position = "none"
+)
+theme_simple <- theme_bw() + theme(
+  line = element_blank(),
+  panel.grid = element_blank(),
+  rect = element_blank(),
+  strip.text = element_blank(),
+  axis.text.x = element_text(size = 14),
+  axis.text.y = element_blank(),
+  axis.ticks = element_blank(),
+  plot.title = element_blank(),
+  axis.title = element_blank(),
+  # plot.margin = structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit"),
+  legend.position = "none"
+)
+modified_time <- Sys.time() %>% 
+  as.numeric() %>% 
+  .POSIXct(tz = "UTC") %>% 
+  format("%Y%m%d%H%M%OS1")
+metathis::meta_tag(metathis::meta(), name = "last_modified", content = modified_time)
+```
+
+# Interactions: review
+
+Recall the equation for a regression with two predictors and their interaction.
+
+$$
+\hat y = \hat \beta_0 + \hat \beta_1 x_1 + \hat \beta_2 x_2 + \hat \beta_3 x_1 x_2
+$$
+
+In the following four figures, determine the signs of the four $\hat \beta$s. 
+
+```{r echo=FALSE, out.height='450px'}
+set.seed(20)
+params <- lapply(1:4, \(x) {
+  result <- as.list(sample(c(-2, -1, 1, 2), 4))
+  names(result) <- c("beta0", "beta1", "beta2", "beta3")
+  result
+})
+lapply(params, \(p) {
+  expand_grid(x1 = c(0, 2),
+              x2 = c(0, 1)) %>% 
+    mutate(y = with(p, beta0 + beta1 * x1 + beta2 * x2 + beta3 * x2 * x1)) %>% 
+    ggplot(aes(x1, y, color = factor(x2))) +
+    geom_line(linewidth = 2) +
+    scale_color_manual(expression(x[2]), 
+                       values = c("firebrick", "cornflowerblue")) +
+    theme_classic()
+}) %>% 
+  cowplot::plot_grid(plotlist = .)
+```
+
+---
