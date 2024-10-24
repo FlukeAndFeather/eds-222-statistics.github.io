@@ -12,13 +12,31 @@ Homework assignments will be distributed through GitHub Classroom. The
 links below will become active on the Date Posted.
 
 | Homework | Date Posted | Date Due |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | 1 ([link](https://classroom.github.com/a/1Rml_wbC)) | Thursday 9/26 | Monday 10/14 5pm |
 | 2 ([link](https://classroom.github.com/a/mlJ3iaU4)) | Tuesday 10/8 | Friday 10/18 11:59pm |
 | 3 ([link](https://classroom.github.com/a/bDJFkAYN)) | Tuesday 10/22 | Friday 11/8 11:59pm |
 | 4 (link) | Tuesday 11/12 | Friday 11/22 11:59pm |
 
 : {.hover .bordered tbl-colwidths="\[20,40,40\]"}
+
+## Submission guidelines
+
+Please make sure your homework repositories on GitHub will render the
+assignment Quarto document! When you're done with your assignment, run
+the following diagnostics.
+
+1.  Create a new RStudio project from version control with your
+    assignment GitHub repository URL. Make sure you create it in a
+    temporary folder, separate from where you did your homework.
+2.  Open the assignment Quarto document and render it.
+3.  Check the rendered version. Did the document render without errors?
+    Are all the answers to your questions there?
+
+This process uses the same workflow Leo and Max use to grade your
+assignments. If you hit an error doing this *then so will we* and we
+won't be able to grade your assignment. Each homework is worth 10% of
+your grade, so make sure we can grade your work!
 
 ## Final project proposal
 
