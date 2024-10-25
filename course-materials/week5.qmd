@@ -6,11 +6,13 @@ description: "October 28^th^ - November 1^st^"
 
 ## Class materials
 
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
-|----|----|----|
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|------------------------|------------------------|------------------------|
 | Midterm review | Midterm exam | No reading |
-: {.hover .bordered tbl-colwidths="[30,35,35]"} 
+
+: {.hover .bordered tbl-colwidths="\[30,35,35\]"}
 
 ## Notes
 
-* Midterm (Thursday) will be in class and closed book
+-   Midterm (Thursday) will be in class and closed book
+-   Practice midterm available [here](https://drive.google.com/file/d/1poUneC4HPUYFP4_KF377p2kl0aBiFiGr/view?usp=sharing)

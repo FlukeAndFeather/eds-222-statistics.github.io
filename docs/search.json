@@ -81,7 +81,7 @@
     "href": "course-materials/week5.html#notes",
     "title": "Midterm",
     "section": "Notes",
-    "text": "Notes\n\nMidterm (Thursday) will be in class and closed book"
+    "text": "Notes\n\nMidterm (Thursday) will be in class and closed book\nPractice midterm available here"
   },
   {
     "objectID": "course-materials/week3.html",
@@ -138,6 +138,13 @@
     "title": "EDS 222 Assignments",
     "section": "",
     "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/14 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 11:59pm\n\n\n3 (link)\nTuesday 10/22\nFriday 11/8 11:59pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 11:59pm"
+  },
+  {
+    "objectID": "assignments.html#submission-guidelines",
+    "href": "assignments.html#submission-guidelines",
+    "title": "EDS 222 Assignments",
+    "section": "Submission guidelines",
+    "text": "Submission guidelines\nPlease make sure your homework repositories on GitHub will render the assignment Quarto document! When you’re done with your assignment, run the following diagnostics.\n\nCreate a new RStudio project from version control with your assignment GitHub repository URL. Make sure you create it in a temporary folder, separate from where you did your homework.\nOpen the assignment Quarto document and render it.\nCheck the rendered version. Did the document render without errors? Are all the answers to your questions there?\n\nThis process uses the same workflow Leo and Max use to grade your assignments. If you hit an error doing this then so will we and we won’t be able to grade your assignment. Each homework is worth 10% of your grade, so make sure we can grade your work!"
   },
   {
     "objectID": "assignments.html#final-project-proposal",
