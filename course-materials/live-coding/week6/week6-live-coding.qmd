@@ -1,0 +1,92 @@
+---
+title: "Week 6 Lecture: Logistic Regression"
+author: "Max Czapanskiy"
+format:
+  html:
+    code-tools: true
+---
+
+```{r}
+#| include: false
+
+# Setup
+library(tidyverse)
+theme_set(theme_minimal(18) +
+            theme(plot.margin = unit(c(0.5, 1, 0.5, 0.5), "cm")))
+set.seed(123)
+
+```
+
+## Estimating logistic regression coefficients
+
+### Model and likelihood function
+
+Given the logistic regression model:
+
+$$
+\begin{align}
+y &\sim Bernoulli(p) \\
+logit(p) &= \beta_0 + \beta_1 x
+\end{align}
+$$
+
+What's the likelihood of some values of $\beta_0$ and $\beta_1$?
+
+Recall our likelihood function is:
+
+$$
+L(\beta_0, \beta_1) = \prod_i PMF(y_i, p_i)
+$$
+
+Where $PMF(y_i, p_i)$ is the value of the Bernoulli probability mass function with probability $p_i$ at $y_i$. E.g., $PMF(1, 0.5)=0.5$, $PMF(0, 0.75)=0.25$, and $PMF(1, 0.1)=0.1$.
+
+### Simulate some data 
+
+```{r}
+# Simulate some values for x
+
+# Choose our betas
+
+# Calculate p across x 
+
+# Simulate y
+# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable
+
+# Visualize
+
+```
+
+### Likelihood of a few options
+
+Calculate the likelihood of:
+
+-   $\beta_0=-5$, $\beta_1 = 1$
+
+-   $\beta_0=-1$, $\beta_1 = 0$
+
+-   $\beta_0=-3$, $\beta_1 = 0.5$
+
+```{r}
+# Write our likelihood function 
+# Note this uses the x and y values we generated earlier!
+# We're looking for the likelihood of the parameters given the data.
+
+# Apply the likelihood function to some candidate coefficients
+
+```
+
+### Likelihood of a lot of options
+
+Calculate the likelihood of 1,000,000 combinations of $\beta_0$, $\beta_1$ in the ranges $\beta_0 \in [-5, 0]$ and $\beta_1 \in [-1, 2]$.
+
+```{r}
+# Create a data frame with combinations of beta0, beta1
+ # Apply the likelihood function using mapply()
+
+# Isolate the parameters with the maximum likelihood
+
+# Visualize!
+
+```
+
+Our estimates for $\beta_0$ and $\beta_1$ chosen by maximum likelihood are `r #round(max_likelihood$beta0, 3)` and `r #round(max_likelihood$beta1, 3)`, respectively. Compare those to the values we used in our simulation: -3 and 0.75.

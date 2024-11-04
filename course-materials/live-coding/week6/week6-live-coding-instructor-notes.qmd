@@ -1,0 +1,117 @@
+---
+title: "Week 6 Lecture: Logistic Regression"
+author: "Max Czapanskiy"
+---
+
+```{r}
+#| include: false
+
+# Setup
+library(tidyverse)
+theme_set(theme_minimal(18) +
+            theme(plot.margin = unit(c(0.5, 1, 0.5, 0.5), "cm")))
+set.seed(123)
+
+```
+
+## Estimating logistic regression coefficients
+
+### Model and likelihood function
+
+Given the logistic regression model:
+
+$$
+\begin{align}
+y &\sim Bernoulli(p) \\
+logit(p) &= \beta_0 + \beta_1 x
+\end{align}
+$$
+
+What's the likelihood of some values of $\beta_0$ and $\beta_1$?
+
+Recall our likelihood function is:
+
+$$
+L(\beta_0, \beta_1) = \prod_i PMF(y_i, p_i)
+$$
+
+Where $PMF(y_i, p_i)$ is the value of the Bernoulli probability mass function with probability $p_i$ at $y_i$. E.g., $PMF(1, 0.5)=0.5$, $PMF(0, 0.75)=0.25$, and $PMF(1, 0.1)=0.1$.
+
+### Simulate some data 
+
+```{r}
+# Simulate some values for x
+x <- runif(10, 0, 10)
+
+# Choose our betas
+beta0 <- -3
+beta1 <- 0.75
+
+# Calculate p across x 
+logit_p <- beta0 + beta1 * x
+inv_logit <- function(x) exp(x) / (1 + exp(x))
+p <- inv_logit(logit_p)
+
+# Simulate y
+# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable
+y <- rbinom(10, size = 1, p)
+
+# Visualize
+tibble(x, y) %>% 
+  ggplot(aes(x, y)) +
+  geom_point(size = 4, color = "cornflowerblue", shape = 18) +
+  scale_x_continuous(breaks = seq(0, 10, by = 2), limits = c(0, 10))
+
+```
+
+### Likelihood of a few options
+
+Calculate the likelihood of:
+
+-   $\beta_0=-5$, $\beta_1 = 1$
+
+-   $\beta_0=-1$, $\beta_1 = 0$
+
+-   $\beta_0=-3$, $\beta_1 = 0.5$
+
+```{r}
+# Write our likelihood function 
+# Note this uses the x and y values we generated earlier!
+# We're looking for the likelihood of the parameters given the data.
+likelihood_fun <- function(beta0, beta1) {
+  logit_p <- beta0 + beta1 * x
+  p <- inv_logit(logit_p)
+  prod(dbinom(y, 1, p))
+}
+
+# Apply the likelihood function to some candidate coefficients
+likelihood_fun(-5, 1)
+likelihood_fun(-1, 0)
+likelihood_fun(-3, 0.5)
+
+```
+
+### Likelihood of a lot of options
+
+Calculate the likelihood of 1,000,000 combinations of $\beta_0$, $\beta_1$ in the ranges $\beta_0 \in [-5, 0]$ and $\beta_1 \in [-1, 2]$.
+
+```{r}
+# Create a data frame with combinations of beta0, beta1
+likelihood_space <- expand_grid(
+  beta0 = seq(-5, 0, length.out = 1000),
+  beta1 = seq(-1, 2, length.out = 1000)
+) %>% 
+  # Apply the likelihood function using mapply()
+  mutate(likelihood = mapply(likelihood_fun, beta0, beta1))
+
+# Isolate the parameters with the maximum likelihood
+max_likelihood <- filter(likelihood_space, likelihood == max(likelihood))
+
+# Visualize!
+ggplot(likelihood_space, aes(beta0, beta1, fill = likelihood)) +
+  geom_raster() +
+  geom_point(data = max_likelihood, color = "red") +
+  scale_fill_viridis_c()
+```
+
+Our estimates for $\beta_0$ and $\beta_1$ chosen by maximum likelihood are `r round(max_likelihood$beta0, 3)` and `r round(max_likelihood$beta1, 3)`, respectively. Compare those to the values we used in our simulation: -3 and 0.75.
