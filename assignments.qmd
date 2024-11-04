@@ -38,8 +38,11 @@ assignments. If you hit an error doing this *then so will we* and we
 won't be able to grade your assignment. Each homework is worth 10% of
 your grade, so make sure we can grade your work!
 
-## Final project proposal
+## Final project
 
 In addition to the homework assignments, a final project proposal in the
 form of one short paragraph describing your project is due November 8th
 (through Canvas).
+
+The final project consists of a blog post and a presentation. Details
+available [here](final-project.qmd).

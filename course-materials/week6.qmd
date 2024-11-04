@@ -6,13 +6,14 @@ description: "November 4^th^ - November 8^th^"
 
 ## Class materials
 
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
-|----|----|----|
-| [Logistic Regression (and other nonlinear models)](slides/week6/week6-slides.html){target="_blank"} <br/> [Live coding demo](live-coding/week6/week6-live-coding.qmd) | [Logistic regression in R](labs/week-6-lab.Rmd){target="_blank} | Chapter 9 in *IMS* |
-: {.hover .bordered tbl-colwidths="[30,35,35]"} 
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|------------------------|------------------------|------------------------|
+| [Logistic Regression (and other nonlinear models)](handouts/week6-handout.pdf){target="_blank"} <br/> [Live coding demo](live-coding/week6/week6-live-coding.qmd) | [Logistic regression in R](labs/week-6-lab.Rmd){target="\"_blank"} | Chapter 9 in *IMS* |
+
+: {.hover .bordered tbl-colwidths="\[30,35,35\]"}
 
 ## Notes
 
-* Homework assignment 3 due Friday, November 8^th^.
+-   Homework assignment 3 due Friday, November 8^th^.
 
-* Final project proposal is also due Friday, November 8^th^. Submission will be through Canvas.
+-   Final project proposal is also due Friday, November 8^th^. Submission will be through Canvas.

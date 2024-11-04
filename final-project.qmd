@@ -1,0 +1,42 @@
+---
+title: "Final Project Guidelines"
+---
+
+## Project goal
+
+The goal of this project is to explore an environmental data science question for which you do not know the answer. You will construct a research question, collect relevant data, and design a statistical analysis to answer your question. Your analysis must apply at least some of the statistical concepts you have learned in this course, including concepts covered in the second half of the class. You will summarize your findings and communicate clearly how they have or have not helped you answer your question.
+
+**Your results do not need to be conclusive!**
+
+Most data science questions cannot be fully answered with one analysis. If you carefully conduct your analysis, yet cannot conclude anything concrete,that is perfectly fine. There are many reasons you might find yourself in this situation, including, among many others:you have null results (i.e., you fail to reject the null hypothesis); your results are uncertain (e.g., one test suggests one answer while another test suggests another answer); there are issues with the analysis due to limited data availability; there are issues with the analysis because of violations of OLS assumptions, etc. Regardless of the final results, make sure to carefully describe your data and analysis, and to clearly articulate the limitations of your findings.
+
+## Submission guidelines
+
+The submission has three parts:
+
+1.  Brief proposal \[Due date: 11/10, 11:59pm\]. Please write a short paragraph (4-5 sentences) describing the project you propose to pursue. Motivate the question, describe possible data sources, and suggest possible analyses you may conduct to answer your question. Submission will be through Canvas.
+
+2.  Technical blog post \[Due date: 12/13, 11:59 pm\]. This blog post is a write up summarizing in text and with figures and/or tables your question, the data you have collected, your analysis plan, and your results. Your target audience should be other quantitative scientists and practitioners familiar with the basics of statistics and data science, but not necessarily experts in environmental science or the details of the methods studied in this course. Submit a link to your blog post via Canvas by 11:59pm on December 13.
+
+Some guidelines for the blog post:
+
+-   Main text length should be roughly 1500 - 2500 words.
+-   2-4 tables and/or figures, each carefully labeled and captioned so that they are easily interpretable
+-   Include scientific references when applicable.
+-   Include links to the underlying data you use. If your data cannot be shared publicly, note this in a short “data availability” statement at the end of your post.
+-   Include a link to a repository with your code.
+
+3.  4-minute presentation \[December 10 8-11am\]. This is a short presentation for the class in which you motivate your question, describe your data and analysis plan, and summarize your results. It should be a fun way to practice sharing data science with an audience through public speaking.\
+    In order to fit everyone in, the 4-minute limit will have to be strictly enforced. Practice your presentation in advance and time yourself! 4 minutes is probably much, much shorter than you think.
+
+## General guidelines
+
+-   Motivate your question. Why is this important? Is there existing evidence on this question? If so, why is it inconclusive? If not, why not?
+
+-   Describe your data. Where did you access it? What are its spatial and temporal features? What are its limitations? What do you know about the sampling strategy and what biases that may introduce? If helpful, you can use a histogram, scatterplot, or summary statistics table to describe your data.
+
+-   Clearly describe your analysis plan. What is your analysis plan? Why did you choose this analysis, given your data and question? What are the limitations?
+
+-   Summarize your results visually and in words. Show us your results in figure(s) and/or table(s) that are carefully labeled and captioned. Describe in the text (and orally when presenting) what you found, and how these results either do or do not help you answeryour question.
+
+-   What might you do next? One analysis cannot fully answer an interesting scientific question. If you had time to collect more data or conduct more analyses, what would help you answer this question better?

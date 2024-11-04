@@ -60,5 +60,9 @@ format:
 
 editor: source
 
+resources:
+  - "course-materials/handouts/*"
+
+
 
 
