@@ -53,7 +53,7 @@
     "href": "final-project.html#submission-guidelines",
     "title": "Final Project Guidelines",
     "section": "Submission guidelines",
-    "text": "Submission guidelines\nThe submission has three parts:\n\nBrief proposal [Due date: 11/10, 11:59pm]. Please write a short paragraph (4-5 sentences) describing the project you propose to pursue. Motivate the question, describe possible data sources, and suggest possible analyses you may conduct to answer your question. Submission will be through Canvas.\nTechnical blog post [Due date: 12/13, 11:59 pm]. This blog post is a write up summarizing in text and with figures and/or tables your question, the data you have collected, your analysis plan, and your results. Your target audience should be other quantitative scientists and practitioners familiar with the basics of statistics and data science, but not necessarily experts in environmental science or the details of the methods studied in this course. Submit a link to your blog post via Canvas by 11:59pm on December 13.\n\nSome guidelines for the blog post:\n\nMain text length should be roughly 1500 - 2500 words.\n2-4 tables and/or figures, each carefully labeled and captioned so that they are easily interpretable\nInclude scientific references when applicable.\nInclude links to the underlying data you use. If your data cannot be shared publicly, note this in a short “data availability” statement at the end of your post.\nInclude a link to a repository with your code.\n\n\n4-minute presentation [December 10 8-11am]. This is a short presentation for the class in which you motivate your question, describe your data and analysis plan, and summarize your results. It should be a fun way to practice sharing data science with an audience through public speaking.\nIn order to fit everyone in, the 4-minute limit will have to be strictly enforced. Practice your presentation in advance and time yourself! 4 minutes is probably much, much shorter than you think."
+    "text": "Submission guidelines\nThe submission has three parts:\n\nBrief proposal [Due date: 11/11, 11:59pm]. Please write a short paragraph (4-5 sentences) describing the project you propose to pursue. Motivate the question, describe possible data sources, and suggest possible analyses you may conduct to answer your question. Submission will be through Canvas.\nTechnical blog post [Due date: 12/13, 11:59 pm]. This blog post is a write up summarizing in text and with figures and/or tables your question, the data you have collected, your analysis plan, and your results. Your target audience should be other quantitative scientists and practitioners familiar with the basics of statistics and data science, but not necessarily experts in environmental science or the details of the methods studied in this course. Submit a link to your blog post via Canvas by 11:59pm on December 13.\n\nSome guidelines for the blog post:\n\nMain text length should be roughly 1500 - 2500 words.\n2-4 tables and/or figures, each carefully labeled and captioned so that they are easily interpretable\nInclude scientific references when applicable.\nInclude links to the underlying data you use. If your data cannot be shared publicly, note this in a short “data availability” statement at the end of your post.\nInclude a link to a repository with your code.\n\n\n4-minute presentation [December 10 8-11am]. This is a short presentation for the class in which you motivate your question, describe your data and analysis plan, and summarize your results. It should be a fun way to practice sharing data science with an audience through public speaking.\nIn order to fit everyone in, the 4-minute limit will have to be strictly enforced. Practice your presentation in advance and time yourself! 4 minutes is probably much, much shorter than you think."
   },
   {
     "objectID": "final-project.html#general-guidelines",
@@ -88,21 +88,21 @@
     "href": "course-materials/week6.html",
     "title": "Nonlinear models",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic Regression (and other nonlinear models)  Live coding demo\nLogistic regression in R\nChapter 9 in IMS"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R\nChapter 9 in IMS"
   },
   {
     "objectID": "course-materials/week6.html#class-materials",
     "href": "course-materials/week6.html#class-materials",
     "title": "Nonlinear models",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic Regression (and other nonlinear models)  Live coding demo\nLogistic regression in R\nChapter 9 in IMS"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R\nChapter 9 in IMS"
   },
   {
     "objectID": "course-materials/week6.html#notes",
     "href": "course-materials/week6.html#notes",
     "title": "Nonlinear models",
     "section": "Notes",
-    "text": "Notes\n\nHomework assignment 3 due Friday, November 8th.\nFinal project proposal is also due Friday, November 8th. Submission will be through Canvas."
+    "text": "Notes\n\nHomework assignment 3 due Friday, November 8th next Monday November 11th.\nFinal project proposal is also due Friday, November 8th Monday November 11th. Submission will be through Canvas."
   },
   {
     "objectID": "course-materials/week4.html",
@@ -172,14 +172,14 @@
     "href": "assignments.html",
     "title": "EDS 222 Assignments",
     "section": "",
-    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/14 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 11:59pm\n\n\n3 (link)\nTuesday 10/22\nFriday 11/8 11:59pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 11:59pm"
+    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/14 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 11:59pm\n\n\n3 (link)\nTuesday 10/22\nMonday 11/11 11:59pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 11:59pm"
   },
   {
     "objectID": "assignments.html#homework-assignments",
     "href": "assignments.html#homework-assignments",
     "title": "EDS 222 Assignments",
     "section": "",
-    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/14 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 11:59pm\n\n\n3 (link)\nTuesday 10/22\nFriday 11/8 11:59pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 11:59pm"
+    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/14 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 11:59pm\n\n\n3 (link)\nTuesday 10/22\nMonday 11/11 11:59pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 11:59pm"
   },
   {
     "objectID": "assignments.html#submission-guidelines",
@@ -193,7 +193,7 @@
     "href": "assignments.html#final-project",
     "title": "EDS 222 Assignments",
     "section": "Final project",
-    "text": "Final project\nIn addition to the homework assignments, a final project proposal in the form of one short paragraph describing your project is due November 8th (through Canvas).\nThe final project consists of a blog post and a presentation. Details available here."
+    "text": "Final project\nIn addition to the homework assignments, a final project proposal in the form of one short paragraph describing your project is due November 11th (through Canvas).\nThe final project consists of a blog post and a presentation. Details available here."
   },
   {
     "objectID": "course-materials/week10.html",
