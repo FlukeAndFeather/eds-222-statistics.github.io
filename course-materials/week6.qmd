@@ -8,7 +8,7 @@ description: "November 4^th^ - November 8^th^"
 
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
 |------------------------|------------------------|------------------------|
-| [Logistic regression slides](handouts/week6-handout.pdf){target="_blank"} <br/> [Live coding demo](live-coding/week6/week6-live-coding.qmd) <br/> [Logistic regression slides (annotated)](handouts/week6-handout-annotated.pdf){target="_blank"} | [Logistic regression in R](labs/week-6-lab.Rmd){target="\"_blank"} | Chapter 9 in *IMS* |
+| [Logistic regression slides](handouts/week6-handout.pdf){target="_blank"} <br/> [Live coding demo](live-coding/week6/week6-live-coding.qmd) <br/> [Logistic regression slides (annotated)](handouts/week6-handout-annotated.pdf){target="_blank"} | [Logistic regression in R](labs/week-6-lab.qmd){target="\"_blank"} | Chapter 9 in *IMS* |
 
 : {.hover .bordered tbl-colwidths="\[30,35,35\]"}
 

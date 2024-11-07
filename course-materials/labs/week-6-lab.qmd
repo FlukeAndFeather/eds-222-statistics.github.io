@@ -1,6 +1,10 @@
 ---
 title: "EDS222 Week 6 Lab: Logistic Regression"
-format: html
+format: 
+  html:
+    echo: true
+    eval: false
+    code-tools: true
 bibliography: references.bib
 ---
 
@@ -12,18 +16,238 @@ Is exposure to environmental hazards influenced by *class* or *race and ethnicit
 
 1.  Data exploration
 2.  Try (and fail) to use OLS
-3.  Fit a reduced logistic regression model using maximum likelihood
+3.  Fit a logistic regression model using maximum likelihood
 4.  Fit the full logistic regression model using `glm()`
 
 # Data exploration
 
-We will use the data from @switzer2017 for today's lab. Begin by downloading the data [here](https://drive.google.com/file/d/1_1vgFyUxWW7XNzNcVzd32UY9502TspXn/view?usp=drive_link).
+We will use the data from @switzer2017 for today's lab. Begin by downloading the CSV file available [here](https://drive.google.com/file/d/1_1vgFyUxWW7XNzNcVzd32UY9502TspXn/view?usp=drive_link). These data come from multiple sources.
+
+## Water utility and violations data
+
+-   Source: Safe Drinking Water Information System (SDWIS)
+
+-   Time period: 2010-2013 (4 years)
+
+-   Sample size: 12,972 utilities
+
+-   Criteria: Local government-owned utilities serving populations of 10,000 or more
+
+## Demographic data
+
+-   Source: US Census Bureau's American Community Surveys (2010-2013)
+
+-   Variables included:
+
+    -   Percent Hispanic population
+
+    -   Percent Black population
+
+    -   Percent of population with high school education
+
+    -   Percent of population with bachelor's degree
+
+    -   Percent of population below poverty line
+
+    -   Median household income
+
+Load the data and begin exploring.
 
 ```{r}
 #| label: setup
 
 suppressMessages(library(tidyverse))
+theme_set(theme_bw())
 
 drinking_water <- read_csv("drinking_water.csv", show_col_types = FALSE)
 
 ```
+
+## Questions
+
+1.  What do you think each row represents?
+2.  What columns do you think represent:
+    1.  Drinking water health violations?
+    2.  Percent Black and Hispanic population in the utility district?
+    3.  Median household income in the utility district?
+3.  One column includes a *count* of drinking water health violations. How would you create a new column with a binary variable representing whether there were any violations?
+
+```{r}
+
+
+```
+
+4.  Create a scatter plot of violations against race (percent Black population), ethnicity (percent Hispanic population), and SES (median household income). What visualization issues do we get with a scatter plot? How could you address that?\
+
+```{r}
+# Make plots
+
+```
+
+# Try (and fail) to use OLS
+
+Fit the following OLS model.
+
+$$
+\text{violations} = \beta_0 + \beta_1\text{percentHispanic}
+$$
+
+```{r}
+pcthisp_lm <- lm(???)
+summary(pcthisp_lm)
+
+```
+
+## Questions
+
+1.  Plot the residuals. What pattern do you notice?
+
+```{r}
+# Make a plot of the residuals.
+
+```
+
+2.  Plot the raw data and the predicted probabilities for `violations`. Are there any obvious problems?
+
+```{r}
+# Plot raw data and predicted probabilities
+  
+```
+
+# Fit a logistic regression model using maximum likelihood
+
+Recall that logistic regression uses *maximum likelihood*, not OLS, to estimate coefficients. Usually we will use functions from R packages to fit these models, but I want you to do it yourself once.
+
+## Negative log likelihood
+
+Estimating coefficients is an optimization problem: what combination yields the maximum likelihood? There are two things we can do to make our problem more tractable for optimization.
+
+1.  Recall that the likelihood function involves a *product*. Multiplication is computationally costly (compared to addition) and multiplying small numbers is very error prone. We can avoid this problem by working with logarithms. The log of a product is the sum of the logs: $log(a \times b) = log(a) + log(b)$. Logarithms are monotonically increasing, which means if $a > b$ then $log(a) > log(b)$. This useful property means we can maximize the sum of the log likelihoods (which is quick and robust to errors) instead of the product of likelihoods (which is slow and error prone).
+2.  Optimization algorithms typically find the *minimum* value. They're intended to look for valleys, not peaks. So instead of maximizing the log likelihood, we can minimize the negative log likelihood.
+
+That seems confusing! Let's write the code and so we can see what's happening. Do the following:
+
+1.  Write a likelihood function for the violations and percent Hispanic model. This should calculate the negative log likelihood of a set of coefficients, conditional on the data.
+2.  Call an optimization function to find the maximum likelihood parameters.
+
+It will help to keep the model formulation handy:
+
+$$
+\begin{align}
+\text{violations} &\sim Bernoulli(p) \\
+logit(p) &= \beta_0 + \beta_1 \text{percentHispanic}
+\end{align}
+$$
+
+```{r}
+# Inverse logit utility function
+inv_logit <- function(x) exp(x) / (1 + exp(x))
+  
+# Likelihood of the coefficients, given the data
+likelihood_fun <- function(coefficients, data) {
+  # Calculate logit(p) based on coefficients and predictor
+
+  # Invert the logit to get p
+
+  # Use the PMF of the Bernoulli to get our log likelihoods
+
+  # Sum the negative log likelihood
+
+}
+
+# Use an optimization function to get the maximum likelihood coefficients
+drinking_water_complete <- drop_na(drinking_water, pcthisp, violations)
+coef_optim <- optim(???, 
+                    ???, 
+                    data = ???)
+
+```
+
+## Questions
+
+1.  What were your maximum likelihood estimates for $\hat\beta_0$ and $\hat\beta_1$?
+
+```{r}
+# What are the maximum likelihood estimates for our coefficients?
+# Hint: explore coef_optim
+
+```
+
+2.  What's the predicted probability of drinking water violations for communities with 0%, 50%, and 100% Hispanic population? \
+    Plot the predicted probability across the whole range 0-100% Hispanic.
+
+```{r}
+# Create and plot predictions
+
+```
+
+3.  How much does the probability of a drinking water violation change when percent Hispanic population increases from 10 to 20%, 45 to 55%, and 80 to 90%?
+
+```{r}
+
+```
+
+4.  How would you interpret the coefficients? What do the slope and intercept mean in this context? Where is the relationship linear, and where is it non-linear?
+5.  Create a "DEM" of the likelihood landscape for $\beta_0$ and $\beta_1$. Choose a range of $\beta_0$ and $\beta_1$ values around your best estimates, calculate the likelihood for each combination, and create a figure with $\beta_0$ on the x-axis, $\beta_1$ on the y-axis, and the likelihood as the fill. Add a point for $(\hat\beta_0, \hat\beta_1)$.\
+    Bonus problem: add contours!
+
+```{r}
+likelihood_dem <- expand_grid(
+  ???,
+  ???
+) %>% 
+  mutate(coefficients = mapply(function(b0, b1) c(beta0 = b0, beta1 = b1),
+                               ???, ???,
+                               SIMPLIFY = FALSE),
+         negloglik = sapply(coefficients, 
+                            ???, 
+                            data = ???),
+         likelihood = ???)
+
+ggplot(likelihood_dem, aes(???, ???, fill = ???)) +
+  geom_raster() +
+  geom_point(x = ???, y = ???, color = "red")
+
+```
+
+# Fit the full logistic regression model using `glm()`
+
+Normally we won't need to write our own likelihood functions and use optimization to find our maximum likelihood coefficients. The `glm()` function in the built-in `stats` package can fit all kinds of generalized linear models, which includes logistic regression.
+
+Here's how to fit the same model from the previous section. Notice the formula and data arguments look very similar to what we'd use for `lm()`. But now we have to specify the response variable's "family" (i.e., the type of random variable) and the link function we want to use (logit, in our case).
+
+```{r}
+pcthisp_glm <- glm(violations ~ pcthisp, 
+                   family = binomial(link = "logit"),
+                   data = drinking_water)
+summary(pcthisp_glm)
+
+```
+
+## Questions
+
+1.  How would you fit a model that includes an interaction term between ethnicity and SES?
+
+```{r}
+interaction_glm <- ???
+summary(interaction_glm)
+
+```
+
+2.  Create a figure similar to Fig. 1 in @switzer2017. Put percent Hispanic population on the x-axis, median household income on the y-axis, and make the fill the probability of a water quality violation.
+
+```{r}
+predictions <- expand_grid(
+  pcthisp = ???,
+  medianincomehouse = ???
+) %>% 
+  mutate(violations = predict(???, 
+                              newdata = ., 
+                              type = ???))
+
+# Create plot
+
+```
+
+3.  Interpret the predicted surface. How does SES influence the relationship between ethnicity and exposure to environmental hazards? What is the "slope" of the probability of a violation w.r.t. percent Hispanic population at low, medium, and high median household income levels?\
+
