@@ -1,0 +1,29 @@
+---
+title: "EDS222 Week 6 Lab: Logistic Regression"
+format: html
+bibliography: references.bib
+---
+
+# The Color of Drinking Water
+
+Is exposure to environmental hazards influenced by *class* or *race and ethnicity*? Switzer and Teodoro [@switzer2017] argued the either-or framing of that question is misguided, and actually the *interaction* between class and race/ethnicity is the important question for environmental justice. Today's lab will use logistic regression and interaction terms to investigate drinking water quality in the context of socio-economic status (SES), race, and ethnicity.
+
+# Overview
+
+1.  Data exploration
+2.  Try (and fail) to use OLS
+3.  Fit a reduced logistic regression model using maximum likelihood
+4.  Fit the full logistic regression model using `glm()`
+
+# Data exploration
+
+We will use the data from @switzer2017 for today's lab. Begin by downloading the data [here](https://drive.google.com/file/d/1_1vgFyUxWW7XNzNcVzd32UY9502TspXn/view?usp=drive_link).
+
+```{r}
+#| label: setup
+
+suppressMessages(library(tidyverse))
+
+drinking_water <- read_csv("drinking_water.csv", show_col_types = FALSE)
+
+```
