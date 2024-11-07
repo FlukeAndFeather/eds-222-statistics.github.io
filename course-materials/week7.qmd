@@ -6,11 +6,12 @@ description: "November 11^th^ - November 15^th^"
 
 ## Class materials
 
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
-|----|----|----|
-| [Logistic Regression (and other nonlinear models)](slides/week7/week7-slides.html){target="_blank"} | [Logistic regression in R](labs/week-7-lab.Rmd){target="_blank} | Chapters 13, 19.2 in *IMS* |
-: {.hover .bordered tbl-colwidths="[30,35,35]"} 
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
+|------------------------|------------------------|------------------------|
+| Hypothesis testing | Hypothesis testing in R | Chapters 11, 12 in *IMS* |
+
+: {.hover .bordered tbl-colwidths="\[30,35,35\]"}
 
 ## Notes
 
-* Homework assignment 4 posted on Tuesday, November 12^th^.
+-   Homework assignment 4 posted on Tuesday, November 12^th^.

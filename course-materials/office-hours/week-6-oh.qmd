@@ -1,0 +1,230 @@
+---
+title: "EDS222 week 6 office hours"
+format: 
+  html:
+    code-tools: true
+---
+
+## Muddy points
+
+-   What's the relationship between logit and likelihood?
+
+-   What is the logit?
+
+-   is Bernoulli(p) the same as logit(p)?
+
+## What is the logit?
+
+It's a transformation!
+
+Problem:
+
+Given the equation
+
+$$
+y = \beta_0 + \beta_1 x
+$$
+
+Depending on the values on the right hand side of the equation, y can be any real number.
+
+In logistic regression, we'll need to calculate the likelihood of some 0's and 1's given a probability $p$. If our $p$ is outside \[0, 1\] that's undefined.
+
+I can't do this:
+
+```{r}
+dbinom(c(1, 1, 0), size = 1, prob = -1)
+
+```
+
+When we try to use probabilities outside \[0,1\] we get Not A Number.
+
+That's where the logit comes in.
+
+$$
+odds = \frac{p}{1-p} \\
+logit = log(odds)
+$$
+
+```{r}
+library(tidyverse)
+p <- seq(0.01, 0.99, length.out = 100)
+odds <- p / (1 - p)
+logit <- log(odds)
+
+tibble(p, odds, logit) %>% 
+  ggplot(aes(p, odds)) +
+  geom_line()
+
+# When p = 0.5, odds = 1
+# ditto,        logit = 0
+
+tibble(p, odds, logit) %>% 
+  ggplot(aes(p, logit)) +
+  geom_line()
+
+```
+
+**logit converts what we *have* (0, 1) to what we can *model* (-Inf, Inf)**
+
+Allows us to treat a probability as a linear model.
+
+## What's the relationship between logit and likelihood?
+
+$$
+\text{endangered} \sim Bernoulli(p) \\
+logit(p) = \beta_0 + \beta_1 \text{dist2coast}
+$$
+
+### Simulation
+
+```{r}
+set.seed(1422)
+# Step 1, generate predictors
+dist2coast <- runif(100, 0, 100)
+# Step 2, choose our coefficients
+beta_0 <- 0
+beta_1 <- -0.1
+# Step 3, calculate random variable parameters (in this case, just p)
+logit_p <- beta_0 + beta_1 * dist2coast
+inv_logit <- function(x) exp(x) / (1 + exp(x))
+p <- inv_logit(logit_p)
+# Step 4, generate random numbers from the random variable
+endangered <- rbinom(100, size = 1, prob = p)
+# Done! Simulated!
+
+# Let's visualize
+tibble(dist2coast, p, endangered) %>% 
+  ggplot(aes(dist2coast)) +
+  geom_point(aes(y = endangered)) +
+  geom_line(aes(y = p), color = "firebrick") +
+  theme_bw()
+
+```
+
+-   p declines as we move away from the coast (red line)
+
+-   only "success" we saw was when p was closest to 1 (i.e. all the way to the left)
+
+Now, how would I make the red line increase as we move away from the coast?
+
+```{r}
+set.seed(1422)
+# Step 1, generate predictors
+dist2coast <- runif(100, 0, 100)
+# Step 2, choose our coefficients
+beta_0 <- -1
+beta_1 <- 0.1
+# Step 3, calculate random variable parameters (in this case, just p)
+logit_p <- beta_0 + beta_1 * dist2coast
+inv_logit <- function(x) exp(x) / (1 + exp(x))
+p <- inv_logit(logit_p)
+# Step 4, generate random numbers from the random variable
+endangered <- rbinom(100, size = 1, prob = p)
+# Done! Simulated!
+
+# Let's visualize
+tibble(dist2coast, p, endangered) %>% 
+  ggplot(aes(dist2coast)) +
+  geom_point(aes(y = endangered)) +
+  geom_line(aes(y = p), color = "firebrick") +
+  theme_bw()
+
+```
+
+## Is Bernoulli(p) the same as logit(p)?
+
+logit is a transformation. It's a formula applied to an input.
+
+$$
+logit(x) = log(\frac{x}{1-x})
+$$
+
+Bernoulli is a random variable. "distributed as"
+
+```{r}
+p <- 0.75
+x <- 0:1
+PMF_p <- c(1 - p, p)
+
+tibble(p, PMF_p, x) %>% 
+  ggplot() +
+  geom_segment(aes(x = x, xend = x, y = 0, yend = PMF_p)) +
+  geom_point(aes(x, PMF_p), size = 2) +
+  expand_limits(y = 1) +
+  theme_bw() 
+
+```
+
+## Likelihood walkthrough
+
+What's the likelihood of *p* being 0.5 if we observe {0, 1, 0, 0, 0, 1, 1}?
+
+$$
+L=\prod_i PMF(p_i) \times (x==1)
+$$
+
+```{r}
+p_good <- 0.5
+prod(dbinom(c(0, 1, 0, 0, 0, 1, 1), size = 1, prob = p_good))
+
+p_bad <- 0.9
+prod(dbinom(c(0, 1, 0, 0, 0, 1, 1), size = 1, prob = p_bad))
+
+```
+
+The likelihood of *p* being 0.5 if we get 3 0's and 3 1's is much greater than the likelihood of *p* being 0.9 given the same observations.
+
+If I got one 1 and three 0's, what would be the most likely *p*?
+
+```{r}
+p_good <- 0.25
+prod(dbinom(c(1, 0, 0, 0), size = 1, prob = p_good))
+
+p_bad <- 0.5
+prod(dbinom(c(1, 0, 0, 0), size = 1, prob = p_bad))
+```
+
+We care that 0.105 is greater than 0.0625. We don't care about 0.105 in of itself.
+
+Let's build that out to regression.
+
+```{r}
+set.seed(1422)
+# Step 1, generate predictors
+dist2coast <- runif(100, 0, 100)
+# Step 2, choose our coefficients
+beta_0 <- -1
+beta_1 <- 0.1
+# Step 3, calculate random variable parameters (in this case, just p)
+logit_p <- beta_0 + beta_1 * dist2coast
+inv_logit <- function(x) exp(x) / (1 + exp(x))
+p <- inv_logit(logit_p)
+# Step 4, generate random numbers from the random variable
+endangered <- rbinom(100, size = 1, prob = p)
+# Done! Simulated!
+
+tibble(dist2coast, p, endangered) %>% 
+  mutate(likelihood = dbinom(endangered, size = 1, prob = p))
+
+```
+
+```{r}
+c(beta_0, beta_1)
+
+likelihood_fun <- function(coef, data) {
+  # given x and coefs, figure out p
+  logit_p <- coef["beta0"] + coef["beta1"] * data$dist2coast
+  p <- inv_logit(logit_p)
+  # calculate the log likelihood of the observed, given p
+  loglik <- dbinom(data$endangered, size = 1, prob = p, log = TRUE)
+  # Sum it up and flip the sign
+  -sum(loglik)
+}
+
+mpas <- tibble(dist2coast, endangered)
+likelihood_fun(c(beta0 = -1, beta1 = 0.1), mpas)
+likelihood_fun(c(beta0 = -5, beta1 = 1), mpas)
+
+```
+
+The likelihood *does not mean anything in of itself*. It's only important relatively.

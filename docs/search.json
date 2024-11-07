@@ -56,305 +56,60 @@
     "text": "Questions\n\nHow would you fit a model that includes an interaction term between ethnicity and SES?\n\n\ninteraction_glm &lt;- ???\nsummary(interaction_glm)\n\n\nCreate a figure similar to Fig. 1 in Switzer and Teodoro (2017). Put percent Hispanic population on the x-axis, median household income on the y-axis, and make the fill the probability of a water quality violation.\n\n\npredictions &lt;- expand_grid(\n  pcthisp = ???,\n  medianincomehouse = ???\n) %&gt;% \n  mutate(violations = predict(???, \n                              newdata = ., \n                              type = ???))\n\n# Create plot\n\n\nInterpret the predicted surface. How does SES influence the relationship between ethnicity and exposure to environmental hazards? What is the “slope” of the probability of a violation w.r.t. percent Hispanic population at low, medium, and high median household income levels?"
   },
   {
-    "objectID": "index.html#course-description",
-    "href": "index.html#course-description",
-    "title": "Statistics for Environmental Data Science",
-    "section": "Course Description",
-    "text": "Course Description\nStatistics is the science of collecting, manipulating, and analyzing empirical data. In this class, we will learn the statistical fundamentals that will enable us to draw conclusions about the environment and its interaction with social and economic systems. We will cover fundamental statistical concepts and tools, and then apply and expand upon those tools to learn some temporal and spatial statistical methods that are particularly helpful in environmental data science. Welcome!\n\nSome concepts we’ll cover:\n\nSampling and study design, descriptive statistics\nLinear and logistic regression (univariate and multivariate)\nHypothesis testing and inference\nSpatial weighting, spatial clustering\nTime series analysis, forecasting"
+    "objectID": "course-materials/office-hours/week-6-oh.html",
+    "href": "course-materials/office-hours/week-6-oh.html",
+    "title": "EDS222 week 6 office hours",
+    "section": "",
+    "text": "What’s the relationship between logit and likelihood?\nWhat is the logit?\nis Bernoulli(p) the same as logit(p)?"
   },
   {
-    "objectID": "index.html#teaching-team",
-    "href": "index.html#teaching-team",
-    "title": "Statistics for Environmental Data Science",
-    "section": "Teaching Team",
-    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nMax Czapanskiy\nEmail: maxczap@ucsb.edu\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\nLeonardo Feitosa\nEmail: lmfeitosa@ucsb.edu"
+    "objectID": "course-materials/office-hours/week-6-oh.html#muddy-points",
+    "href": "course-materials/office-hours/week-6-oh.html#muddy-points",
+    "title": "EDS222 week 6 office hours",
+    "section": "",
+    "text": "What’s the relationship between logit and likelihood?\nWhat is the logit?\nis Bernoulli(p) the same as logit(p)?"
   },
   {
-    "objectID": "index.html#acknowledgements",
-    "href": "index.html#acknowledgements",
-    "title": "Statistics for Environmental Data Science",
-    "section": "Acknowledgements",
-    "text": "Acknowledgements\nEDS 222 was originally developed and taught by Tamma Carleton. This new website houses materials which are heavily reused, adapted from, and inspired by Tamma’s original work."
+    "objectID": "course-materials/office-hours/week-6-oh.html#what-is-the-logit",
+    "href": "course-materials/office-hours/week-6-oh.html#what-is-the-logit",
+    "title": "EDS222 week 6 office hours",
+    "section": "What is the logit?",
+    "text": "What is the logit?\nIt’s a transformation!\nProblem:\nGiven the equation\n\\[\ny = \\beta_0 + \\beta_1 x\n\\]\nDepending on the values on the right hand side of the equation, y can be any real number.\nIn logistic regression, we’ll need to calculate the likelihood of some 0’s and 1’s given a probability \\(p\\). If our \\(p\\) is outside [0, 1] that’s undefined.\nI can’t do this:\n\ndbinom(c(1, 1, 0), size = 1, prob = -1)\n\nWarning in dbinom(c(1, 1, 0), size = 1, prob = -1): NaNs produced\n\n\n[1] NaN NaN NaN\n\n\nWhen we try to use probabilities outside [0,1] we get Not A Number.\nThat’s where the logit comes in.\n\\[\nodds = \\frac{p}{1-p} \\\\\nlogit = log(odds)\n\\]\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.0     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\np &lt;- seq(0.01, 0.99, length.out = 100)\nodds &lt;- p / (1 - p)\nlogit &lt;- log(odds)\n\ntibble(p, odds, logit) %&gt;% \n  ggplot(aes(p, odds)) +\n  geom_line()\n\n\n\n\n\n\n\n# When p = 0.5, odds = 1\n# ditto,        logit = 0\n\ntibble(p, odds, logit) %&gt;% \n  ggplot(aes(p, logit)) +\n  geom_line()\n\n\n\n\n\n\n\n\nlogit converts what we have (0, 1) to what we can model (-Inf, Inf)\nAllows us to treat a probability as a linear model."
   },
   {
-    "objectID": "course-materials/live-coding/week6/week6-live-coding-instructor-notes.html",
-    "href": "course-materials/live-coding/week6/week6-live-coding-instructor-notes.html",
+    "objectID": "course-materials/office-hours/week-6-oh.html#whats-the-relationship-between-logit-and-likelihood",
+    "href": "course-materials/office-hours/week-6-oh.html#whats-the-relationship-between-logit-and-likelihood",
+    "title": "EDS222 week 6 office hours",
+    "section": "What’s the relationship between logit and likelihood?",
+    "text": "What’s the relationship between logit and likelihood?\n\\[\n\\text{endangered} \\sim Bernoulli(p) \\\\\nlogit(p) = \\beta_0 + \\beta_1 \\text{dist2coast}\n\\]\n\nSimulation\n\nset.seed(1422)\n# Step 1, generate predictors\ndist2coast &lt;- runif(100, 0, 100)\n# Step 2, choose our coefficients\nbeta_0 &lt;- 0\nbeta_1 &lt;- -0.1\n# Step 3, calculate random variable parameters (in this case, just p)\nlogit_p &lt;- beta_0 + beta_1 * dist2coast\ninv_logit &lt;- function(x) exp(x) / (1 + exp(x))\np &lt;- inv_logit(logit_p)\n# Step 4, generate random numbers from the random variable\nendangered &lt;- rbinom(100, size = 1, prob = p)\n# Done! Simulated!\n\n# Let's visualize\ntibble(dist2coast, p, endangered) %&gt;% \n  ggplot(aes(dist2coast)) +\n  geom_point(aes(y = endangered)) +\n  geom_line(aes(y = p), color = \"firebrick\") +\n  theme_bw()\n\n\n\n\n\n\n\n\n\np declines as we move away from the coast (red line)\nonly “success” we saw was when p was closest to 1 (i.e. all the way to the left)\n\nNow, how would I make the red line increase as we move away from the coast?\n\nset.seed(1422)\n# Step 1, generate predictors\ndist2coast &lt;- runif(100, 0, 100)\n# Step 2, choose our coefficients\nbeta_0 &lt;- -1\nbeta_1 &lt;- 0.1\n# Step 3, calculate random variable parameters (in this case, just p)\nlogit_p &lt;- beta_0 + beta_1 * dist2coast\ninv_logit &lt;- function(x) exp(x) / (1 + exp(x))\np &lt;- inv_logit(logit_p)\n# Step 4, generate random numbers from the random variable\nendangered &lt;- rbinom(100, size = 1, prob = p)\n# Done! Simulated!\n\n# Let's visualize\ntibble(dist2coast, p, endangered) %&gt;% \n  ggplot(aes(dist2coast)) +\n  geom_point(aes(y = endangered)) +\n  geom_line(aes(y = p), color = \"firebrick\") +\n  theme_bw()"
+  },
+  {
+    "objectID": "course-materials/office-hours/week-6-oh.html#is-bernoullip-the-same-as-logitp",
+    "href": "course-materials/office-hours/week-6-oh.html#is-bernoullip-the-same-as-logitp",
+    "title": "EDS222 week 6 office hours",
+    "section": "Is Bernoulli(p) the same as logit(p)?",
+    "text": "Is Bernoulli(p) the same as logit(p)?\nlogit is a transformation. It’s a formula applied to an input.\n\\[\nlogit(x) = log(\\frac{x}{1-x})\n\\]\nBernoulli is a random variable. “distributed as”\n\np &lt;- 0.75\nx &lt;- 0:1\nPMF_p &lt;- c(1 - p, p)\n\ntibble(p, PMF_p, x) %&gt;% \n  ggplot() +\n  geom_segment(aes(x = x, xend = x, y = 0, yend = PMF_p)) +\n  geom_point(aes(x, PMF_p), size = 2) +\n  expand_limits(y = 1) +\n  theme_bw()"
+  },
+  {
+    "objectID": "course-materials/office-hours/week-6-oh.html#likelihood-walkthrough",
+    "href": "course-materials/office-hours/week-6-oh.html#likelihood-walkthrough",
+    "title": "EDS222 week 6 office hours",
+    "section": "Likelihood walkthrough",
+    "text": "Likelihood walkthrough\nWhat’s the likelihood of p being 0.5 if we observe {0, 1, 0, 0, 0, 1, 1}?\n\\[\nL=\\prod_i PMF(p_i) \\times (x==1)\n\\]\n\np_good &lt;- 0.5\nprod(dbinom(c(0, 1, 0, 0, 0, 1, 1), size = 1, prob = p_good))\n\n[1] 0.0078125\n\np_bad &lt;- 0.9\nprod(dbinom(c(0, 1, 0, 0, 0, 1, 1), size = 1, prob = p_bad))\n\n[1] 7.29e-05\n\n\nThe likelihood of p being 0.5 if we get 3 0’s and 3 1’s is much greater than the likelihood of p being 0.9 given the same observations.\nIf I got one 1 and three 0’s, what would be the most likely p?\n\np_good &lt;- 0.25\nprod(dbinom(c(1, 0, 0, 0), size = 1, prob = p_good))\n\n[1] 0.1054688\n\np_bad &lt;- 0.5\nprod(dbinom(c(1, 0, 0, 0), size = 1, prob = p_bad))\n\n[1] 0.0625\n\n\nWe care that 0.105 is greater than 0.0625. We don’t care about 0.105 in of itself.\nLet’s build that out to regression.\n\nset.seed(1422)\n# Step 1, generate predictors\ndist2coast &lt;- runif(100, 0, 100)\n# Step 2, choose our coefficients\nbeta_0 &lt;- -1\nbeta_1 &lt;- 0.1\n# Step 3, calculate random variable parameters (in this case, just p)\nlogit_p &lt;- beta_0 + beta_1 * dist2coast\ninv_logit &lt;- function(x) exp(x) / (1 + exp(x))\np &lt;- inv_logit(logit_p)\n# Step 4, generate random numbers from the random variable\nendangered &lt;- rbinom(100, size = 1, prob = p)\n# Done! Simulated!\n\ntibble(dist2coast, p, endangered) %&gt;% \n  mutate(likelihood = dbinom(endangered, size = 1, prob = p))\n\n# A tibble: 100 × 4\n   dist2coast     p endangered likelihood\n        &lt;dbl&gt; &lt;dbl&gt;      &lt;int&gt;      &lt;dbl&gt;\n 1      40.8  0.956          1      0.956\n 2      32.8  0.907          1      0.907\n 3      31.4  0.895          1      0.895\n 4      20.3  0.736          1      0.736\n 5      69.2  0.997          1      0.997\n 6      68.6  0.997          1      0.997\n 7      97.4  1.00           1      1.00 \n 8      53.1  0.987          1      0.987\n 9       4.47 0.365          0      0.635\n10      76.7  0.999          1      0.999\n# ℹ 90 more rows\n\n\n\nc(beta_0, beta_1)\n\n[1] -1.0  0.1\n\nlikelihood_fun &lt;- function(coef, data) {\n  # given x and coefs, figure out p\n  logit_p &lt;- coef[\"beta0\"] + coef[\"beta1\"] * data$dist2coast\n  p &lt;- inv_logit(logit_p)\n  # calculate the log likelihood of the observed, given p\n  loglik &lt;- dbinom(data$endangered, size = 1, prob = p, log = TRUE)\n  # Sum it up and flip the sign\n  -sum(loglik)\n}\n\nmpas &lt;- tibble(dist2coast, endangered)\nlikelihood_fun(c(beta0 = -1, beta1 = 0.1), mpas)\n\n[1] 11.4208\n\nlikelihood_fun(c(beta0 = -5, beta1 = 1), mpas)\n\n[1] 22.2768\n\n\nThe likelihood does not mean anything in of itself. It’s only important relatively."
+  },
+  {
+    "objectID": "course-materials/live-coding/week6/week6-live-coding.html",
+    "href": "course-materials/live-coding/week6/week6-live-coding.html",
     "title": "Week 6 Lecture: Logistic Regression",
     "section": "",
-    "text": "Given the logistic regression model:\n\\[\n\\begin{align}\ny &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 x\n\\end{align}\n\\]\nWhat’s the likelihood of some values of \\(\\beta_0\\) and \\(\\beta_1\\)?\nRecall our likelihood function is:\n\\[\nL(\\beta_0, \\beta_1) = \\prod_i PMF(y_i, p_i)\n\\]\nWhere \\(PMF(y_i, p_i)\\) is the value of the Bernoulli probability mass function with probability \\(p_i\\) at \\(y_i\\). E.g., \\(PMF(1, 0.5)=0.5\\), \\(PMF(0, 0.75)=0.25\\), and \\(PMF(1, 0.1)=0.1\\).\n\n\n\n\n# Simulate some values for x\nx &lt;- runif(10, 0, 10)\n\n# Choose our betas\nbeta0 &lt;- -3\nbeta1 &lt;- 0.75\n\n# Calculate p across x \nlogit_p &lt;- beta0 + beta1 * x\ninv_logit &lt;- function(x) exp(x) / (1 + exp(x))\np &lt;- inv_logit(logit_p)\n\n# Simulate y\n# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable\ny &lt;- rbinom(10, size = 1, p)\n\n# Visualize\ntibble(x, y) %&gt;% \n  ggplot(aes(x, y)) +\n  geom_point(size = 4, color = \"cornflowerblue\", shape = 18) +\n  scale_x_continuous(breaks = seq(0, 10, by = 2), limits = c(0, 10))\n\n\n\n\n\n\n\n\n\n\n\nCalculate the likelihood of:\n\n\\(\\beta_0=-5\\), \\(\\beta_1 = 1\\)\n\\(\\beta_0=-1\\), \\(\\beta_1 = 0\\)\n\\(\\beta_0=-3\\), \\(\\beta_1 = 0.5\\)\n\n\n# Write our likelihood function \n# Note this uses the x and y values we generated earlier!\n# We're looking for the likelihood of the parameters given the data.\nlikelihood_fun &lt;- function(beta0, beta1) {\n  logit_p &lt;- beta0 + beta1 * x\n  p &lt;- inv_logit(logit_p)\n  prod(dbinom(y, 1, p))\n}\n\n# Apply the likelihood function to some candidate coefficients\nlikelihood_fun(-5, 1)\n\n[1] 0.01463619\n\nlikelihood_fun(-1, 0)\n\n[1] 3.976128e-05\n\nlikelihood_fun(-3, 0.5)\n\n[1] 0.005685931\n\n\n\n\n\nCalculate the likelihood of 1,000,000 combinations of \\(\\beta_0\\), \\(\\beta_1\\) in the ranges \\(\\beta_0 \\in [-5, 0]\\) and \\(\\beta_1 \\in [-1, 2]\\).\n\n# Create a data frame with combinations of beta0, beta1\nlikelihood_space &lt;- expand_grid(\n  beta0 = seq(-5, 0, length.out = 1000),\n  beta1 = seq(-1, 2, length.out = 1000)\n) %&gt;% \n  # Apply the likelihood function using mapply()\n  mutate(likelihood = mapply(likelihood_fun, beta0, beta1))\n\n# Isolate the parameters with the maximum likelihood\nmax_likelihood &lt;- filter(likelihood_space, likelihood == max(likelihood))\n\n# Visualize!\nggplot(likelihood_space, aes(beta0, beta1, fill = likelihood)) +\n  geom_raster() +\n  geom_point(data = max_likelihood, color = \"red\") +\n  scale_fill_viridis_c()\n\n\n\n\n\n\n\n\nOur estimates for \\(\\beta_0\\) and \\(\\beta_1\\) chosen by maximum likelihood are -3.193 and 0.82, respectively. Compare those to the values we used in our simulation: -3 and 0.75."
+    "text": "Given the logistic regression model:\n\\[\n\\begin{align}\ny &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 x\n\\end{align}\n\\]\nWhat’s the likelihood of some values of \\(\\beta_0\\) and \\(\\beta_1\\)?\nRecall our likelihood function is:\n\\[\nL(\\beta_0, \\beta_1) = \\prod_i PMF(y_i, p_i)\n\\]\nWhere \\(PMF(y_i, p_i)\\) is the value of the Bernoulli probability mass function with probability \\(p_i\\) at \\(y_i\\). E.g., \\(PMF(1, 0.5)=0.5\\), \\(PMF(0, 0.75)=0.25\\), and \\(PMF(1, 0.1)=0.1\\).\n\n\n\n\n# Simulate some values for x\n\n# Choose our betas\n\n# Calculate p across x \n\n# Simulate y\n# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable\n\n# Visualize\n\n\n\n\nCalculate the likelihood of:\n\n\\(\\beta_0=-5\\), \\(\\beta_1 = 1\\)\n\\(\\beta_0=-1\\), \\(\\beta_1 = 0\\)\n\\(\\beta_0=-3\\), \\(\\beta_1 = 0.5\\)\n\n\n# Write our likelihood function \n# Note this uses the x and y values we generated earlier!\n# We're looking for the likelihood of the parameters given the data.\n\n# Apply the likelihood function to some candidate coefficients\n\n\n\n\nCalculate the likelihood of 1,000,000 combinations of \\(\\beta_0\\), \\(\\beta_1\\) in the ranges \\(\\beta_0 \\in [-5, 0]\\) and \\(\\beta_1 \\in [-1, 2]\\).\n\n# Create a data frame with combinations of beta0, beta1\n # Apply the likelihood function using mapply()\n\n# Isolate the parameters with the maximum likelihood\n\n# Visualize!\n\nOur estimates for \\(\\beta_0\\) and \\(\\beta_1\\) chosen by maximum likelihood are and , respectively. Compare those to the values we used in our simulation: -3 and 0.75."
   },
   {
-    "objectID": "course-materials/live-coding/week6/week6-live-coding-instructor-notes.html#estimating-logistic-regression-coefficients",
-    "href": "course-materials/live-coding/week6/week6-live-coding-instructor-notes.html#estimating-logistic-regression-coefficients",
+    "objectID": "course-materials/live-coding/week6/week6-live-coding.html#estimating-logistic-regression-coefficients",
+    "href": "course-materials/live-coding/week6/week6-live-coding.html#estimating-logistic-regression-coefficients",
     "title": "Week 6 Lecture: Logistic Regression",
     "section": "",
-    "text": "Given the logistic regression model:\n\\[\n\\begin{align}\ny &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 x\n\\end{align}\n\\]\nWhat’s the likelihood of some values of \\(\\beta_0\\) and \\(\\beta_1\\)?\nRecall our likelihood function is:\n\\[\nL(\\beta_0, \\beta_1) = \\prod_i PMF(y_i, p_i)\n\\]\nWhere \\(PMF(y_i, p_i)\\) is the value of the Bernoulli probability mass function with probability \\(p_i\\) at \\(y_i\\). E.g., \\(PMF(1, 0.5)=0.5\\), \\(PMF(0, 0.75)=0.25\\), and \\(PMF(1, 0.1)=0.1\\).\n\n\n\n\n# Simulate some values for x\nx &lt;- runif(10, 0, 10)\n\n# Choose our betas\nbeta0 &lt;- -3\nbeta1 &lt;- 0.75\n\n# Calculate p across x \nlogit_p &lt;- beta0 + beta1 * x\ninv_logit &lt;- function(x) exp(x) / (1 + exp(x))\np &lt;- inv_logit(logit_p)\n\n# Simulate y\n# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable\ny &lt;- rbinom(10, size = 1, p)\n\n# Visualize\ntibble(x, y) %&gt;% \n  ggplot(aes(x, y)) +\n  geom_point(size = 4, color = \"cornflowerblue\", shape = 18) +\n  scale_x_continuous(breaks = seq(0, 10, by = 2), limits = c(0, 10))\n\n\n\n\n\n\n\n\n\n\n\nCalculate the likelihood of:\n\n\\(\\beta_0=-5\\), \\(\\beta_1 = 1\\)\n\\(\\beta_0=-1\\), \\(\\beta_1 = 0\\)\n\\(\\beta_0=-3\\), \\(\\beta_1 = 0.5\\)\n\n\n# Write our likelihood function \n# Note this uses the x and y values we generated earlier!\n# We're looking for the likelihood of the parameters given the data.\nlikelihood_fun &lt;- function(beta0, beta1) {\n  logit_p &lt;- beta0 + beta1 * x\n  p &lt;- inv_logit(logit_p)\n  prod(dbinom(y, 1, p))\n}\n\n# Apply the likelihood function to some candidate coefficients\nlikelihood_fun(-5, 1)\n\n[1] 0.01463619\n\nlikelihood_fun(-1, 0)\n\n[1] 3.976128e-05\n\nlikelihood_fun(-3, 0.5)\n\n[1] 0.005685931\n\n\n\n\n\nCalculate the likelihood of 1,000,000 combinations of \\(\\beta_0\\), \\(\\beta_1\\) in the ranges \\(\\beta_0 \\in [-5, 0]\\) and \\(\\beta_1 \\in [-1, 2]\\).\n\n# Create a data frame with combinations of beta0, beta1\nlikelihood_space &lt;- expand_grid(\n  beta0 = seq(-5, 0, length.out = 1000),\n  beta1 = seq(-1, 2, length.out = 1000)\n) %&gt;% \n  # Apply the likelihood function using mapply()\n  mutate(likelihood = mapply(likelihood_fun, beta0, beta1))\n\n# Isolate the parameters with the maximum likelihood\nmax_likelihood &lt;- filter(likelihood_space, likelihood == max(likelihood))\n\n# Visualize!\nggplot(likelihood_space, aes(beta0, beta1, fill = likelihood)) +\n  geom_raster() +\n  geom_point(data = max_likelihood, color = \"red\") +\n  scale_fill_viridis_c()\n\n\n\n\n\n\n\n\nOur estimates for \\(\\beta_0\\) and \\(\\beta_1\\) chosen by maximum likelihood are -3.193 and 0.82, respectively. Compare those to the values we used in our simulation: -3 and 0.75."
-  },
-  {
-    "objectID": "final-project.html",
-    "href": "final-project.html",
-    "title": "Final Project Guidelines",
-    "section": "",
-    "text": "The goal of this project is to explore an environmental data science question for which you do not know the answer. You will construct a research question, collect relevant data, and design a statistical analysis to answer your question. Your analysis must apply at least some of the statistical concepts you have learned in this course, including concepts covered in the second half of the class. You will summarize your findings and communicate clearly how they have or have not helped you answer your question.\nYour results do not need to be conclusive!\nMost data science questions cannot be fully answered with one analysis. If you carefully conduct your analysis, yet cannot conclude anything concrete,that is perfectly fine. There are many reasons you might find yourself in this situation, including, among many others:you have null results (i.e., you fail to reject the null hypothesis); your results are uncertain (e.g., one test suggests one answer while another test suggests another answer); there are issues with the analysis due to limited data availability; there are issues with the analysis because of violations of OLS assumptions, etc. Regardless of the final results, make sure to carefully describe your data and analysis, and to clearly articulate the limitations of your findings."
-  },
-  {
-    "objectID": "final-project.html#project-goal",
-    "href": "final-project.html#project-goal",
-    "title": "Final Project Guidelines",
-    "section": "",
-    "text": "The goal of this project is to explore an environmental data science question for which you do not know the answer. You will construct a research question, collect relevant data, and design a statistical analysis to answer your question. Your analysis must apply at least some of the statistical concepts you have learned in this course, including concepts covered in the second half of the class. You will summarize your findings and communicate clearly how they have or have not helped you answer your question.\nYour results do not need to be conclusive!\nMost data science questions cannot be fully answered with one analysis. If you carefully conduct your analysis, yet cannot conclude anything concrete,that is perfectly fine. There are many reasons you might find yourself in this situation, including, among many others:you have null results (i.e., you fail to reject the null hypothesis); your results are uncertain (e.g., one test suggests one answer while another test suggests another answer); there are issues with the analysis due to limited data availability; there are issues with the analysis because of violations of OLS assumptions, etc. Regardless of the final results, make sure to carefully describe your data and analysis, and to clearly articulate the limitations of your findings."
-  },
-  {
-    "objectID": "final-project.html#submission-guidelines",
-    "href": "final-project.html#submission-guidelines",
-    "title": "Final Project Guidelines",
-    "section": "Submission guidelines",
-    "text": "Submission guidelines\nThe submission has three parts:\n\nBrief proposal [Due date: 11/11, 11:59pm]. Please write a short paragraph (4-5 sentences) describing the project you propose to pursue. Motivate the question, describe possible data sources, and suggest possible analyses you may conduct to answer your question. Submission will be through Canvas.\nTechnical blog post [Due date: 12/13, 11:59 pm]. This blog post is a write up summarizing in text and with figures and/or tables your question, the data you have collected, your analysis plan, and your results. Your target audience should be other quantitative scientists and practitioners familiar with the basics of statistics and data science, but not necessarily experts in environmental science or the details of the methods studied in this course. Submit a link to your blog post via Canvas by 11:59pm on December 13.\n\nSome guidelines for the blog post:\n\nMain text length should be roughly 1500 - 2500 words.\n2-4 tables and/or figures, each carefully labeled and captioned so that they are easily interpretable\nInclude scientific references when applicable.\nInclude links to the underlying data you use. If your data cannot be shared publicly, note this in a short “data availability” statement at the end of your post.\nInclude a link to a repository with your code.\n\n\n4-minute presentation [December 10 8-11am]. This is a short presentation for the class in which you motivate your question, describe your data and analysis plan, and summarize your results. It should be a fun way to practice sharing data science with an audience through public speaking.\nIn order to fit everyone in, the 4-minute limit will have to be strictly enforced. Practice your presentation in advance and time yourself! 4 minutes is probably much, much shorter than you think."
-  },
-  {
-    "objectID": "final-project.html#general-guidelines",
-    "href": "final-project.html#general-guidelines",
-    "title": "Final Project Guidelines",
-    "section": "General guidelines",
-    "text": "General guidelines\n\nMotivate your question. Why is this important? Is there existing evidence on this question? If so, why is it inconclusive? If not, why not?\nDescribe your data. Where did you access it? What are its spatial and temporal features? What are its limitations? What do you know about the sampling strategy and what biases that may introduce? If helpful, you can use a histogram, scatterplot, or summary statistics table to describe your data.\nClearly describe your analysis plan. What is your analysis plan? Why did you choose this analysis, given your data and question? What are the limitations?\nSummarize your results visually and in words. Show us your results in figure(s) and/or table(s) that are carefully labeled and captioned. Describe in the text (and orally when presenting) what you found, and how these results either do or do not help you answeryour question.\nWhat might you do next? One analysis cannot fully answer an interesting scientific question. If you had time to collect more data or conduct more analyses, what would help you answer this question better?"
-  },
-  {
-    "objectID": "course-materials/week8.html",
-    "href": "course-materials/week8.html",
-    "title": "Spatial interpolation and kriging",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
-  },
-  {
-    "objectID": "course-materials/week8.html#class-materials",
-    "href": "course-materials/week8.html#class-materials",
-    "title": "Spatial interpolation and kriging",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
-  },
-  {
-    "objectID": "course-materials/week8.html#notes",
-    "href": "course-materials/week8.html#notes",
-    "title": "Spatial interpolation and kriging",
-    "section": "Notes",
-    "text": "Notes\n\nHomework assignment 4 due Friday, November 22nd."
-  },
-  {
-    "objectID": "course-materials/week6.html",
-    "href": "course-materials/week6.html",
-    "title": "Nonlinear models",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R\nChapter 9 in IMS"
-  },
-  {
-    "objectID": "course-materials/week6.html#class-materials",
-    "href": "course-materials/week6.html#class-materials",
-    "title": "Nonlinear models",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R\nChapter 9 in IMS"
-  },
-  {
-    "objectID": "course-materials/week6.html#notes",
-    "href": "course-materials/week6.html#notes",
-    "title": "Nonlinear models",
-    "section": "Notes",
-    "text": "Notes\n\nHomework assignment 3 due Friday, November 8th next Monday November 11th.\nFinal project proposal is also due Friday, November 8th Monday November 11th. Submission will be through Canvas."
-  },
-  {
-    "objectID": "course-materials/week4.html",
-    "href": "course-materials/week4.html",
-    "title": "Multiple regression and interactions",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nInteractions\nInteractions review Interactions in R\nContinuous variable interactions\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
-  },
-  {
-    "objectID": "course-materials/week4.html#class-materials",
-    "href": "course-materials/week4.html#class-materials",
-    "title": "Multiple regression and interactions",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nInteractions\nInteractions review Interactions in R\nContinuous variable interactions\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
-  },
-  {
-    "objectID": "course-materials/week4.html#notes",
-    "href": "course-materials/week4.html#notes",
-    "title": "Multiple regression and interactions",
-    "section": "Notes",
-    "text": "Notes\n\nHomework assignment 3 will be posted Tuesday, October 22nd."
-  },
-  {
-    "objectID": "course-materials/week2.html",
-    "href": "course-materials/week2.html",
-    "title": "Ordinary least squares",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nLaw of Large Numbers, simulation in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
-  },
-  {
-    "objectID": "course-materials/week2.html#class-materials",
-    "href": "course-materials/week2.html#class-materials",
-    "title": "Ordinary least squares",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nLaw of Large Numbers, simulation in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
-  },
-  {
-    "objectID": "course-materials/week2.html#notes",
-    "href": "course-materials/week2.html#notes",
-    "title": "Ordinary least squares",
-    "section": "Notes",
-    "text": "Notes\n\nHomework assignment 2 will be posted on Tuesday, October 8th.\nHomework assignment 1 is due next Monday, October 14th."
-  },
-  {
-    "objectID": "course-materials/week1.html",
-    "href": "course-materials/week1.html",
-    "title": "Summarizing data",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nLab setup and Github Classrooms demo\nChapters 4-6 in IMS  Variance (video)"
-  },
-  {
-    "objectID": "course-materials/week1.html#class-materials",
-    "href": "course-materials/week1.html#class-materials",
-    "title": "Summarizing data",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nLab setup and Github Classrooms demo\nChapters 4-6 in IMS  Variance (video)"
-  },
-  {
-    "objectID": "course-materials/week1.html#notes",
-    "href": "course-materials/week1.html#notes",
-    "title": "Summarizing data",
-    "section": "Notes",
-    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. Your TA, Leonardo, will cover lecture and lab this week.\nHomework assignment 1 is due next Monday, October 7th."
-  },
-  {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "EDS 222 Assignments",
-    "section": "",
-    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/14 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 11:59pm\n\n\n3 (link)\nTuesday 10/22\nMonday 11/11 11:59pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 11:59pm"
-  },
-  {
-    "objectID": "assignments.html#homework-assignments",
-    "href": "assignments.html#homework-assignments",
-    "title": "EDS 222 Assignments",
-    "section": "",
-    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/14 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 11:59pm\n\n\n3 (link)\nTuesday 10/22\nMonday 11/11 11:59pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 11:59pm"
-  },
-  {
-    "objectID": "assignments.html#submission-guidelines",
-    "href": "assignments.html#submission-guidelines",
-    "title": "EDS 222 Assignments",
-    "section": "Submission guidelines",
-    "text": "Submission guidelines\nPlease make sure your homework repositories on GitHub will render the assignment Quarto document! When you’re done with your assignment, run the following diagnostics.\n\nCreate a new RStudio project from version control with your assignment GitHub repository URL. Make sure you create it in a temporary folder, separate from where you did your homework.\nOpen the assignment Quarto document and render it.\nCheck the rendered version. Did the document render without errors? Are all the answers to your questions there?\n\nThis process uses the same workflow Leo and Max use to grade your assignments. If you hit an error doing this then so will we and we won’t be able to grade your assignment. Each homework is worth 10% of your grade, so make sure we can grade your work!"
-  },
-  {
-    "objectID": "assignments.html#final-project",
-    "href": "assignments.html#final-project",
-    "title": "EDS 222 Assignments",
-    "section": "Final project",
-    "text": "Final project\nIn addition to the homework assignments, a final project proposal in the form of one short paragraph describing your project is due November 11th (through Canvas).\nThe final project consists of a blog post and a presentation. Details available here."
-  },
-  {
-    "objectID": "course-materials/week10.html",
-    "href": "course-materials/week10.html",
-    "title": "Time series analysis",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
-  },
-  {
-    "objectID": "course-materials/week10.html#class-materials",
-    "href": "course-materials/week10.html#class-materials",
-    "title": "Time series analysis",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
-  },
-  {
-    "objectID": "course-materials/week10.html#notes",
-    "href": "course-materials/week10.html#notes",
-    "title": "Time series analysis",
-    "section": "Notes",
-    "text": "Notes\n\nFinal project presentations will take place next week Tuesday December 10th 0800-1100 in Bren 1424. We will make arrangements for you to sign up for 30 minute slots within that window - you won’t need to be there the entire time."
-  },
-  {
-    "objectID": "course-materials/week3.html",
-    "href": "course-materials/week3.html",
-    "title": "Ordinary least squares, continued",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMultiple regression\nMultiple regression in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
-  },
-  {
-    "objectID": "course-materials/week3.html#class-materials",
-    "href": "course-materials/week3.html#class-materials",
-    "title": "Ordinary least squares, continued",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMultiple regression\nMultiple regression in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
-  },
-  {
-    "objectID": "course-materials/week3.html#notes",
-    "href": "course-materials/week3.html#notes",
-    "title": "Ordinary least squares, continued",
-    "section": "Notes",
-    "text": "Notes\n\nHomework assignment 2 is due Friday, October 18th."
-  },
-  {
-    "objectID": "course-materials/week5.html",
-    "href": "course-materials/week5.html",
-    "title": "Midterm",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
-  },
-  {
-    "objectID": "course-materials/week5.html#class-materials",
-    "href": "course-materials/week5.html#class-materials",
-    "title": "Midterm",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
-  },
-  {
-    "objectID": "course-materials/week5.html#notes",
-    "href": "course-materials/week5.html#notes",
-    "title": "Midterm",
-    "section": "Notes",
-    "text": "Notes\n\nMidterm (Thursday) will be in class and closed book\nPractice midterm available here"
-  },
-  {
-    "objectID": "course-materials/week7.html",
-    "href": "course-materials/week7.html",
-    "title": "Inference and hypothesis testing",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic Regression (and other nonlinear models)\nLogistic regression in R\nChapters 13, 19.2 in IMS"
-  },
-  {
-    "objectID": "course-materials/week7.html#class-materials",
-    "href": "course-materials/week7.html#class-materials",
-    "title": "Inference and hypothesis testing",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic Regression (and other nonlinear models)\nLogistic regression in R\nChapters 13, 19.2 in IMS"
-  },
-  {
-    "objectID": "course-materials/week7.html#notes",
-    "href": "course-materials/week7.html#notes",
-    "title": "Inference and hypothesis testing",
-    "section": "Notes",
-    "text": "Notes\n\nHomework assignment 4 posted on Tuesday, November 12th."
-  },
-  {
-    "objectID": "course-materials/week9.html",
-    "href": "course-materials/week9.html",
-    "title": "Course review and Thanksgiving",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
-  },
-  {
-    "objectID": "course-materials/week9.html#class-materials",
-    "href": "course-materials/week9.html#class-materials",
-    "title": "Course review and Thanksgiving",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
-  },
-  {
-    "objectID": "course-materials/week9.html#notes",
-    "href": "course-materials/week9.html#notes",
-    "title": "Course review and Thanksgiving",
-    "section": "Notes",
-    "text": "Notes\n\nCourse review will be held over Zoom to accommodate student travel."
+    "text": "Given the logistic regression model:\n\\[\n\\begin{align}\ny &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 x\n\\end{align}\n\\]\nWhat’s the likelihood of some values of \\(\\beta_0\\) and \\(\\beta_1\\)?\nRecall our likelihood function is:\n\\[\nL(\\beta_0, \\beta_1) = \\prod_i PMF(y_i, p_i)\n\\]\nWhere \\(PMF(y_i, p_i)\\) is the value of the Bernoulli probability mass function with probability \\(p_i\\) at \\(y_i\\). E.g., \\(PMF(1, 0.5)=0.5\\), \\(PMF(0, 0.75)=0.25\\), and \\(PMF(1, 0.1)=0.1\\).\n\n\n\n\n# Simulate some values for x\n\n# Choose our betas\n\n# Calculate p across x \n\n# Simulate y\n# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable\n\n# Visualize\n\n\n\n\nCalculate the likelihood of:\n\n\\(\\beta_0=-5\\), \\(\\beta_1 = 1\\)\n\\(\\beta_0=-1\\), \\(\\beta_1 = 0\\)\n\\(\\beta_0=-3\\), \\(\\beta_1 = 0.5\\)\n\n\n# Write our likelihood function \n# Note this uses the x and y values we generated earlier!\n# We're looking for the likelihood of the parameters given the data.\n\n# Apply the likelihood function to some candidate coefficients\n\n\n\n\nCalculate the likelihood of 1,000,000 combinations of \\(\\beta_0\\), \\(\\beta_1\\) in the ranges \\(\\beta_0 \\in [-5, 0]\\) and \\(\\beta_1 \\in [-1, 2]\\).\n\n# Create a data frame with combinations of beta0, beta1\n # Apply the likelihood function using mapply()\n\n# Isolate the parameters with the maximum likelihood\n\n# Visualize!\n\nOur estimates for \\(\\beta_0\\) and \\(\\beta_1\\) chosen by maximum likelihood are and , respectively. Compare those to the values we used in our simulation: -3 and 0.75."
   },
   {
     "objectID": "course-materials/week0.html",
@@ -385,18 +140,305 @@
     "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. For week 0, please watch the recorded lecture, complete the reading, and answer the reading quiz on Canvas.\nHomework assignment 1 will be posted Thursday September 26"
   },
   {
-    "objectID": "course-materials/live-coding/week6/week6-live-coding.html",
-    "href": "course-materials/live-coding/week6/week6-live-coding.html",
-    "title": "Week 6 Lecture: Logistic Regression",
+    "objectID": "course-materials/week9.html",
+    "href": "course-materials/week9.html",
+    "title": "Course review and Thanksgiving",
     "section": "",
-    "text": "Given the logistic regression model:\n\\[\n\\begin{align}\ny &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 x\n\\end{align}\n\\]\nWhat’s the likelihood of some values of \\(\\beta_0\\) and \\(\\beta_1\\)?\nRecall our likelihood function is:\n\\[\nL(\\beta_0, \\beta_1) = \\prod_i PMF(y_i, p_i)\n\\]\nWhere \\(PMF(y_i, p_i)\\) is the value of the Bernoulli probability mass function with probability \\(p_i\\) at \\(y_i\\). E.g., \\(PMF(1, 0.5)=0.5\\), \\(PMF(0, 0.75)=0.25\\), and \\(PMF(1, 0.1)=0.1\\).\n\n\n\n\n# Simulate some values for x\n\n# Choose our betas\n\n# Calculate p across x \n\n# Simulate y\n# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable\n\n# Visualize\n\n\n\n\nCalculate the likelihood of:\n\n\\(\\beta_0=-5\\), \\(\\beta_1 = 1\\)\n\\(\\beta_0=-1\\), \\(\\beta_1 = 0\\)\n\\(\\beta_0=-3\\), \\(\\beta_1 = 0.5\\)\n\n\n# Write our likelihood function \n# Note this uses the x and y values we generated earlier!\n# We're looking for the likelihood of the parameters given the data.\n\n# Apply the likelihood function to some candidate coefficients\n\n\n\n\nCalculate the likelihood of 1,000,000 combinations of \\(\\beta_0\\), \\(\\beta_1\\) in the ranges \\(\\beta_0 \\in [-5, 0]\\) and \\(\\beta_1 \\in [-1, 2]\\).\n\n# Create a data frame with combinations of beta0, beta1\n # Apply the likelihood function using mapply()\n\n# Isolate the parameters with the maximum likelihood\n\n# Visualize!\n\nOur estimates for \\(\\beta_0\\) and \\(\\beta_1\\) chosen by maximum likelihood are and , respectively. Compare those to the values we used in our simulation: -3 and 0.75."
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
   },
   {
-    "objectID": "course-materials/live-coding/week6/week6-live-coding.html#estimating-logistic-regression-coefficients",
-    "href": "course-materials/live-coding/week6/week6-live-coding.html#estimating-logistic-regression-coefficients",
+    "objectID": "course-materials/week9.html#class-materials",
+    "href": "course-materials/week9.html#class-materials",
+    "title": "Course review and Thanksgiving",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
+  },
+  {
+    "objectID": "course-materials/week9.html#notes",
+    "href": "course-materials/week9.html#notes",
+    "title": "Course review and Thanksgiving",
+    "section": "Notes",
+    "text": "Notes\n\nCourse review will be held over Zoom to accommodate student travel."
+  },
+  {
+    "objectID": "course-materials/week7.html",
+    "href": "course-materials/week7.html",
+    "title": "Inference and hypothesis testing",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nHypothesis testing\nHypothesis testing in R\nChapters 11, 12 in IMS"
+  },
+  {
+    "objectID": "course-materials/week7.html#class-materials",
+    "href": "course-materials/week7.html#class-materials",
+    "title": "Inference and hypothesis testing",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nHypothesis testing\nHypothesis testing in R\nChapters 11, 12 in IMS"
+  },
+  {
+    "objectID": "course-materials/week7.html#notes",
+    "href": "course-materials/week7.html#notes",
+    "title": "Inference and hypothesis testing",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 4 posted on Tuesday, November 12th."
+  },
+  {
+    "objectID": "course-materials/week5.html",
+    "href": "course-materials/week5.html",
+    "title": "Midterm",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
+  },
+  {
+    "objectID": "course-materials/week5.html#class-materials",
+    "href": "course-materials/week5.html#class-materials",
+    "title": "Midterm",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
+  },
+  {
+    "objectID": "course-materials/week5.html#notes",
+    "href": "course-materials/week5.html#notes",
+    "title": "Midterm",
+    "section": "Notes",
+    "text": "Notes\n\nMidterm (Thursday) will be in class and closed book\nPractice midterm available here"
+  },
+  {
+    "objectID": "course-materials/week3.html",
+    "href": "course-materials/week3.html",
+    "title": "Ordinary least squares, continued",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMultiple regression\nMultiple regression in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+  },
+  {
+    "objectID": "course-materials/week3.html#class-materials",
+    "href": "course-materials/week3.html#class-materials",
+    "title": "Ordinary least squares, continued",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMultiple regression\nMultiple regression in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+  },
+  {
+    "objectID": "course-materials/week3.html#notes",
+    "href": "course-materials/week3.html#notes",
+    "title": "Ordinary least squares, continued",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 2 is due Friday, October 18th."
+  },
+  {
+    "objectID": "course-materials/week10.html",
+    "href": "course-materials/week10.html",
+    "title": "Time series analysis",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
+  },
+  {
+    "objectID": "course-materials/week10.html#class-materials",
+    "href": "course-materials/week10.html#class-materials",
+    "title": "Time series analysis",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
+  },
+  {
+    "objectID": "course-materials/week10.html#notes",
+    "href": "course-materials/week10.html#notes",
+    "title": "Time series analysis",
+    "section": "Notes",
+    "text": "Notes\n\nFinal project presentations will take place next week Tuesday December 10th 0800-1100 in Bren 1424. We will make arrangements for you to sign up for 30 minute slots within that window - you won’t need to be there the entire time."
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "EDS 222 Assignments",
+    "section": "",
+    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/14 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 11:59pm\n\n\n3 (link)\nTuesday 10/22\nMonday 11/11 11:59pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 11:59pm"
+  },
+  {
+    "objectID": "assignments.html#homework-assignments",
+    "href": "assignments.html#homework-assignments",
+    "title": "EDS 222 Assignments",
+    "section": "",
+    "text": "Homework assignments will be distributed through GitHub Classroom. The links below will become active on the Date Posted.\n\n\n\n\n\n\n\n\nHomework\nDate Posted\nDate Due\n\n\n\n\n1 (link)\nThursday 9/26\nMonday 10/14 5pm\n\n\n2 (link)\nTuesday 10/8\nFriday 10/18 11:59pm\n\n\n3 (link)\nTuesday 10/22\nMonday 11/11 11:59pm\n\n\n4 (link)\nTuesday 11/12\nFriday 11/22 11:59pm"
+  },
+  {
+    "objectID": "assignments.html#submission-guidelines",
+    "href": "assignments.html#submission-guidelines",
+    "title": "EDS 222 Assignments",
+    "section": "Submission guidelines",
+    "text": "Submission guidelines\nPlease make sure your homework repositories on GitHub will render the assignment Quarto document! When you’re done with your assignment, run the following diagnostics.\n\nCreate a new RStudio project from version control with your assignment GitHub repository URL. Make sure you create it in a temporary folder, separate from where you did your homework.\nOpen the assignment Quarto document and render it.\nCheck the rendered version. Did the document render without errors? Are all the answers to your questions there?\n\nThis process uses the same workflow Leo and Max use to grade your assignments. If you hit an error doing this then so will we and we won’t be able to grade your assignment. Each homework is worth 10% of your grade, so make sure we can grade your work!"
+  },
+  {
+    "objectID": "assignments.html#final-project",
+    "href": "assignments.html#final-project",
+    "title": "EDS 222 Assignments",
+    "section": "Final project",
+    "text": "Final project\nIn addition to the homework assignments, a final project proposal in the form of one short paragraph describing your project is due November 11th (through Canvas).\nThe final project consists of a blog post and a presentation. Details available here."
+  },
+  {
+    "objectID": "course-materials/week1.html",
+    "href": "course-materials/week1.html",
+    "title": "Summarizing data",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nLab setup and Github Classrooms demo\nChapters 4-6 in IMS  Variance (video)"
+  },
+  {
+    "objectID": "course-materials/week1.html#class-materials",
+    "href": "course-materials/week1.html#class-materials",
+    "title": "Summarizing data",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nLab setup and Github Classrooms demo\nChapters 4-6 in IMS  Variance (video)"
+  },
+  {
+    "objectID": "course-materials/week1.html#notes",
+    "href": "course-materials/week1.html#notes",
+    "title": "Summarizing data",
+    "section": "Notes",
+    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. Your TA, Leonardo, will cover lecture and lab this week.\nHomework assignment 1 is due next Monday, October 7th."
+  },
+  {
+    "objectID": "course-materials/week2.html",
+    "href": "course-materials/week2.html",
+    "title": "Ordinary least squares",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nLaw of Large Numbers, simulation in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
+  },
+  {
+    "objectID": "course-materials/week2.html#class-materials",
+    "href": "course-materials/week2.html#class-materials",
+    "title": "Ordinary least squares",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nLaw of Large Numbers, simulation in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
+  },
+  {
+    "objectID": "course-materials/week2.html#notes",
+    "href": "course-materials/week2.html#notes",
+    "title": "Ordinary least squares",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 2 will be posted on Tuesday, October 8th.\nHomework assignment 1 is due next Monday, October 14th."
+  },
+  {
+    "objectID": "course-materials/week4.html",
+    "href": "course-materials/week4.html",
+    "title": "Multiple regression and interactions",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nInteractions\nInteractions review Interactions in R\nContinuous variable interactions\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+  },
+  {
+    "objectID": "course-materials/week4.html#class-materials",
+    "href": "course-materials/week4.html#class-materials",
+    "title": "Multiple regression and interactions",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nInteractions\nInteractions review Interactions in R\nContinuous variable interactions\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+  },
+  {
+    "objectID": "course-materials/week4.html#notes",
+    "href": "course-materials/week4.html#notes",
+    "title": "Multiple regression and interactions",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 3 will be posted Tuesday, October 22nd."
+  },
+  {
+    "objectID": "course-materials/week6.html",
+    "href": "course-materials/week6.html",
+    "title": "Nonlinear models",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R  Logistic regression in R - key\nChapter 9 in IMS"
+  },
+  {
+    "objectID": "course-materials/week6.html#class-materials",
+    "href": "course-materials/week6.html#class-materials",
+    "title": "Nonlinear models",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R  Logistic regression in R - key\nChapter 9 in IMS"
+  },
+  {
+    "objectID": "course-materials/week6.html#notes",
+    "href": "course-materials/week6.html#notes",
+    "title": "Nonlinear models",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 3 due Friday, November 8th next Monday November 11th.\nFinal project proposal is also due Friday, November 8th Monday November 11th. Submission will be through Canvas.\nThe notes from this week’s office hours are here."
+  },
+  {
+    "objectID": "course-materials/week8.html",
+    "href": "course-materials/week8.html",
+    "title": "Spatial interpolation and kriging",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
+  },
+  {
+    "objectID": "course-materials/week8.html#class-materials",
+    "href": "course-materials/week8.html#class-materials",
+    "title": "Spatial interpolation and kriging",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
+  },
+  {
+    "objectID": "course-materials/week8.html#notes",
+    "href": "course-materials/week8.html#notes",
+    "title": "Spatial interpolation and kriging",
+    "section": "Notes",
+    "text": "Notes\n\nHomework assignment 4 due Friday, November 22nd."
+  },
+  {
+    "objectID": "final-project.html",
+    "href": "final-project.html",
+    "title": "Final Project Guidelines",
+    "section": "",
+    "text": "The goal of this project is to explore an environmental data science question for which you do not know the answer. You will construct a research question, collect relevant data, and design a statistical analysis to answer your question. Your analysis must apply at least some of the statistical concepts you have learned in this course, including concepts covered in the second half of the class. You will summarize your findings and communicate clearly how they have or have not helped you answer your question.\nYour results do not need to be conclusive!\nMost data science questions cannot be fully answered with one analysis. If you carefully conduct your analysis, yet cannot conclude anything concrete,that is perfectly fine. There are many reasons you might find yourself in this situation, including, among many others:you have null results (i.e., you fail to reject the null hypothesis); your results are uncertain (e.g., one test suggests one answer while another test suggests another answer); there are issues with the analysis due to limited data availability; there are issues with the analysis because of violations of OLS assumptions, etc. Regardless of the final results, make sure to carefully describe your data and analysis, and to clearly articulate the limitations of your findings."
+  },
+  {
+    "objectID": "final-project.html#project-goal",
+    "href": "final-project.html#project-goal",
+    "title": "Final Project Guidelines",
+    "section": "",
+    "text": "The goal of this project is to explore an environmental data science question for which you do not know the answer. You will construct a research question, collect relevant data, and design a statistical analysis to answer your question. Your analysis must apply at least some of the statistical concepts you have learned in this course, including concepts covered in the second half of the class. You will summarize your findings and communicate clearly how they have or have not helped you answer your question.\nYour results do not need to be conclusive!\nMost data science questions cannot be fully answered with one analysis. If you carefully conduct your analysis, yet cannot conclude anything concrete,that is perfectly fine. There are many reasons you might find yourself in this situation, including, among many others:you have null results (i.e., you fail to reject the null hypothesis); your results are uncertain (e.g., one test suggests one answer while another test suggests another answer); there are issues with the analysis due to limited data availability; there are issues with the analysis because of violations of OLS assumptions, etc. Regardless of the final results, make sure to carefully describe your data and analysis, and to clearly articulate the limitations of your findings."
+  },
+  {
+    "objectID": "final-project.html#submission-guidelines",
+    "href": "final-project.html#submission-guidelines",
+    "title": "Final Project Guidelines",
+    "section": "Submission guidelines",
+    "text": "Submission guidelines\nThe submission has three parts:\n\nBrief proposal [Due date: 11/11, 11:59pm]. Please write a short paragraph (4-5 sentences) describing the project you propose to pursue. Motivate the question, describe possible data sources, and suggest possible analyses you may conduct to answer your question. Submission will be through Canvas.\nTechnical blog post [Due date: 12/13, 11:59 pm]. This blog post is a write up summarizing in text and with figures and/or tables your question, the data you have collected, your analysis plan, and your results. Your target audience should be other quantitative scientists and practitioners familiar with the basics of statistics and data science, but not necessarily experts in environmental science or the details of the methods studied in this course. Submit a link to your blog post via Canvas by 11:59pm on December 13.\n\nSome guidelines for the blog post:\n\nMain text length should be roughly 1500 - 2500 words.\n2-4 tables and/or figures, each carefully labeled and captioned so that they are easily interpretable\nInclude scientific references when applicable.\nInclude links to the underlying data you use. If your data cannot be shared publicly, note this in a short “data availability” statement at the end of your post.\nInclude a link to a repository with your code.\n\n\n4-minute presentation [December 10 8-11am]. This is a short presentation for the class in which you motivate your question, describe your data and analysis plan, and summarize your results. It should be a fun way to practice sharing data science with an audience through public speaking.\nIn order to fit everyone in, the 4-minute limit will have to be strictly enforced. Practice your presentation in advance and time yourself! 4 minutes is probably much, much shorter than you think."
+  },
+  {
+    "objectID": "final-project.html#general-guidelines",
+    "href": "final-project.html#general-guidelines",
+    "title": "Final Project Guidelines",
+    "section": "General guidelines",
+    "text": "General guidelines\n\nMotivate your question. Why is this important? Is there existing evidence on this question? If so, why is it inconclusive? If not, why not?\nDescribe your data. Where did you access it? What are its spatial and temporal features? What are its limitations? What do you know about the sampling strategy and what biases that may introduce? If helpful, you can use a histogram, scatterplot, or summary statistics table to describe your data.\nClearly describe your analysis plan. What is your analysis plan? Why did you choose this analysis, given your data and question? What are the limitations?\nSummarize your results visually and in words. Show us your results in figure(s) and/or table(s) that are carefully labeled and captioned. Describe in the text (and orally when presenting) what you found, and how these results either do or do not help you answeryour question.\nWhat might you do next? One analysis cannot fully answer an interesting scientific question. If you had time to collect more data or conduct more analyses, what would help you answer this question better?"
+  },
+  {
+    "objectID": "course-materials/live-coding/week6/week6-live-coding-instructor-notes.html",
+    "href": "course-materials/live-coding/week6/week6-live-coding-instructor-notes.html",
     "title": "Week 6 Lecture: Logistic Regression",
     "section": "",
-    "text": "Given the logistic regression model:\n\\[\n\\begin{align}\ny &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 x\n\\end{align}\n\\]\nWhat’s the likelihood of some values of \\(\\beta_0\\) and \\(\\beta_1\\)?\nRecall our likelihood function is:\n\\[\nL(\\beta_0, \\beta_1) = \\prod_i PMF(y_i, p_i)\n\\]\nWhere \\(PMF(y_i, p_i)\\) is the value of the Bernoulli probability mass function with probability \\(p_i\\) at \\(y_i\\). E.g., \\(PMF(1, 0.5)=0.5\\), \\(PMF(0, 0.75)=0.25\\), and \\(PMF(1, 0.1)=0.1\\).\n\n\n\n\n# Simulate some values for x\n\n# Choose our betas\n\n# Calculate p across x \n\n# Simulate y\n# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable\n\n# Visualize\n\n\n\n\nCalculate the likelihood of:\n\n\\(\\beta_0=-5\\), \\(\\beta_1 = 1\\)\n\\(\\beta_0=-1\\), \\(\\beta_1 = 0\\)\n\\(\\beta_0=-3\\), \\(\\beta_1 = 0.5\\)\n\n\n# Write our likelihood function \n# Note this uses the x and y values we generated earlier!\n# We're looking for the likelihood of the parameters given the data.\n\n# Apply the likelihood function to some candidate coefficients\n\n\n\n\nCalculate the likelihood of 1,000,000 combinations of \\(\\beta_0\\), \\(\\beta_1\\) in the ranges \\(\\beta_0 \\in [-5, 0]\\) and \\(\\beta_1 \\in [-1, 2]\\).\n\n# Create a data frame with combinations of beta0, beta1\n # Apply the likelihood function using mapply()\n\n# Isolate the parameters with the maximum likelihood\n\n# Visualize!\n\nOur estimates for \\(\\beta_0\\) and \\(\\beta_1\\) chosen by maximum likelihood are and , respectively. Compare those to the values we used in our simulation: -3 and 0.75."
+    "text": "Given the logistic regression model:\n\\[\n\\begin{align}\ny &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 x\n\\end{align}\n\\]\nWhat’s the likelihood of some values of \\(\\beta_0\\) and \\(\\beta_1\\)?\nRecall our likelihood function is:\n\\[\nL(\\beta_0, \\beta_1) = \\prod_i PMF(y_i, p_i)\n\\]\nWhere \\(PMF(y_i, p_i)\\) is the value of the Bernoulli probability mass function with probability \\(p_i\\) at \\(y_i\\). E.g., \\(PMF(1, 0.5)=0.5\\), \\(PMF(0, 0.75)=0.25\\), and \\(PMF(1, 0.1)=0.1\\).\n\n\n\n\n# Simulate some values for x\nx &lt;- runif(10, 0, 10)\n\n# Choose our betas\nbeta0 &lt;- -3\nbeta1 &lt;- 0.75\n\n# Calculate p across x \nlogit_p &lt;- beta0 + beta1 * x\ninv_logit &lt;- function(x) exp(x) / (1 + exp(x))\np &lt;- inv_logit(logit_p)\n\n# Simulate y\n# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable\ny &lt;- rbinom(10, size = 1, p)\n\n# Visualize\ntibble(x, y) %&gt;% \n  ggplot(aes(x, y)) +\n  geom_point(size = 4, color = \"cornflowerblue\", shape = 18) +\n  scale_x_continuous(breaks = seq(0, 10, by = 2), limits = c(0, 10))\n\n\n\n\n\n\n\n\n\n\n\nCalculate the likelihood of:\n\n\\(\\beta_0=-5\\), \\(\\beta_1 = 1\\)\n\\(\\beta_0=-1\\), \\(\\beta_1 = 0\\)\n\\(\\beta_0=-3\\), \\(\\beta_1 = 0.5\\)\n\n\n# Write our likelihood function \n# Note this uses the x and y values we generated earlier!\n# We're looking for the likelihood of the parameters given the data.\nlikelihood_fun &lt;- function(beta0, beta1) {\n  logit_p &lt;- beta0 + beta1 * x\n  p &lt;- inv_logit(logit_p)\n  prod(dbinom(y, 1, p))\n}\n\n# Apply the likelihood function to some candidate coefficients\nlikelihood_fun(-5, 1)\n\n[1] 0.01463619\n\nlikelihood_fun(-1, 0)\n\n[1] 3.976128e-05\n\nlikelihood_fun(-3, 0.5)\n\n[1] 0.005685931\n\n\n\n\n\nCalculate the likelihood of 1,000,000 combinations of \\(\\beta_0\\), \\(\\beta_1\\) in the ranges \\(\\beta_0 \\in [-5, 0]\\) and \\(\\beta_1 \\in [-1, 2]\\).\n\n# Create a data frame with combinations of beta0, beta1\nlikelihood_space &lt;- expand_grid(\n  beta0 = seq(-5, 0, length.out = 1000),\n  beta1 = seq(-1, 2, length.out = 1000)\n) %&gt;% \n  # Apply the likelihood function using mapply()\n  mutate(likelihood = mapply(likelihood_fun, beta0, beta1))\n\n# Isolate the parameters with the maximum likelihood\nmax_likelihood &lt;- filter(likelihood_space, likelihood == max(likelihood))\n\n# Visualize!\nggplot(likelihood_space, aes(beta0, beta1, fill = likelihood)) +\n  geom_raster() +\n  geom_point(data = max_likelihood, color = \"red\") +\n  scale_fill_viridis_c()\n\n\n\n\n\n\n\n\nOur estimates for \\(\\beta_0\\) and \\(\\beta_1\\) chosen by maximum likelihood are -3.193 and 0.82, respectively. Compare those to the values we used in our simulation: -3 and 0.75."
+  },
+  {
+    "objectID": "course-materials/live-coding/week6/week6-live-coding-instructor-notes.html#estimating-logistic-regression-coefficients",
+    "href": "course-materials/live-coding/week6/week6-live-coding-instructor-notes.html#estimating-logistic-regression-coefficients",
+    "title": "Week 6 Lecture: Logistic Regression",
+    "section": "",
+    "text": "Given the logistic regression model:\n\\[\n\\begin{align}\ny &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 x\n\\end{align}\n\\]\nWhat’s the likelihood of some values of \\(\\beta_0\\) and \\(\\beta_1\\)?\nRecall our likelihood function is:\n\\[\nL(\\beta_0, \\beta_1) = \\prod_i PMF(y_i, p_i)\n\\]\nWhere \\(PMF(y_i, p_i)\\) is the value of the Bernoulli probability mass function with probability \\(p_i\\) at \\(y_i\\). E.g., \\(PMF(1, 0.5)=0.5\\), \\(PMF(0, 0.75)=0.25\\), and \\(PMF(1, 0.1)=0.1\\).\n\n\n\n\n# Simulate some values for x\nx &lt;- runif(10, 0, 10)\n\n# Choose our betas\nbeta0 &lt;- -3\nbeta1 &lt;- 0.75\n\n# Calculate p across x \nlogit_p &lt;- beta0 + beta1 * x\ninv_logit &lt;- function(x) exp(x) / (1 + exp(x))\np &lt;- inv_logit(logit_p)\n\n# Simulate y\n# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable\ny &lt;- rbinom(10, size = 1, p)\n\n# Visualize\ntibble(x, y) %&gt;% \n  ggplot(aes(x, y)) +\n  geom_point(size = 4, color = \"cornflowerblue\", shape = 18) +\n  scale_x_continuous(breaks = seq(0, 10, by = 2), limits = c(0, 10))\n\n\n\n\n\n\n\n\n\n\n\nCalculate the likelihood of:\n\n\\(\\beta_0=-5\\), \\(\\beta_1 = 1\\)\n\\(\\beta_0=-1\\), \\(\\beta_1 = 0\\)\n\\(\\beta_0=-3\\), \\(\\beta_1 = 0.5\\)\n\n\n# Write our likelihood function \n# Note this uses the x and y values we generated earlier!\n# We're looking for the likelihood of the parameters given the data.\nlikelihood_fun &lt;- function(beta0, beta1) {\n  logit_p &lt;- beta0 + beta1 * x\n  p &lt;- inv_logit(logit_p)\n  prod(dbinom(y, 1, p))\n}\n\n# Apply the likelihood function to some candidate coefficients\nlikelihood_fun(-5, 1)\n\n[1] 0.01463619\n\nlikelihood_fun(-1, 0)\n\n[1] 3.976128e-05\n\nlikelihood_fun(-3, 0.5)\n\n[1] 0.005685931\n\n\n\n\n\nCalculate the likelihood of 1,000,000 combinations of \\(\\beta_0\\), \\(\\beta_1\\) in the ranges \\(\\beta_0 \\in [-5, 0]\\) and \\(\\beta_1 \\in [-1, 2]\\).\n\n# Create a data frame with combinations of beta0, beta1\nlikelihood_space &lt;- expand_grid(\n  beta0 = seq(-5, 0, length.out = 1000),\n  beta1 = seq(-1, 2, length.out = 1000)\n) %&gt;% \n  # Apply the likelihood function using mapply()\n  mutate(likelihood = mapply(likelihood_fun, beta0, beta1))\n\n# Isolate the parameters with the maximum likelihood\nmax_likelihood &lt;- filter(likelihood_space, likelihood == max(likelihood))\n\n# Visualize!\nggplot(likelihood_space, aes(beta0, beta1, fill = likelihood)) +\n  geom_raster() +\n  geom_point(data = max_likelihood, color = \"red\") +\n  scale_fill_viridis_c()\n\n\n\n\n\n\n\n\nOur estimates for \\(\\beta_0\\) and \\(\\beta_1\\) chosen by maximum likelihood are -3.193 and 0.82, respectively. Compare those to the values we used in our simulation: -3 and 0.75."
+  },
+  {
+    "objectID": "index.html#course-description",
+    "href": "index.html#course-description",
+    "title": "Statistics for Environmental Data Science",
+    "section": "Course Description",
+    "text": "Course Description\nStatistics is the science of collecting, manipulating, and analyzing empirical data. In this class, we will learn the statistical fundamentals that will enable us to draw conclusions about the environment and its interaction with social and economic systems. We will cover fundamental statistical concepts and tools, and then apply and expand upon those tools to learn some temporal and spatial statistical methods that are particularly helpful in environmental data science. Welcome!\n\nSome concepts we’ll cover:\n\nSampling and study design, descriptive statistics\nLinear and logistic regression (univariate and multivariate)\nHypothesis testing and inference\nSpatial weighting, spatial clustering\nTime series analysis, forecasting"
+  },
+  {
+    "objectID": "index.html#teaching-team",
+    "href": "index.html#teaching-team",
+    "title": "Statistics for Environmental Data Science",
+    "section": "Teaching Team",
+    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nMax Czapanskiy\nEmail: maxczap@ucsb.edu\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\nLeonardo Feitosa\nEmail: lmfeitosa@ucsb.edu"
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "Statistics for Environmental Data Science",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nEDS 222 was originally developed and taught by Tamma Carleton. This new website houses materials which are heavily reused, adapted from, and inspired by Tamma’s original work."
   },
   {
     "objectID": "course-materials/labs/week-6-lab-key.html",
