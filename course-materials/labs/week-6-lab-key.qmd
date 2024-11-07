@@ -126,7 +126,8 @@ summary(pcthisp_lm)
 
 ## Questions
 
-1.  Plot the residuals. What pattern do you notice?
+1.  Plot the residuals. What pattern do you notice?\
+    **All the residuals fall along two parallel lines - not normal!**
 
 ```{r}
 drinking_water %>% 
@@ -218,6 +219,8 @@ pcthisp <- seq(0, 100, by = 1)
 logit_p <- beta0_hat + beta1_hat * pcthisp
 p <- inv_logit(logit_p)
 
+p[pcthisp %in% c(0, 50, 100)]
+
 tibble(pcthisp, p) %>% 
   ggplot(aes(pcthisp, p)) +
   geom_line()
@@ -271,6 +274,37 @@ summary(pcthisp_glm)
 
 ## Questions
 
-1.  How would you fit a model that includes and interaction term between ethnicity and SES?
-2.  Recall for continuous x continuous OLS interactions, we put one continuous predictor on the x-axis and added lines for the predicted response *at different values of the second continuous predictor*. Do the same here. Plot the predicted probability of a drinking water violation (response) with respect to percent Hispanic population (first continuous predictor) at low, medium, and high levels of median household income (second continuous predictor).
-3.  Interpret the predicted lines. Does SES influence the relationship between ethnicity and exposure to environmental hazards?
+1.  How would you fit a model that includes an interaction term between ethnicity and SES?
+
+```{r}
+interaction_glm <- glm(violations ~ pcthisp * medianincomehouse, 
+                       family = binomial(link = "logit"),
+                       data = drinking_water)
+summary(interaction_glm)
+
+```
+
+2.  Create a figure similar to Fig. 1 in @switzer2017. Put percent Hispanic population on the x-axis, median household income on the y-axis, and make the fill the probability of a water quality violation.
+
+```{r}
+predictions <- expand_grid(
+  pcthisp = seq(0, 100, length.out = 100),
+  medianincomehouse = seq(2500, 250000, length.out = 100)
+) %>% 
+  mutate(violations = predict(interaction_glm, 
+                              newdata = ., 
+                              type = "response"))
+
+ggplot(predictions, aes(pcthisp, 
+                        medianincomehouse, 
+                        fill = violations)) +
+  geom_raster() +
+  scale_fill_gradient(low = "navy", high = "firebrick") +
+  labs(x = "Percent Hispanic population",
+       y = "Median household income",
+       fill = "Pr(violation)")
+
+```
+
+3.  Interpret the predicted surface. How does SES influence the relationship between ethnicity and exposure to environmental hazards? What is the "slope" of the probability of a violation w.r.t. percent Hispanic population at low, medium, and high median household income levels?\
+    **At the low end of the SES axis, Pr(violation) increases steeply with percent Hispanic population, but the relationship is flatter at higher income levels. At a low median household income level (\$30k), the "slope" is 0.008. At moderate (\$45k) and high (\$60k) median household income levels, the "slope" is \~0 and -0.008, respectively. Note: there are very few data points in the upper-right corner of the figure, so the negative slope observed for high median household income level may be an extrapolation issue.**
