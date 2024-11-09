@@ -1,8 +1,6 @@
 project:
   type: website
   output-dir: docs
-  pre-render: course-materials/slides/render_slides.R
-  post-render: course-materials/slides/move_slides.R
   render:
     - "*.qmd"
 

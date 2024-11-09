@@ -1,5 +1,5 @@
 ---
-title: "Inference and hypothesis testing"
+title: "Logistic regression review"
 subtitle: "Week 7"
 description: "November 11^th^ - November 15^th^"
 ---
@@ -8,7 +8,7 @@ description: "November 11^th^ - November 15^th^"
 
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
 |------------------------|------------------------|------------------------|
-| Hypothesis testing | Hypothesis testing in R | Chapters 11, 12 in *IMS* |
+| [Logistic regression exercises](slides/week7/week7-slides.qmd) | [Logistic regression in R](labs/week-6-lab.qmd){target="\"_blank"} <br/> [Logistic regression in R - key](labs/week-6-lab-key.qmd) | Review your notes from week 6 |
 
 : {.hover .bordered tbl-colwidths="\[30,35,35\]"}
 

@@ -112,137 +112,165 @@
     "text": "Given the logistic regression model:\n\\[\n\\begin{align}\ny &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 x\n\\end{align}\n\\]\nWhat’s the likelihood of some values of \\(\\beta_0\\) and \\(\\beta_1\\)?\nRecall our likelihood function is:\n\\[\nL(\\beta_0, \\beta_1) = \\prod_i PMF(y_i, p_i)\n\\]\nWhere \\(PMF(y_i, p_i)\\) is the value of the Bernoulli probability mass function with probability \\(p_i\\) at \\(y_i\\). E.g., \\(PMF(1, 0.5)=0.5\\), \\(PMF(0, 0.75)=0.25\\), and \\(PMF(1, 0.1)=0.1\\).\n\n\n\n\n# Simulate some values for x\n\n# Choose our betas\n\n# Calculate p across x \n\n# Simulate y\n# Note: rbinom() with size = 1 is equivalent to a random Bernoulli variable\n\n# Visualize\n\n\n\n\nCalculate the likelihood of:\n\n\\(\\beta_0=-5\\), \\(\\beta_1 = 1\\)\n\\(\\beta_0=-1\\), \\(\\beta_1 = 0\\)\n\\(\\beta_0=-3\\), \\(\\beta_1 = 0.5\\)\n\n\n# Write our likelihood function \n# Note this uses the x and y values we generated earlier!\n# We're looking for the likelihood of the parameters given the data.\n\n# Apply the likelihood function to some candidate coefficients\n\n\n\n\nCalculate the likelihood of 1,000,000 combinations of \\(\\beta_0\\), \\(\\beta_1\\) in the ranges \\(\\beta_0 \\in [-5, 0]\\) and \\(\\beta_1 \\in [-1, 2]\\).\n\n# Create a data frame with combinations of beta0, beta1\n # Apply the likelihood function using mapply()\n\n# Isolate the parameters with the maximum likelihood\n\n# Visualize!\n\nOur estimates for \\(\\beta_0\\) and \\(\\beta_1\\) chosen by maximum likelihood are and , respectively. Compare those to the values we used in our simulation: -3 and 0.75."
   },
   {
-    "objectID": "course-materials/week0.html",
-    "href": "course-materials/week0.html",
-    "title": "Course introduction",
+    "objectID": "course-materials/slides/week7/week7-slides.html",
+    "href": "course-materials/slides/week7/week7-slides.html",
+    "title": "EDS222 Week 7",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nCourse introduction\nNone\nNone\nPreface, Chapters 1-2 in IMS  [optional] Gender Shades and video on RCTs"
+    "text": "This week, we will review key topics from earlier weeks and postpone new material to week 8. As you complete the following exercises, please try to identify your “muddiest” areas. Are there formulas or functions you’re using and can’t articulate why? Are there similar topics that you’re having a hard time differentiating? Make a note of these points as you go - that will help guide your studying and give me a better idea of how to clarify concepts and tools in our final weeks."
   },
   {
-    "objectID": "course-materials/week0.html#class-materials",
-    "href": "course-materials/week0.html#class-materials",
-    "title": "Course introduction",
+    "objectID": "course-materials/slides/week7/week7-slides.html#probability",
+    "href": "course-materials/slides/week7/week7-slides.html#probability",
+    "title": "EDS222 Week 7",
+    "section": "Probability",
+    "text": "Probability\n\nWhat potential values can a \\(Normal\\) variable take? What about a \\(Bernoulli\\) variable?\n\nWhat’s something in the real world we could represent with a \\(Normal\\) variable?\nHow about a \\(Bernoulli\\) variable?\n\nWhat’s the difference between a probability density function (PDF) and a probability mass function (PMF)?\n\nConsider distributions from the \\(Normal\\) and \\(Bernoulli\\) families. Which has a PDF? Which a PMF?\nConsider the PDF for a \\(Normal(\\mu=0,\\sigma=1)\\) variable. What’s the value of the PDF when \\(x=0\\)? Does this value represent the probability of producing a 0 from this distribution? Why or why not?\nConsider the PMF for a \\(Bernoulli(p=0.5)\\) variable. What’s the value of the PMF when \\(x=0\\)? Does this value represent the probability of producing a 0 from this distribution? Why or why not?\n\nDraw the PMF for a \\(Bernoulli(p=0.25)\\) variable by hand. Then use ggplot to recreate your drawing.\n\n\nWhat’s the probability of observing \\(\\{ 0, 0, 1, 1 \\}\\) from a \\(Bernoulli(p = 0.5)\\) variable?\n\nWould that probability go up or down if the variable was a \\(Bernoulli(p = 0.99)\\)?\n\nWhat’s the probability of observing 0 from a \\(Bernoulli(p=0.1)\\) AND 1 from a \\(Bernoulli(p=0.9)\\)?\n\nExtending the previous question, what’s the probability of observing \\(\\{0, 0, 0, 1, 0\\}\\) from a \\(Bernoulli\\) variable if \\(p\\) is 0.1 for the first observation and increases by 0.1 for each subsequent observation?\n\nDescribe what each following R function returns.\n\ndnorm()\npnorm()\nrnorm()\ndbinom()\nrbinom()\n\nWhich R function would help you solve problem 4 above? Write the code below."
+  },
+  {
+    "objectID": "course-materials/slides/week7/week7-slides.html#link-functions",
+    "href": "course-materials/slides/week7/week7-slides.html#link-functions",
+    "title": "EDS222 Week 7",
+    "section": "Link functions",
+    "text": "Link functions\n\nFill in the blanks below to specify a logistic regression in statistical notation.\n\\[\n\\begin{align}\ny &\\sim ??? (???) \\\\\n???(???) &= ??? + ??? x\n\\end{align}\n\\]\n\nWhat kind of random variable is the response?\nWhat parameter does that variable take?\nWhat transformation (link function) is applied to the parameter?\nWhich part of the model is linear?\n\nWhat’s the formula for odds?\nWhat’s the formula for the logit function?\nThe logistic function is the inverse of the logit function. Without using R or a calculator, what’s the value of \\(logistic(logit(0))\\)? How about \\(logistic(logit(1000))\\)?\n\nWhat kinds of numbers can the logit function operate on? Conversely, what inputs would yield an undefined result? Why?\nWhat about the logistic?\n\nImagine a “logistic” regression without a link function. I.e., \\(p\\) is linearly related to \\(x\\). Give an example of values for \\(\\beta_0,\\beta_1,x\\) that would break your regression model. What constraint on \\(p\\) did you break?\nIn your own words, describe why the logit link function is necessary for logistic regression to work.\nUse ggplot to create a logistic curve. Your x-axis should cover the range -5 to 5. Use \\(\\beta_0=0,\\beta_1=1\\) as your coefficients.\nAnswer the following questions first using your intuition, then check your answers in code.\n\nHow will your curve change if \\(\\beta_0\\) increases to 3?\nHow will your curve change if you flip the sign of \\(\\beta_1\\) to -1?"
+  },
+  {
+    "objectID": "course-materials/slides/week7/week7-slides.html#likelihood",
+    "href": "course-materials/slides/week7/week7-slides.html#likelihood",
+    "title": "EDS222 Week 7",
+    "section": "Likelihood",
+    "text": "Likelihood\n\nThe PMF of a random discrete variable describes the probability of observing a value given the parameters. What is the likelihood function relative to that?\nIs the likelihood function directly interpretable? Or rather, in what context are likelihoods meaningful?\nConsider this logistic regression model from the week 6 lab.\n\\[\n\\begin{align}\n\\text{healthViolation} &\\sim Bernoulli(p) \\\\\nlogit(p) &= \\beta_0 + \\beta_1 \\text{pctHisp}\n\\end{align}\n\\]\nLet’s say you observe the following data.\n\n\n\npctHisp\nhealthViolation\n\n\n\n\n0.00\n1\n\n\n0.15\n0\n\n\n0.30\n0\n\n\n0.45\n1\n\n\n0.60\n1\n\n\n0.75\n0\n\n\n0.90\n1\n\n\n\n\nVisualize these data using ggplot.\nLet \\(\\beta_0=0, \\beta_1=1\\).\n\nCalculate \\(logit(p)\\) across the range of \\(\\text{pctHisp}\\) values.\nCalculate \\(p\\).\nAdd \\(p\\) to your ggplot as a curve. Make it red.\n\nLet \\(\\beta_0=-2, \\beta_1=0.5\\).\n\nRepeat the calculations above and add a curve for \\(p\\), but make it blue.\n\nIntuitively, which curve do you think is more likely?\n\nNow you’re going to write a likelihood function for the above logistic model.\n\nWhat inputs does this function need?\nWhat value will it return?\n\nConsider the following partially written code chunk.\n\ninv_logit &lt;- function(x) {\n  ____\n}\nlikelihood_fun &lt;- function(coefs, data) {\n  logit_p &lt;- ____\n  p &lt;- inv_logit(____)\n  loglik &lt;- ____(____, size = 1, prob = ____, ____ = TRUE)\n  -____(____)\n}\n\n\nWhat is the length of the vector coefs (i.e. the first parameter of the likelihood function)? What should the names of the vector be ?\nIf data is a data frame, what two columns does it need to have?\nWhy is size = 1 important? Refer to the statistical notation above.\nIn questions 3.2 and 3.3, you visualized \\(p\\) for two different sets of coefficients. Use the likelihood function to calculate the negative log likelihood of those coefficients. Interpret those values.\n\nNow you’ll use optimization to estimate the most likely coefficients. Fill in the partially written code chunk below.\n\nmost_likely &lt;- optim(\n  par = c(____ = ____, ____ = ____),\n  fn = ____,\n  data = ____\n)\n\n\nWhat estimates did you get for \\(\\beta_0, \\beta_1\\)?\nAdd the predicted values of \\(p\\) for these coefficients to your plot with the raw data. How does this curve compare to the other two you added earlier?"
+  },
+  {
+    "objectID": "final-project.html",
+    "href": "final-project.html",
+    "title": "Final Project Guidelines",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nCourse introduction\nNone\nNone\nPreface, Chapters 1-2 in IMS  [optional] Gender Shades and video on RCTs"
+    "text": "The goal of this project is to explore an environmental data science question for which you do not know the answer. You will construct a research question, collect relevant data, and design a statistical analysis to answer your question. Your analysis must apply at least some of the statistical concepts you have learned in this course, including concepts covered in the second half of the class. You will summarize your findings and communicate clearly how they have or have not helped you answer your question.\nYour results do not need to be conclusive!\nMost data science questions cannot be fully answered with one analysis. If you carefully conduct your analysis, yet cannot conclude anything concrete,that is perfectly fine. There are many reasons you might find yourself in this situation, including, among many others:you have null results (i.e., you fail to reject the null hypothesis); your results are uncertain (e.g., one test suggests one answer while another test suggests another answer); there are issues with the analysis due to limited data availability; there are issues with the analysis because of violations of OLS assumptions, etc. Regardless of the final results, make sure to carefully describe your data and analysis, and to clearly articulate the limitations of your findings."
   },
   {
-    "objectID": "course-materials/week0.html#recorded-lecture",
-    "href": "course-materials/week0.html#recorded-lecture",
-    "title": "Course introduction",
-    "section": "Recorded lecture",
-    "text": "Recorded lecture\nProf Czapanskiy is out this week. Please watch the recorded lecture videos below.\n\nPart 1: Intro and course motivation\n\n\n\nPart 2: Syllabus\n\n\n\nPart 3: Populations and samples"
+    "objectID": "final-project.html#project-goal",
+    "href": "final-project.html#project-goal",
+    "title": "Final Project Guidelines",
+    "section": "",
+    "text": "The goal of this project is to explore an environmental data science question for which you do not know the answer. You will construct a research question, collect relevant data, and design a statistical analysis to answer your question. Your analysis must apply at least some of the statistical concepts you have learned in this course, including concepts covered in the second half of the class. You will summarize your findings and communicate clearly how they have or have not helped you answer your question.\nYour results do not need to be conclusive!\nMost data science questions cannot be fully answered with one analysis. If you carefully conduct your analysis, yet cannot conclude anything concrete,that is perfectly fine. There are many reasons you might find yourself in this situation, including, among many others:you have null results (i.e., you fail to reject the null hypothesis); your results are uncertain (e.g., one test suggests one answer while another test suggests another answer); there are issues with the analysis due to limited data availability; there are issues with the analysis because of violations of OLS assumptions, etc. Regardless of the final results, make sure to carefully describe your data and analysis, and to clearly articulate the limitations of your findings."
   },
   {
-    "objectID": "course-materials/week0.html#notes",
-    "href": "course-materials/week0.html#notes",
-    "title": "Course introduction",
+    "objectID": "final-project.html#submission-guidelines",
+    "href": "final-project.html#submission-guidelines",
+    "title": "Final Project Guidelines",
+    "section": "Submission guidelines",
+    "text": "Submission guidelines\nThe submission has three parts:\n\nBrief proposal [Due date: 11/11, 11:59pm]. Please write a short paragraph (4-5 sentences) describing the project you propose to pursue. Motivate the question, describe possible data sources, and suggest possible analyses you may conduct to answer your question. Submission will be through Canvas.\nTechnical blog post [Due date: 12/13, 11:59 pm]. This blog post is a write up summarizing in text and with figures and/or tables your question, the data you have collected, your analysis plan, and your results. Your target audience should be other quantitative scientists and practitioners familiar with the basics of statistics and data science, but not necessarily experts in environmental science or the details of the methods studied in this course. Submit a link to your blog post via Canvas by 11:59pm on December 13.\n\nSome guidelines for the blog post:\n\nMain text length should be roughly 1500 - 2500 words.\n2-4 tables and/or figures, each carefully labeled and captioned so that they are easily interpretable\nInclude scientific references when applicable.\nInclude links to the underlying data you use. If your data cannot be shared publicly, note this in a short “data availability” statement at the end of your post.\nInclude a link to a repository with your code.\n\n\n4-minute presentation [December 10 8-11am]. This is a short presentation for the class in which you motivate your question, describe your data and analysis plan, and summarize your results. It should be a fun way to practice sharing data science with an audience through public speaking.\nIn order to fit everyone in, the 4-minute limit will have to be strictly enforced. Practice your presentation in advance and time yourself! 4 minutes is probably much, much shorter than you think."
+  },
+  {
+    "objectID": "final-project.html#general-guidelines",
+    "href": "final-project.html#general-guidelines",
+    "title": "Final Project Guidelines",
+    "section": "General guidelines",
+    "text": "General guidelines\n\nMotivate your question. Why is this important? Is there existing evidence on this question? If so, why is it inconclusive? If not, why not?\nDescribe your data. Where did you access it? What are its spatial and temporal features? What are its limitations? What do you know about the sampling strategy and what biases that may introduce? If helpful, you can use a histogram, scatterplot, or summary statistics table to describe your data.\nClearly describe your analysis plan. What is your analysis plan? Why did you choose this analysis, given your data and question? What are the limitations?\nSummarize your results visually and in words. Show us your results in figure(s) and/or table(s) that are carefully labeled and captioned. Describe in the text (and orally when presenting) what you found, and how these results either do or do not help you answeryour question.\nWhat might you do next? One analysis cannot fully answer an interesting scientific question. If you had time to collect more data or conduct more analyses, what would help you answer this question better?"
+  },
+  {
+    "objectID": "course-materials/week8.html",
+    "href": "course-materials/week8.html",
+    "title": "Spatial interpolation and kriging",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
+  },
+  {
+    "objectID": "course-materials/week8.html#class-materials",
+    "href": "course-materials/week8.html#class-materials",
+    "title": "Spatial interpolation and kriging",
+    "section": "",
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
+  },
+  {
+    "objectID": "course-materials/week8.html#notes",
+    "href": "course-materials/week8.html#notes",
+    "title": "Spatial interpolation and kriging",
     "section": "Notes",
-    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. For week 0, please watch the recorded lecture, complete the reading, and answer the reading quiz on Canvas.\nHomework assignment 1 will be posted Thursday September 26"
+    "text": "Notes\n\nHomework assignment 4 due Friday, November 22nd."
   },
   {
-    "objectID": "course-materials/week9.html",
-    "href": "course-materials/week9.html",
-    "title": "Course review and Thanksgiving",
+    "objectID": "course-materials/week6.html",
+    "href": "course-materials/week6.html",
+    "title": "Nonlinear models",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R  Logistic regression in R - key\nChapter 9 in IMS"
   },
   {
-    "objectID": "course-materials/week9.html#class-materials",
-    "href": "course-materials/week9.html#class-materials",
-    "title": "Course review and Thanksgiving",
+    "objectID": "course-materials/week6.html#class-materials",
+    "href": "course-materials/week6.html#class-materials",
+    "title": "Nonlinear models",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R  Logistic regression in R - key\nChapter 9 in IMS"
   },
   {
-    "objectID": "course-materials/week9.html#notes",
-    "href": "course-materials/week9.html#notes",
-    "title": "Course review and Thanksgiving",
+    "objectID": "course-materials/week6.html#notes",
+    "href": "course-materials/week6.html#notes",
+    "title": "Nonlinear models",
     "section": "Notes",
-    "text": "Notes\n\nCourse review will be held over Zoom to accommodate student travel."
+    "text": "Notes\n\nHomework assignment 3 due Friday, November 8th next Monday November 11th.\nFinal project proposal is also due Friday, November 8th Monday November 11th. Submission will be through Canvas.\nThe notes from this week’s office hours are here."
   },
   {
-    "objectID": "course-materials/week7.html",
-    "href": "course-materials/week7.html",
-    "title": "Inference and hypothesis testing",
+    "objectID": "course-materials/week4.html",
+    "href": "course-materials/week4.html",
+    "title": "Multiple regression and interactions",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nHypothesis testing\nHypothesis testing in R\nChapters 11, 12 in IMS"
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nInteractions\nInteractions review Interactions in R\nContinuous variable interactions\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
   },
   {
-    "objectID": "course-materials/week7.html#class-materials",
-    "href": "course-materials/week7.html#class-materials",
-    "title": "Inference and hypothesis testing",
+    "objectID": "course-materials/week4.html#class-materials",
+    "href": "course-materials/week4.html#class-materials",
+    "title": "Multiple regression and interactions",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nHypothesis testing\nHypothesis testing in R\nChapters 11, 12 in IMS"
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nInteractions\nInteractions review Interactions in R\nContinuous variable interactions\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
   },
   {
-    "objectID": "course-materials/week7.html#notes",
-    "href": "course-materials/week7.html#notes",
-    "title": "Inference and hypothesis testing",
+    "objectID": "course-materials/week4.html#notes",
+    "href": "course-materials/week4.html#notes",
+    "title": "Multiple regression and interactions",
     "section": "Notes",
-    "text": "Notes\n\nHomework assignment 4 posted on Tuesday, November 12th."
+    "text": "Notes\n\nHomework assignment 3 will be posted Tuesday, October 22nd."
   },
   {
-    "objectID": "course-materials/week5.html",
-    "href": "course-materials/week5.html",
-    "title": "Midterm",
+    "objectID": "course-materials/week2.html",
+    "href": "course-materials/week2.html",
+    "title": "Ordinary least squares",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nLaw of Large Numbers, simulation in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
   },
   {
-    "objectID": "course-materials/week5.html#class-materials",
-    "href": "course-materials/week5.html#class-materials",
-    "title": "Midterm",
+    "objectID": "course-materials/week2.html#class-materials",
+    "href": "course-materials/week2.html#class-materials",
+    "title": "Ordinary least squares",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nLaw of Large Numbers, simulation in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
   },
   {
-    "objectID": "course-materials/week5.html#notes",
-    "href": "course-materials/week5.html#notes",
-    "title": "Midterm",
+    "objectID": "course-materials/week2.html#notes",
+    "href": "course-materials/week2.html#notes",
+    "title": "Ordinary least squares",
     "section": "Notes",
-    "text": "Notes\n\nMidterm (Thursday) will be in class and closed book\nPractice midterm available here"
+    "text": "Notes\n\nHomework assignment 2 will be posted on Tuesday, October 8th.\nHomework assignment 1 is due next Monday, October 14th."
   },
   {
-    "objectID": "course-materials/week3.html",
-    "href": "course-materials/week3.html",
-    "title": "Ordinary least squares, continued",
+    "objectID": "course-materials/week1.html",
+    "href": "course-materials/week1.html",
+    "title": "Summarizing data",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMultiple regression\nMultiple regression in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nLab setup and Github Classrooms demo\nChapters 4-6 in IMS  Variance (video)"
   },
   {
-    "objectID": "course-materials/week3.html#class-materials",
-    "href": "course-materials/week3.html#class-materials",
-    "title": "Ordinary least squares, continued",
+    "objectID": "course-materials/week1.html#class-materials",
+    "href": "course-materials/week1.html#class-materials",
+    "title": "Summarizing data",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMultiple regression\nMultiple regression in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nLab setup and Github Classrooms demo\nChapters 4-6 in IMS  Variance (video)"
   },
   {
-    "objectID": "course-materials/week3.html#notes",
-    "href": "course-materials/week3.html#notes",
-    "title": "Ordinary least squares, continued",
+    "objectID": "course-materials/week1.html#notes",
+    "href": "course-materials/week1.html#notes",
+    "title": "Summarizing data",
     "section": "Notes",
-    "text": "Notes\n\nHomework assignment 2 is due Friday, October 18th."
-  },
-  {
-    "objectID": "course-materials/week10.html",
-    "href": "course-materials/week10.html",
-    "title": "Time series analysis",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
-  },
-  {
-    "objectID": "course-materials/week10.html#class-materials",
-    "href": "course-materials/week10.html#class-materials",
-    "title": "Time series analysis",
-    "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
-  },
-  {
-    "objectID": "course-materials/week10.html#notes",
-    "href": "course-materials/week10.html#notes",
-    "title": "Time series analysis",
-    "section": "Notes",
-    "text": "Notes\n\nFinal project presentations will take place next week Tuesday December 10th 0800-1100 in Bren 1424. We will make arrangements for you to sign up for 30 minute slots within that window - you won’t need to be there the entire time."
+    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. Your TA, Leonardo, will cover lecture and lab this week.\nHomework assignment 1 is due next Monday, October 7th."
   },
   {
     "objectID": "assignments.html",
@@ -273,137 +301,137 @@
     "text": "Final project\nIn addition to the homework assignments, a final project proposal in the form of one short paragraph describing your project is due November 11th (through Canvas).\nThe final project consists of a blog post and a presentation. Details available here."
   },
   {
-    "objectID": "course-materials/week1.html",
-    "href": "course-materials/week1.html",
-    "title": "Summarizing data",
+    "objectID": "course-materials/week10.html",
+    "href": "course-materials/week10.html",
+    "title": "Time series analysis",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nLab setup and Github Classrooms demo\nChapters 4-6 in IMS  Variance (video)"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
   },
   {
-    "objectID": "course-materials/week1.html#class-materials",
-    "href": "course-materials/week1.html#class-materials",
-    "title": "Summarizing data",
+    "objectID": "course-materials/week10.html#class-materials",
+    "href": "course-materials/week10.html#class-materials",
+    "title": "Time series analysis",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nSummarizing data\nSummarizing data in R\nLab setup and Github Classrooms demo\nChapters 4-6 in IMS  Variance (video)"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nTime series analysis\nFinal project co-working time\nChapters 2 and 3 in Hyndman & Athanasopoulos"
   },
   {
-    "objectID": "course-materials/week1.html#notes",
-    "href": "course-materials/week1.html#notes",
-    "title": "Summarizing data",
+    "objectID": "course-materials/week10.html#notes",
+    "href": "course-materials/week10.html#notes",
+    "title": "Time series analysis",
     "section": "Notes",
-    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. Your TA, Leonardo, will cover lecture and lab this week.\nHomework assignment 1 is due next Monday, October 7th."
+    "text": "Notes\n\nFinal project presentations will take place next week Tuesday December 10th 0800-1100 in Bren 1424. We will make arrangements for you to sign up for 30 minute slots within that window - you won’t need to be there the entire time."
   },
   {
-    "objectID": "course-materials/week2.html",
-    "href": "course-materials/week2.html",
-    "title": "Ordinary least squares",
+    "objectID": "course-materials/week3.html",
+    "href": "course-materials/week3.html",
+    "title": "Ordinary least squares, continued",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nLaw of Large Numbers, simulation in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMultiple regression\nMultiple regression in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
   },
   {
-    "objectID": "course-materials/week2.html#class-materials",
-    "href": "course-materials/week2.html#class-materials",
-    "title": "Ordinary least squares",
+    "objectID": "course-materials/week3.html#class-materials",
+    "href": "course-materials/week3.html#class-materials",
+    "title": "Ordinary least squares, continued",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nOrdinary least squares\nOrdinary least squares in R\nLaw of Large Numbers, simulation in R\nChapter 7 in IMS  Covariance (video)  Linear regression with one regressor (video)"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMultiple regression\nMultiple regression in R\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
   },
   {
-    "objectID": "course-materials/week2.html#notes",
-    "href": "course-materials/week2.html#notes",
-    "title": "Ordinary least squares",
+    "objectID": "course-materials/week3.html#notes",
+    "href": "course-materials/week3.html#notes",
+    "title": "Ordinary least squares, continued",
     "section": "Notes",
-    "text": "Notes\n\nHomework assignment 2 will be posted on Tuesday, October 8th.\nHomework assignment 1 is due next Monday, October 14th."
+    "text": "Notes\n\nHomework assignment 2 is due Friday, October 18th."
   },
   {
-    "objectID": "course-materials/week4.html",
-    "href": "course-materials/week4.html",
-    "title": "Multiple regression and interactions",
+    "objectID": "course-materials/week5.html",
+    "href": "course-materials/week5.html",
+    "title": "Midterm",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nInteractions\nInteractions review Interactions in R\nContinuous variable interactions\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
   },
   {
-    "objectID": "course-materials/week4.html#class-materials",
-    "href": "course-materials/week4.html#class-materials",
-    "title": "Multiple regression and interactions",
+    "objectID": "course-materials/week5.html#class-materials",
+    "href": "course-materials/week5.html#class-materials",
+    "title": "Midterm",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nInteractions\nInteractions review Interactions in R\nContinuous variable interactions\nChapter 8 in IMS  (Optional) Chapter 10 in IMS"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nMidterm review\nMidterm exam\nNo reading"
   },
   {
-    "objectID": "course-materials/week4.html#notes",
-    "href": "course-materials/week4.html#notes",
-    "title": "Multiple regression and interactions",
+    "objectID": "course-materials/week5.html#notes",
+    "href": "course-materials/week5.html#notes",
+    "title": "Midterm",
     "section": "Notes",
-    "text": "Notes\n\nHomework assignment 3 will be posted Tuesday, October 22nd."
+    "text": "Notes\n\nMidterm (Thursday) will be in class and closed book\nPractice midterm available here"
   },
   {
-    "objectID": "course-materials/week6.html",
-    "href": "course-materials/week6.html",
-    "title": "Nonlinear models",
+    "objectID": "course-materials/week7.html",
+    "href": "course-materials/week7.html",
+    "title": "Logistic regression review",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R  Logistic regression in R - key\nChapter 9 in IMS"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression exercises\nLogistic regression in R  Logistic regression in R - key\nReview your notes from week 6"
   },
   {
-    "objectID": "course-materials/week6.html#class-materials",
-    "href": "course-materials/week6.html#class-materials",
-    "title": "Nonlinear models",
+    "objectID": "course-materials/week7.html#class-materials",
+    "href": "course-materials/week7.html#class-materials",
+    "title": "Logistic regression review",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression slides  Live coding demo  Logistic regression slides (annotated)\nLogistic regression in R  Logistic regression in R - key\nChapter 9 in IMS"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nLogistic regression exercises\nLogistic regression in R  Logistic regression in R - key\nReview your notes from week 6"
   },
   {
-    "objectID": "course-materials/week6.html#notes",
-    "href": "course-materials/week6.html#notes",
-    "title": "Nonlinear models",
+    "objectID": "course-materials/week7.html#notes",
+    "href": "course-materials/week7.html#notes",
+    "title": "Logistic regression review",
     "section": "Notes",
-    "text": "Notes\n\nHomework assignment 3 due Friday, November 8th next Monday November 11th.\nFinal project proposal is also due Friday, November 8th Monday November 11th. Submission will be through Canvas.\nThe notes from this week’s office hours are here."
+    "text": "Notes\n\nHomework assignment 4 posted on Tuesday, November 12th."
   },
   {
-    "objectID": "course-materials/week8.html",
-    "href": "course-materials/week8.html",
-    "title": "Spatial interpolation and kriging",
+    "objectID": "course-materials/week9.html",
+    "href": "course-materials/week9.html",
+    "title": "Course review and Thanksgiving",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
   },
   {
-    "objectID": "course-materials/week8.html#class-materials",
-    "href": "course-materials/week8.html#class-materials",
-    "title": "Spatial interpolation and kriging",
+    "objectID": "course-materials/week9.html#class-materials",
+    "href": "course-materials/week9.html#class-materials",
+    "title": "Course review and Thanksgiving",
     "section": "",
-    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nSpatial interpolation and kriging\nKriging in R\nNone"
+    "text": "Lecture slides\n Lab activity\n Reading\n\n\n\n\nCourse review (Zoom)\nNo class (Thanksgiving)\nNone"
   },
   {
-    "objectID": "course-materials/week8.html#notes",
-    "href": "course-materials/week8.html#notes",
-    "title": "Spatial interpolation and kriging",
+    "objectID": "course-materials/week9.html#notes",
+    "href": "course-materials/week9.html#notes",
+    "title": "Course review and Thanksgiving",
     "section": "Notes",
-    "text": "Notes\n\nHomework assignment 4 due Friday, November 22nd."
+    "text": "Notes\n\nCourse review will be held over Zoom to accommodate student travel."
   },
   {
-    "objectID": "final-project.html",
-    "href": "final-project.html",
-    "title": "Final Project Guidelines",
+    "objectID": "course-materials/week0.html",
+    "href": "course-materials/week0.html",
+    "title": "Course introduction",
     "section": "",
-    "text": "The goal of this project is to explore an environmental data science question for which you do not know the answer. You will construct a research question, collect relevant data, and design a statistical analysis to answer your question. Your analysis must apply at least some of the statistical concepts you have learned in this course, including concepts covered in the second half of the class. You will summarize your findings and communicate clearly how they have or have not helped you answer your question.\nYour results do not need to be conclusive!\nMost data science questions cannot be fully answered with one analysis. If you carefully conduct your analysis, yet cannot conclude anything concrete,that is perfectly fine. There are many reasons you might find yourself in this situation, including, among many others:you have null results (i.e., you fail to reject the null hypothesis); your results are uncertain (e.g., one test suggests one answer while another test suggests another answer); there are issues with the analysis due to limited data availability; there are issues with the analysis because of violations of OLS assumptions, etc. Regardless of the final results, make sure to carefully describe your data and analysis, and to clearly articulate the limitations of your findings."
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nCourse introduction\nNone\nNone\nPreface, Chapters 1-2 in IMS  [optional] Gender Shades and video on RCTs"
   },
   {
-    "objectID": "final-project.html#project-goal",
-    "href": "final-project.html#project-goal",
-    "title": "Final Project Guidelines",
+    "objectID": "course-materials/week0.html#class-materials",
+    "href": "course-materials/week0.html#class-materials",
+    "title": "Course introduction",
     "section": "",
-    "text": "The goal of this project is to explore an environmental data science question for which you do not know the answer. You will construct a research question, collect relevant data, and design a statistical analysis to answer your question. Your analysis must apply at least some of the statistical concepts you have learned in this course, including concepts covered in the second half of the class. You will summarize your findings and communicate clearly how they have or have not helped you answer your question.\nYour results do not need to be conclusive!\nMost data science questions cannot be fully answered with one analysis. If you carefully conduct your analysis, yet cannot conclude anything concrete,that is perfectly fine. There are many reasons you might find yourself in this situation, including, among many others:you have null results (i.e., you fail to reject the null hypothesis); your results are uncertain (e.g., one test suggests one answer while another test suggests another answer); there are issues with the analysis due to limited data availability; there are issues with the analysis because of violations of OLS assumptions, etc. Regardless of the final results, make sure to carefully describe your data and analysis, and to clearly articulate the limitations of your findings."
+    "text": "Lecture slides\n Lab activity\n Discussion section\n Reading\n\n\n\n\nCourse introduction\nNone\nNone\nPreface, Chapters 1-2 in IMS  [optional] Gender Shades and video on RCTs"
   },
   {
-    "objectID": "final-project.html#submission-guidelines",
-    "href": "final-project.html#submission-guidelines",
-    "title": "Final Project Guidelines",
-    "section": "Submission guidelines",
-    "text": "Submission guidelines\nThe submission has three parts:\n\nBrief proposal [Due date: 11/11, 11:59pm]. Please write a short paragraph (4-5 sentences) describing the project you propose to pursue. Motivate the question, describe possible data sources, and suggest possible analyses you may conduct to answer your question. Submission will be through Canvas.\nTechnical blog post [Due date: 12/13, 11:59 pm]. This blog post is a write up summarizing in text and with figures and/or tables your question, the data you have collected, your analysis plan, and your results. Your target audience should be other quantitative scientists and practitioners familiar with the basics of statistics and data science, but not necessarily experts in environmental science or the details of the methods studied in this course. Submit a link to your blog post via Canvas by 11:59pm on December 13.\n\nSome guidelines for the blog post:\n\nMain text length should be roughly 1500 - 2500 words.\n2-4 tables and/or figures, each carefully labeled and captioned so that they are easily interpretable\nInclude scientific references when applicable.\nInclude links to the underlying data you use. If your data cannot be shared publicly, note this in a short “data availability” statement at the end of your post.\nInclude a link to a repository with your code.\n\n\n4-minute presentation [December 10 8-11am]. This is a short presentation for the class in which you motivate your question, describe your data and analysis plan, and summarize your results. It should be a fun way to practice sharing data science with an audience through public speaking.\nIn order to fit everyone in, the 4-minute limit will have to be strictly enforced. Practice your presentation in advance and time yourself! 4 minutes is probably much, much shorter than you think."
+    "objectID": "course-materials/week0.html#recorded-lecture",
+    "href": "course-materials/week0.html#recorded-lecture",
+    "title": "Course introduction",
+    "section": "Recorded lecture",
+    "text": "Recorded lecture\nProf Czapanskiy is out this week. Please watch the recorded lecture videos below.\n\nPart 1: Intro and course motivation\n\n\n\nPart 2: Syllabus\n\n\n\nPart 3: Populations and samples"
   },
   {
-    "objectID": "final-project.html#general-guidelines",
-    "href": "final-project.html#general-guidelines",
-    "title": "Final Project Guidelines",
-    "section": "General guidelines",
-    "text": "General guidelines\n\nMotivate your question. Why is this important? Is there existing evidence on this question? If so, why is it inconclusive? If not, why not?\nDescribe your data. Where did you access it? What are its spatial and temporal features? What are its limitations? What do you know about the sampling strategy and what biases that may introduce? If helpful, you can use a histogram, scatterplot, or summary statistics table to describe your data.\nClearly describe your analysis plan. What is your analysis plan? Why did you choose this analysis, given your data and question? What are the limitations?\nSummarize your results visually and in words. Show us your results in figure(s) and/or table(s) that are carefully labeled and captioned. Describe in the text (and orally when presenting) what you found, and how these results either do or do not help you answeryour question.\nWhat might you do next? One analysis cannot fully answer an interesting scientific question. If you had time to collect more data or conduct more analyses, what would help you answer this question better?"
+    "objectID": "course-materials/week0.html#notes",
+    "href": "course-materials/week0.html#notes",
+    "title": "Course introduction",
+    "section": "Notes",
+    "text": "Notes\n\nProf Czapanskiy will be away weeks 0 and 1. For week 0, please watch the recorded lecture, complete the reading, and answer the reading quiz on Canvas.\nHomework assignment 1 will be posted Thursday September 26"
   },
   {
     "objectID": "course-materials/live-coding/week6/week6-live-coding-instructor-notes.html",
