@@ -128,7 +128,7 @@ This week, we will review key topics from earlier weeks and postpone new materia
     1.  What is the length of the vector `coefs` (i.e. the first parameter of the likelihood function)? What should the names of the vector be ?
     2.  If `data` is a data frame, what two columns does it need to have?
     3.  Why is `size = 1` important? Refer to the statistical notation above.
-    4.  In questions 3.2 and 3.3, you visualized $p$ for two different sets of coefficients. Use the likelihood function to calculate the negative log likelihood of those coefficients. Interpret those values.
+    4.  In questions 3.2 and 3.3, you visualized $p$ for two different sets of coefficients. Use the likelihood function to calculate the negative log likelihood for both sets of coefficients. Interpret those values.
 
 6.  Now you'll use optimization to estimate the *most likely* coefficients. Fill in the partially written code chunk below.
 
@@ -143,3 +143,34 @@ This week, we will review key topics from earlier weeks and postpone new materia
 
     1.  What estimates did you get for $\beta_0, \beta_1$?
     2.  Add the predicted values of $p$ for these coefficients to your plot with the raw data. How does this curve compare to the other two you added earlier?
+    
+7.  The last thing you'll do is create a map of the negative log likelihood "landscape". This should be raster plot with _candidate_ $\beta_0$'s on the x-axis, $\beta_1$'s on the y-axis, and the fill should be the negative log likelihood. Add a point for the _most likely_ coefficients. Choose your range of $\beta$'s so the most likely coefficients fall somewhere in the middle.
+
+    ```{r}
+    #| eval: false
+    # This utility function will make it easier to call the likelihood function within mutate()
+    likelihood_fun2 <- function(beta0, beta1, data) {
+      likelihood_fun(c(beta0 = beta0, beta1 = beta1), data = data)
+    }
+    # Create a grid of candidate coefficients to map out the likelihood landscape
+    expand_grid(
+      ____ = seq(____, ____, length.out = 20),
+      ____ = seq(____, ____, length.out = 20)
+    ) %>%
+      # Calculate the negative log likelihood for each pair of coefficients using mapply() and likelihood_fun2()
+      mutate(____ = mapply(FUN = ____, 
+                           ____, 
+                           ____, 
+                           MoreArgs = list(data = health_data))) %>% 
+      # Create a "likelihood DEM"
+      ggplot() +
+      geom_raster(aes(x = ____, y = ____, fill = ____)) +
+      # Most likely coefficients
+      geom_point(x = ____, y = ____, color = "red") +
+      # Make the fill of the likelihood raster cells look like terrain
+      scale_fill_stepsn(colors = terrain.colors(6)) +
+      theme_bw()
+    ```
+
+    1.  Are your most likely coefficients down in a valley or up on a peak? Why?
+    2.  Pick three pairs of coefficients that fall in green, yellow/orange, and pink/white parts of the likelihood landscape. Recreate the plots from question 3 (raw data with predicted $p$ curve) using those three sets of coefficients. Qualitatively describe the shapes of the curves, where the coefficients fall in likelihood landscape, and how well the curves match the data.
