@@ -1,0 +1,242 @@
+---
+title: "EDS222 Week 7"
+format: 
+  html:
+    code-tools: true
+---
+
+This week, we will review key topics from earlier weeks and postpone new material to week 8. As you complete the following exercises, please try to identify your "muddiest" areas. Are there formulas or functions you're using and can't articulate why? Are there similar topics that you're having a hard time differentiating? Make a note of these points as you go - that will help guide your studying and give me a better idea of how to clarify concepts and tools in our final weeks.
+
+## Probability
+
+1.  What potential values can a $Normal$ variable take? What about a $Bernoulli$ variable?\
+    **Normal: real numbers. Bernoulli: 0's and 1's.**
+    1.  What's something in the real world we could represent with a $Normal$ variable?
+    2.  How about a $Bernoulli$ variable?
+2.  What's the difference between a probability *density* function (PDF) and a probability *mass* function (PMF)?\
+    **PDF: continuous, PMF: discrete.**
+    1.  Consider distributions from the $Normal$ and $Bernoulli$ families. Which has a PDF? Which a PMF?
+    2.  Consider the PDF for a $Normal(\mu=0,\sigma=1)$ variable. What's the value of the PDF when $x=0$? Does this value represent the probability of producing a 0 from this distribution? Why or why not?\
+        **Value is whatever** **dnorm(0, mean = 0, sd = 1) gives you. It's not the probability because the probability of an *exact value* for a continuous variable is always 0. Think probability = area under the curve, an exact value has no width so it can have no area.**
+    3.  Consider the PMF for a $Bernoulli(p=0.5)$ variable. What's the value of the PMF when $x=0$? Does this value represent the probability of producing a 0 from this distribution? Why or why not?\
+        **In a PMF it is a probability because the variable takes on discrete values (no area to worry about).**
+3.  Draw the PMF for a $Bernoulli(p=0.25)$ variable by hand. Then use ggplot to recreate your drawing.
+
+```{r}
+library(tidyverse)
+
+```
+
+4.  What's the probability of observing $\{ 0, 0, 1, 1 \}$ from a $Bernoulli(p = 0.5)$ variable?
+
+```{r}
+p <- 0.5
+(1 - p) * (1 - p) * p * p
+```
+
+1.  Would that probability go up or down if the variable was a $Bernoulli(p = 0.99)$?\
+    **Down because with a Bernoulli(p = 0.99) we'd expect more 1's.**
+
+```{r}
+p <- 0.99
+(1 - p) * (1 - p) * p * p
+```
+
+5.  What's the probability of observing 0 from a $Bernoulli(p=0.1)$ AND 1 from a $Bernoulli(p=0.9)$?
+
+```{r}
+(1 - 0.1) * 0.9
+```
+
+1.  Extending the previous question, what's the probability of observing $\{0, 0, 0, 1, 0\}$ from a $Bernoulli$ variable if $p$ is 0.1 for the first observation and increases by 0.1 for each subsequent observation?
+
+
+```{r}
+obs <- c(0, 0, 0, 1, 0)
+p <- c(0.1, 0.2, 0.3, 0.4, 0.5)
+prod(ifelse(obs == 1, p, 1 - p))
+```
+
+6.  Describe what each following R function returns.
+
+    1.  `dnorm()`
+    2.  `pnorm()`
+    3.  `rnorm()`
+    4.  `dbinom()`
+    5.  `rbinom()`
+
+7.  Which R function would help you solve problem 4 above? Write the code below.
+
+```{r}
+prod(dbinom(c(0, 0, 1, 1), size = 1, prob = 0.5))
+prod(dbinom(c(0, 0, 1, 1), size = 1, prob = 0.99))
+```
+
+## Link functions
+
+1.  Fill in the blanks below to specify a logistic regression in statistical notation.\
+    $$
+    \begin{align}
+    y &\sim Bernoulli(p) \\
+    logit(p) &= \beta_0 + \beta_1 x
+    \end{align}
+    $$
+    1.  What kind of random variable is the response?\
+    **Bernoulli**
+    2.  What parameter does that variable take?
+    **p**
+    3.  What transformation (link function) is applied to the parameter?
+    **logit**
+    4.  Which part of the model is linear?
+    $\beta_0 + \beta_1 x$
+2.  What's the formula for *odds*?\
+    $\frac{p}{1-p}$
+3.  What's the formula for the *logit* function?\
+    $log(\frac{p}{1-p})$
+4.  The *logistic* function is the inverse of the logit function. Without using R or a calculator, what's the value of $logistic(logit(0))$? How about $logistic(logit(1000))$?\
+    **0 and 1000, respectively. logistic and logit cancel each other out (they're inverses).**
+    1.  What kinds of numbers can the logit function operate on? Conversely, what inputs would yield an undefined result? Why?\
+    **Probabilities, 0-1. Anything outside that is undefined. Can't take a log of a negative number.**
+    2.  What about the logistic?
+    **Real numbers, -Inf to Inf. Converts them to 0 to 1.**
+5.  Imagine a "logistic" regression without a link function. I.e., $p$ is linearly related to $x$. Give an example of values for $\beta_0,\beta_1,x$ that would break your regression model. What constraint on $p$ did you break?\
+    **Let $\beta_0=0, \beta_1=1, x = 3$. Then p is 3, which breaks the constraint that it must be a probability.**
+6.  In your own words, describe why the logit link function is necessary for logistic regression to work.\
+    **Keeps the potential values for p in the valid range.**
+7.  Use ggplot to create a logistic curve. Your x-axis should cover the range -5 to 5. Use $\beta_0=0,\beta_1=1$ as your coefficients.\
+    Answer the following questions first using your intuition, then check your answers in code.
+    
+```{r}
+beta0 <- 0
+beta1 <- 1
+inv_logit <- function(x) exp(x) / (1 + exp(x))
+tibble(x = seq(-5, 5, length.out = 100),
+       logit_p = beta0 + beta1 * x,
+       p = inv_logit(logit_p)) %>% 
+  ggplot(aes(x, p)) +
+  geom_line() +
+  ylim(0,1)
+```
+    
+    1.  How will your curve change if $\beta_0$ increases to 3?\
+    **Increasing intercept will shift the curve up.**
+    2.  How will your curve change if you flip the sign of $\beta_1$ to -1?
+    **Reversing the sign will flip the curve left-to-right.**
+
+## Likelihood
+
+1.  The PMF of a random discrete variable describes the probability of observing a value given the parameters. What is the likelihood function relative to that?\
+    **PMF is probability of data given the parameter. Likelihood tells you the likelihood of the parameter given the data. In the real world, we can only observe data, not parameters, so we need likelihood for inference.**
+
+2.  Is the likelihood function directly interpretable? Or rather, in what context are likelihoods meaningful?\
+    **Likelihood is not directly interpretable, we compare it across parameters to find whatever is most likely. So only meaningful in a relative sense.**
+
+3.  Consider this logistic regression model from the week 6 lab.
+
+    $$
+    \begin{align}
+    \text{healthViolation} &\sim Bernoulli(p) \\
+    logit(p) &= \beta_0 + \beta_1 \text{pctHisp}
+    \end{align}
+    $$
+
+    Let's say you observe the following data.
+
+    | pctHisp | healthViolation |
+    |---------|-----------------|
+    | 0.00    | 1               |
+    | 0.15    | 0               |
+    | 0.30    | 0               |
+    | 0.45    | 1               |
+    | 0.60    | 1               |
+    | 0.75    | 0               |
+    | 0.90    | 1               |
+
+    1.  Visualize these data using ggplot.
+
+    2.  Let $\beta_0=0, \beta_1=1$.
+
+        1.  Calculate $logit(p)$ across the range of $\text{pctHisp}$ values.
+        2.  Calculate $p$.
+        3.  Add $p$ to your ggplot as a curve. Make it red.
+
+    3.  Let $\beta_0=-2, \beta_1=0.5$.
+
+        1.  Repeat the calculations above and add a curve for $p$, but make it blue.
+
+    4.  Intuitively, which curve do you think is *more likely*?
+    
+```{r}
+
+```
+
+4.  Now you're going to write a likelihood function for the above logistic model.
+
+    1.  What inputs does this function need?
+
+    2.  What value will it return?
+
+5.  Consider the following partially written code chunk.
+
+    ```{r}
+    #| eval: false
+    inv_logit <- function(x) {
+      ____
+    }
+    likelihood_fun <- function(coefs, data) {
+      logit_p <- ____
+      p <- inv_logit(____)
+      loglik <- ____(____, size = 1, prob = ____, ____ = TRUE)
+      -____(____)
+    }
+    ```
+
+    1.  What is the length of the vector `coefs` (i.e. the first parameter of the likelihood function)? What should the names of the vector be ?
+    2.  If `data` is a data frame, what two columns does it need to have?
+    3.  Why is `size = 1` important? Refer to the statistical notation above.
+    4.  In questions 3.2 and 3.3, you visualized $p$ for two different sets of coefficients. Use the likelihood function to calculate the negative log likelihood for both sets of coefficients. Interpret those values.
+
+6.  Now you'll use optimization to estimate the *most likely* coefficients. Fill in the partially written code chunk below.
+
+    ```{r}
+    #| eval: false
+    most_likely <- optim(
+      par = c(____ = ____, ____ = ____),
+      fn = ____,
+      data = ____
+    )
+    ```
+
+    1.  What estimates did you get for $\beta_0, \beta_1$?
+    2.  Add the predicted values of $p$ for these coefficients to your plot with the raw data. How does this curve compare to the other two you added earlier?
+
+7.  The last thing you'll do is create a map of the negative log likelihood "landscape". This should be raster plot with *candidate* $\beta_0$'s on the x-axis, $\beta_1$'s on the y-axis, and the fill should be the negative log likelihood. Add a point for the *most likely* coefficients. Choose your range of $\beta$'s so the most likely coefficients fall somewhere in the middle.
+
+    ```{r}
+    #| eval: false
+    # This utility function will make it easier to call the likelihood function within mutate()
+    likelihood_fun2 <- function(beta0, beta1, data) {
+      likelihood_fun(c(beta0 = beta0, beta1 = beta1), data = data)
+    }
+    # Create a grid of candidate coefficients to map out the likelihood landscape
+    expand_grid(
+      ____ = seq(____, ____, length.out = 20),
+      ____ = seq(____, ____, length.out = 20)
+    ) %>%
+      # Calculate the negative log likelihood for each pair of coefficients using mapply() and likelihood_fun2()
+      mutate(____ = mapply(FUN = ____, 
+                           ____, 
+                           ____, 
+                           MoreArgs = list(data = health_data))) %>% 
+      # Create a "likelihood DEM"
+      ggplot() +
+      geom_raster(aes(x = ____, y = ____, fill = ____)) +
+      # Most likely coefficients
+      geom_point(x = ____, y = ____, color = "red") +
+      # Make the fill of the likelihood raster cells look like terrain
+      scale_fill_stepsn(colors = terrain.colors(6)) +
+      theme_bw()
+    ```
+
+    1.  Are your most likely coefficients down in a valley or up on a peak? Why?
+    2.  Pick three pairs of coefficients that fall in green, yellow/orange, and pink/white parts of the likelihood landscape. Recreate the plots from question 3 (raw data with predicted $p$ curve) using those three sets of coefficients. Qualitatively describe the shapes of the curves, where the coefficients fall in likelihood landscape, and how well the curves match the data.

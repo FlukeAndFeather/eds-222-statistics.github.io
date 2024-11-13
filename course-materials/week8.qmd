@@ -8,9 +8,9 @@ description: "November 18^th^ - November 22^nd^"
 
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
 |----|----|----|
-| [Spatial interpolation and kriging](slides/week8/week8-slides.html){target="_blank"} | [Kriging in R](labs/week-8-lab.Rmd){target="_blank} | None |
+| Hypothesis testing | Hypothesis testing in R | Chapters 11, 13 in *IMS* |
 : {.hover .bordered tbl-colwidths="[30,35,35]"} 
 
 ## Notes
 
-* Homework assignment 4 due Friday, November 22^nd^.
+* None
