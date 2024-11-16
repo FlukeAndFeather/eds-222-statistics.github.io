@@ -65,22 +65,52 @@ drinking_water <- read_csv("drinking_water.csv", show_col_types = FALSE)
 
 ## Questions
 
-1.  What do you think each row represents?
+1.  What do you think each row represents?\
+    **The water utility and demographic data for a single district in a single year.**
 2.  What columns do you think represent:
-    1.  Drinking water health violations?
-    2.  Percent Black and Hispanic population in the utility district?
-    3.  Median household income in the utility district?
+    1.  Drinking water health violations?\
+        **`health`**
+    2.  Percent Black and Hispanic population in the utility district?\
+        `pctblack` and `pcthisp`, respectively
+    3.  Median household income in the utility district?\
+        `medianincomehouse`
 3.  One column includes a *count* of drinking water health violations. How would you create a new column with a binary variable representing whether there were any violations?
 
 ```{r}
-
+drinking_water$violations <- ifelse(drinking_water$health > 0, 1, 0)
 
 ```
 
 4.  Create a scatter plot of violations against race (percent Black population), ethnicity (percent Hispanic population), and SES (median household income). What visualization issues do we get with a scatter plot? How could you address that?\
+    **Points are *overplotted*, we can't see the overall trend. One option: bin the data and calculate the mean.**
 
 ```{r}
-# Make plots
+violations_by_pctblack <- drinking_water %>% 
+  mutate(pctblack = round(pctblack / 5) * 5) %>% 
+  group_by(pctblack) %>% 
+  summarize(violations = mean(violations))
+  
+ggplot(drinking_water, aes(pctblack, violations)) +
+  geom_point() +
+  geom_point(data = violations_by_pctblack, color = "red")
+
+violations_by_pcthisp <- drinking_water %>% 
+  mutate(pcthisp = round(pcthisp / 5) * 5) %>% 
+  group_by(pcthisp) %>% 
+  summarize(violations = mean(violations))
+  
+ggplot(drinking_water, aes(pcthisp, violations)) +
+  geom_point() +
+  geom_point(data = violations_by_pcthisp, color = "red")
+
+violations_by_medianincomehouse <- drinking_water %>% 
+  mutate(medianincomehouse = round(medianincomehouse / 1e4) * 1e4) %>% 
+  group_by(medianincomehouse) %>% 
+  summarize(violations = mean(violations))
+  
+ggplot(drinking_water, aes(medianincomehouse, violations)) +
+  geom_point() +
+  geom_point(data = violations_by_medianincomehouse, color = "red")
 
 ```
 
@@ -93,24 +123,35 @@ $$
 $$
 
 ```{r}
-pcthisp_lm <- lm(???)
+pcthisp_lm <- lm(violations ~ pcthisp, drinking_water)
 summary(pcthisp_lm)
 
 ```
 
 ## Questions
 
-1.  Plot the residuals. What pattern do you notice?
+1.  Plot the residuals. What pattern do you notice?\
+    **All the residuals fall along two parallel lines - not normal!**
 
 ```{r}
-# Make a plot of the residuals.
+drinking_water %>% 
+  select(violations, pcthisp) %>% 
+  drop_na() %>% 
+  mutate(resid = resid(pcthisp_lm)) %>% 
+  ggplot(aes(pcthisp, resid)) +
+  geom_point()
 
 ```
 
-2.  Plot the raw data and the predicted probabilities for `violations`. Are there any obvious problems?
+2.  Plot the raw data and the predicted values for `violations`. Are there any obvious problems?\
+    **The predicted values fall between 0 and 1, so they could conceivably be interpreted as probabilities. But the raw data are far from the line.**
 
 ```{r}
-# Plot raw data and predicted probabilities
+ggplot(drinking_water, aes(pcthisp, violations)) +
+  geom_point() +
+  geom_point(data = violations_by_pcthisp, color = "red") +
+  geom_abline(intercept = coef(pcthisp_lm)[1],
+              slope = coef(pcthisp_lm)[2])
   
 ```
 
@@ -152,7 +193,7 @@ likelihood_fun <- function(coefficients, data) {
   # Use the PMF of the Bernoulli to get our log likelihoods
 
   # Sum the negative log likelihood
-
+  
 }
 
 # Use an optimization function to get the maximum likelihood coefficients
@@ -173,7 +214,7 @@ coef_optim <- optim(???,
 
 ```
 
-2.  What's the predicted probability of drinking water violations for communities with 0%, 50%, and 100% Hispanic population? \
+2.  What's the predicted probability of drinking water violations for communities with 0%, 50%, and 100% Hispanic population?\
     Plot the predicted probability across the whole range 0-100% Hispanic.
 
 ```{r}
@@ -250,4 +291,3 @@ predictions <- expand_grid(
 ```
 
 3.  Interpret the predicted surface. How does SES influence the relationship between ethnicity and exposure to environmental hazards? What is the "slope" of the probability of a violation w.r.t. percent Hispanic population at low, medium, and high median household income levels?\
-
