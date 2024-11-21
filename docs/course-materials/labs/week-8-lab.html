@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -103,35 +123,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -252,26 +243,26 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-color-of-drinking-water" id="toc-the-color-of-drinking-water" class="nav-link active" data-scroll-target="#the-color-of-drinking-water">The Color of Drinking Water</a></li>
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration">Data exploration</a>
+  <li><a href="#to-lead-poison-a-mockingbird" id="toc-to-lead-poison-a-mockingbird" class="nav-link active" data-scroll-target="#to-lead-poison-a-mockingbird">To lead poison a mockingbird</a>
   <ul class="collapse">
-  <li><a href="#water-utility-and-violations-data" id="toc-water-utility-and-violations-data" class="nav-link" data-scroll-target="#water-utility-and-violations-data">Water utility and violations data</a></li>
-  <li><a href="#demographic-data" id="toc-demographic-data" class="nav-link" data-scroll-target="#demographic-data">Demographic data</a></li>
-  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
+  <li><a href="#get-the-data" id="toc-get-the-data" class="nav-link" data-scroll-target="#get-the-data">Get the data</a></li>
+  <li><a href="#hypothesis-testing-by-randomization" id="toc-hypothesis-testing-by-randomization" class="nav-link" data-scroll-target="#hypothesis-testing-by-randomization">Hypothesis testing by randomization</a>
+  <ul class="collapse">
+  <li><a href="#nest-success" id="toc-nest-success" class="nav-link" data-scroll-target="#nest-success">Nest success</a></li>
+  <li><a href="#nestling-blood-lead-levels" id="toc-nestling-blood-lead-levels" class="nav-link" data-scroll-target="#nestling-blood-lead-levels">Nestling blood lead levels</a></li>
   </ul></li>
-  <li><a href="#try-and-fail-to-use-ols" id="toc-try-and-fail-to-use-ols" class="nav-link" data-scroll-target="#try-and-fail-to-use-ols">Try (and fail) to use OLS</a>
+  <li><a href="#hypothesis-testing-by-normal-approximation" id="toc-hypothesis-testing-by-normal-approximation" class="nav-link" data-scroll-target="#hypothesis-testing-by-normal-approximation">Hypothesis testing by normal approximation</a>
   <ul class="collapse">
-  <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1">Questions</a></li>
+  <li><a href="#sensitivity-to-outliers" id="toc-sensitivity-to-outliers" class="nav-link" data-scroll-target="#sensitivity-to-outliers">Sensitivity to outliers</a></li>
   </ul></li>
-  <li><a href="#fit-a-logistic-regression-model-using-maximum-likelihood" id="toc-fit-a-logistic-regression-model-using-maximum-likelihood" class="nav-link" data-scroll-target="#fit-a-logistic-regression-model-using-maximum-likelihood">Fit a logistic regression model using maximum likelihood</a>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals">Confidence intervals</a>
   <ul class="collapse">
-  <li><a href="#negative-log-likelihood" id="toc-negative-log-likelihood" class="nav-link" data-scroll-target="#negative-log-likelihood">Negative log likelihood</a></li>
-  <li><a href="#questions-2" id="toc-questions-2" class="nav-link" data-scroll-target="#questions-2">Questions</a></li>
+  <li><a href="#simulate-the-population" id="toc-simulate-the-population" class="nav-link" data-scroll-target="#simulate-the-population">1. Simulate the population</a></li>
+  <li><a href="#create-one-confidence-interval" id="toc-create-one-confidence-interval" class="nav-link" data-scroll-target="#create-one-confidence-interval">2. Create one confidence interval</a></li>
+  <li><a href="#repeat-the-process" id="toc-repeat-the-process" class="nav-link" data-scroll-target="#repeat-the-process">3. Repeat the process</a></li>
   </ul></li>
-  <li><a href="#fit-the-full-logistic-regression-model-using-glm" id="toc-fit-the-full-logistic-regression-model-using-glm" class="nav-link" data-scroll-target="#fit-the-full-logistic-regression-model-using-glm">Fit the full logistic regression model using <code>glm()</code></a>
-  <ul class="collapse">
-  <li><a href="#questions-3" id="toc-questions-3" class="nav-link" data-scroll-target="#questions-3">Questions</a></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -283,276 +274,168 @@ window.Quarto = {
 
 
 
-<section id="the-color-of-drinking-water" class="level1">
-<h1>The Color of Drinking Water</h1>
-<p>Is exposure to environmental hazards influenced by <em>class</em> or <em>race and ethnicity</em>? Switzer and Teodoro <span class="citation" data-cites="switzer2017">[@switzer2017]</span> argued the either-or framing of that question is misguided, and actually the <em>interaction</em> between class and race/ethnicity is the important question for environmental justice. Today’s lab will use logistic regression and interaction terms to investigate drinking water quality in the context of socio-economic status (SES), race, and ethnicity.</p>
+<section id="to-lead-poison-a-mockingbird" class="level1">
+<h1>To lead poison a mockingbird</h1>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>Lead is an important contaminant in urban areas with well-known impacts on human health, but do non-human animals also face risks from lead exposure? Hitt <em>et al.</em> investigated this question by measuring lead levels in soil and the blood of breeding mockingbirds, as well as egg hatching and offspring development <span class="citation" data-cites="hitt2023">(<a href="#ref-hitt2023" role="doc-biblioref">Hitt et al. 2023</a>)</span>. We will replicate parts of their analysis here.</p>
 </section>
-<section id="overview" class="level1">
-<h1>Overview</h1>
+<section id="get-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="get-the-data">Get the data</h2>
+<p>The data for this study were deposited in the Dryad Data Repository and are available <a href="https://datadryad.org/stash/dataset/doi:10.5061/dryad.tht76hf3v">here</a>. Download the full dataset and put them in the appropriate folder of your RStudio project.</p>
+<p>Read the northern mockingbird nestling data (“NOMO_Nest_Data.csv”) and nestling lead data (“NestlingPb.csv”) into data frames called <code>nest_data</code> and <code>nestlingpb_data</code>, respectively. Filter both data frames to the Uptown and Lakeshore neighborhoods.</p>
+</section>
+<section id="hypothesis-testing-by-randomization" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing-by-randomization">Hypothesis testing by randomization</h2>
+<p><em>Do mockingbirds in a neighborhood with higher lead concentration have less successful nests?</em></p>
+<p>We’ll investigate this question using randomization hypothesis testing.</p>
+<section id="nest-success" class="level3">
+<h3 class="anchored" data-anchor-id="nest-success">Nest success</h3>
+<p><code>nest_data</code> contains columns <code>hood</code> and <code>bin.status</code>, representing the neighborhood and <em>binary status</em> (at least one chick fledged or not) for each monitored nest. Visualize how nest success (i.e., binary status) varied by neighborhood.</p>
+<section id="step-1-state-the-null-and-alternative-hypotheses" class="level4">
+<h4 class="anchored" data-anchor-id="step-1-state-the-null-and-alternative-hypotheses">Step 1: state the null and alternative hypotheses</h4>
+<p><em>H<sub>0</sub>:<br>
+H<sub>A</sub>:</em></p>
+</section>
+<section id="step-2-calculate-the-point-statistic" class="level4">
+<h4 class="anchored" data-anchor-id="step-2-calculate-the-point-statistic">Step 2: calculate the point statistic</h4>
+<p>1) What is the relevant sample statistic for our hypothesis?</p>
+<p>2) How would you calculate it?</p>
+</section>
+<section id="step-3-quantify-the-uncertainty" class="level4">
+<h4 class="anchored" data-anchor-id="step-3-quantify-the-uncertainty">Step 3: quantify the uncertainty</h4>
+<p>Use randomization to simulate the distribution of the sample statistic under the null hypothesis.</p>
+</section>
+<section id="step-4-calculate-probability-of-the-point-estimate-under-the-null" class="level4">
+<h4 class="anchored" data-anchor-id="step-4-calculate-probability-of-the-point-estimate-under-the-null">Step 4: calculate probability of the point estimate under the null</h4>
+<p>What’s the p-value?</p>
+</section>
+<section id="step-5-reject-or-fail-to-reject-the-null" class="level4">
+<h4 class="anchored" data-anchor-id="step-5-reject-or-fail-to-reject-the-null">Step 5: reject or fail to reject the null</h4>
+</section>
+</section>
+<section id="nestling-blood-lead-levels" class="level3">
+<h3 class="anchored" data-anchor-id="nestling-blood-lead-levels">Nestling blood lead levels</h3>
+<p>Now it’s your turn. Perform a similar analysis to investigate whether nestling blood Pb levels vary by neighborhood. Use <code>nestlingpb_data</code> for this part, column <code>blood_ug_dl_pbwt</code>.</p>
+<p>First, visualize the blood Pb levels by neighborhood. What’s an appropriate type of visualization for this?</p>
+<section id="step-1-state-the-null-and-alternative-hypotheses-1" class="level4">
+<h4 class="anchored" data-anchor-id="step-1-state-the-null-and-alternative-hypotheses-1">Step 1: state the null and alternative hypotheses</h4>
+<p><em>H<sub>0</sub>:<br>
+H<sub>A</sub>:</em></p>
+</section>
+<section id="step-2-calculate-the-point-statistic-1" class="level4">
+<h4 class="anchored" data-anchor-id="step-2-calculate-the-point-statistic-1">Step 2: calculate the point statistic</h4>
+<p>1) What is the relevant sample statistic for our hypothesis?</p>
+<p>2) How would you calculate it?</p>
+</section>
+<section id="step-3-quantify-the-uncertainty-1" class="level4">
+<h4 class="anchored" data-anchor-id="step-3-quantify-the-uncertainty-1">Step 3: quantify the uncertainty</h4>
+<p>Use randomization to simulate the distribution of the sample statistic under the null hypothesis.</p>
+</section>
+<section id="step-4-calculate-probability-of-the-point-estimate-under-the-null-1" class="level4">
+<h4 class="anchored" data-anchor-id="step-4-calculate-probability-of-the-point-estimate-under-the-null-1">Step 4: calculate probability of the point estimate under the null</h4>
+<p>What’s the p-value?</p>
+</section>
+<section id="step-5-reject-or-fail-to-reject-the-null-1" class="level4">
+<h4 class="anchored" data-anchor-id="step-5-reject-or-fail-to-reject-the-null-1">Step 5: reject or fail to reject the null</h4>
+</section>
+</section>
+</section>
+<section id="hypothesis-testing-by-normal-approximation" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing-by-normal-approximation">Hypothesis testing by normal approximation</h2>
+<p>Rather than using randomization to simulate the null distribution, it’s often easier to approximate it as a normal distribution.</p>
+<p><strong><em>Does nestling blood Pb level have a relationship with feather Pb level?</em></strong></p>
+<p>First, visualize the relationship between the two variables.</p>
+<section id="step-1-state-the-null-and-alternative-hypotheses-2" class="level4">
+<h4 class="anchored" data-anchor-id="step-1-state-the-null-and-alternative-hypotheses-2">Step 1: state the null and alternative hypotheses</h4>
+<p><em>H<sub>0</sub>:<br>
+H<sub>A</sub>:</em></p>
+</section>
+<section id="step-2-calculate-the-point-statistic-2" class="level4">
+<h4 class="anchored" data-anchor-id="step-2-calculate-the-point-statistic-2">Step 2: calculate the point statistic</h4>
+<p>1) What is the relevant sample statistic for our hypothesis?</p>
+<p>2) How would you calculate it?</p>
+</section>
+<section id="step-3-quantify-the-uncertainty-2" class="level4">
+<h4 class="anchored" data-anchor-id="step-3-quantify-the-uncertainty-2">Step 3: quantify the uncertainty</h4>
+<p>Use the standard error of the regression coefficient to visualize the distribution of the sample statistic under the null hypothesis.</p>
+</section>
+<section id="step-4-calculate-probability-of-the-point-estimate-under-the-null-2" class="level4">
+<h4 class="anchored" data-anchor-id="step-4-calculate-probability-of-the-point-estimate-under-the-null-2">Step 4: calculate probability of the point estimate under the null</h4>
+<p>What’s the p-value? Use <code>pnorm()</code> to get the probability of a point estimate at least as extreme as the observed.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Our calculate p-value is much lower than the p-value from the summary of our linear model. In class I told you <code>lm()</code> uses a <em>Student’s t-distribution</em> instead of a normal distribution for calculating the p-value. When sample sizes are large, the normal distribution and t-distribution are virtually identical. With only 22 complete data points, our sample size is relatively small. Therefore the t-distribution has <em>thicker tails</em> and yields a larger p-value. Hence the discrepancy.</p>
+</div>
+</div>
+</section>
+<section id="step-5-reject-or-fail-to-reject-the-null-2" class="level4">
+<h4 class="anchored" data-anchor-id="step-5-reject-or-fail-to-reject-the-null-2">Step 5: reject or fail to reject the null</h4>
+</section>
+<section id="sensitivity-to-outliers" class="level3">
+<h3 class="anchored" data-anchor-id="sensitivity-to-outliers">Sensitivity to outliers</h3>
+<p>Revisit the visualization of the blood and feather Pb levels. One point seems to be an extreme outlier, and it seems to be exerting a strong influence on our model. Repeat the previous analysis with that point removed, then answer the question below.</p>
+<p><strong>Question:</strong> Of the two analyses (with and without the outlier), which had a lower p-value? Does that make it a better analysis?</p>
+</section>
+</section>
+<section id="confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h2>
+<p>For the last part of today’s lab we will construct confidence intervals around the point estimate of the blood Pb level coefficient. Here’s the plan:</p>
 <ol type="1">
-<li>Data exploration</li>
-<li>Try (and fail) to use OLS</li>
-<li>Fit a logistic regression model using maximum likelihood</li>
-<li>Fit the full logistic regression model using <code>glm()</code></li>
+<li><p>Simulate a population of nestlings, with the same relationship between blood and feather Pb levels as the observed sample.</p></li>
+<li><p>Draw a new sample of nestlings from the simulated population. Create a confidence interval for the point estimate of the blood Pb level coefficient in this sample.</p></li>
+<li><p>Repeat the process 100 times.</p></li>
 </ol>
+<p>~95% of our 95% CIs should contain the population parameter.</p>
+<section id="simulate-the-population" class="level3">
+<h3 class="anchored" data-anchor-id="simulate-the-population">1. Simulate the population</h3>
 </section>
-<section id="data-exploration" class="level1">
-<h1>Data exploration</h1>
-<p>We will use the data from <span class="citation" data-cites="switzer2017">@switzer2017</span> for today’s lab. Begin by downloading the CSV file available <a href="https://drive.google.com/file/d/1_1vgFyUxWW7XNzNcVzd32UY9502TspXn/view?usp=drive_link">here</a>. These data come from multiple sources.</p>
-<section id="water-utility-and-violations-data" class="level2">
-<h2 class="anchored" data-anchor-id="water-utility-and-violations-data">Water utility and violations data</h2>
-<ul>
-<li><p>Source: Safe Drinking Water Information System (SDWIS)</p></li>
-<li><p>Time period: 2010-2013 (4 years)</p></li>
-<li><p>Sample size: 12,972 utilities</p></li>
-<li><p>Criteria: Local government-owned utilities serving populations of 10,000 or more</p></li>
-</ul>
+<section id="create-one-confidence-interval" class="level3">
+<h3 class="anchored" data-anchor-id="create-one-confidence-interval">2. Create one confidence interval</h3>
 </section>
-<section id="demographic-data" class="level2">
-<h2 class="anchored" data-anchor-id="demographic-data">Demographic data</h2>
+<section id="repeat-the-process" class="level3">
+<h3 class="anchored" data-anchor-id="repeat-the-process">3. Repeat the process</h3>
+<p>How many 95% CIs contain the population parameter?</p>
+</section>
+</section>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <ul>
-<li><p>Source: US Census Bureau’s American Community Surveys (2010-2013)</p></li>
-<li><p>Variables included:</p>
+<li><p>Randomization allows us to simulate the null distribution, which we can use to quantify the probability of our result if the null hypothesis is true.</p>
 <ul>
-<li><p>Percent Hispanic population</p></li>
-<li><p>Percent Black population</p></li>
-<li><p>Percent of population with high school education</p></li>
-<li><p>Percent of population with bachelor’s degree</p></li>
-<li><p>Percent of population below poverty line</p></li>
-<li><p>Median household income</p></li>
+<li><p><code>sample()</code> and <code>replicate()</code> are helpful here!</p></li>
+<li><p>Randomization doesn’t make assumptions about the normality of the sample statistic, but it does assume the sample is representative of the population.</p></li>
+</ul></li>
+<li><p>By assuming the sample statistic is normally distributed, we can use standard errors to conduct hypothesis testing.</p>
+<ul>
+<li>R will calculate standard errors for us for most sample statistics, such as regression coefficients.</li>
+</ul></li>
+<li><p>We can also use standard errors to construct confidence intervals.</p>
+<ul>
+<li>By simulating a population, we demonstrated ~95% of 95% CIs will contain the population parameter.</li>
 </ul></li>
 </ul>
-<p>Load the data and begin exploring.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(tidyverse))</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>drinking_water <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"drinking_water.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="questions" class="level2">
-<h2 class="anchored" data-anchor-id="questions">Questions</h2>
-<ol type="1">
-<li>What do you think each row represents?<br>
-<strong>The water utility and demographic data for a single district in a single year.</strong></li>
-<li>What columns do you think represent:
-<ol type="1">
-<li>Drinking water health violations?<br>
-<strong><code>health</code></strong></li>
-<li>Percent Black and Hispanic population in the utility district?<br>
-<code>pctblack</code> and <code>pcthisp</code>, respectively</li>
-<li>Median household income in the utility district?<br>
-<code>medianincomehouse</code></li>
-</ol></li>
-<li>One column includes a <em>count</em> of drinking water health violations. How would you create a new column with a binary variable representing whether there were any violations?</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>drinking_water<span class="sc">$</span>violations <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(drinking_water<span class="sc">$</span>health <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="4" type="1">
-<li>Create a scatter plot of violations against race (percent Black population), ethnicity (percent Hispanic population), and SES (median household income). What visualization issues do we get with a scatter plot? How could you address that?<br>
-<strong>Points are <em>overplotted</em>, we can’t see the overall trend. One option: bin the data and calculate the mean.</strong></li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>violations_by_pctblack <span class="ot">&lt;-</span> drinking_water <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pctblack =</span> <span class="fu">round</span>(pctblack <span class="sc">/</span> <span class="dv">5</span>) <span class="sc">*</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pctblack) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">violations =</span> <span class="fu">mean</span>(violations))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(drinking_water, <span class="fu">aes</span>(pctblack, violations)) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violations_by_pctblack, <span class="at">color =</span> <span class="st">"red"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>violations_by_pcthisp <span class="ot">&lt;-</span> drinking_water <span class="sc">%&gt;%</span> </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pcthisp =</span> <span class="fu">round</span>(pcthisp <span class="sc">/</span> <span class="dv">5</span>) <span class="sc">*</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pcthisp) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">violations =</span> <span class="fu">mean</span>(violations))</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(drinking_water, <span class="fu">aes</span>(pcthisp, violations)) <span class="sc">+</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violations_by_pcthisp, <span class="at">color =</span> <span class="st">"red"</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>violations_by_medianincomehouse <span class="ot">&lt;-</span> drinking_water <span class="sc">%&gt;%</span> </span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">medianincomehouse =</span> <span class="fu">round</span>(medianincomehouse <span class="sc">/</span> <span class="fl">1e4</span>) <span class="sc">*</span> <span class="fl">1e4</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(medianincomehouse) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">violations =</span> <span class="fu">mean</span>(violations))</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(drinking_water, <span class="fu">aes</span>(medianincomehouse, violations)) <span class="sc">+</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violations_by_medianincomehouse, <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="try-and-fail-to-use-ols" class="level1">
-<h1>Try (and fail) to use OLS</h1>
-<p>Fit the following OLS model.</p>
-<p><span class="math display">\[
-\text{violations} = \beta_0 + \beta_1\text{percentHispanic}
-\]</span></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pcthisp_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(violations <span class="sc">~</span> pcthisp, drinking_water)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pcthisp_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="questions-1" class="level2">
-<h2 class="anchored" data-anchor-id="questions-1">Questions</h2>
-<ol type="1">
-<li>Plot the residuals. What pattern do you notice?<br>
-<strong>All the residuals fall along two parallel lines - not normal!</strong></li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>drinking_water <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(violations, pcthisp) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resid =</span> <span class="fu">resid</span>(pcthisp_lm)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(pcthisp, resid)) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="2" type="1">
-<li>Plot the raw data and the predicted values for <code>violations</code>. Are there any obvious problems?<br>
-<strong>The predicted values fall between 0 and 1, so they could conceivably be interpreted as probabilities. But the raw data are far from the line.</strong></li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(drinking_water, <span class="fu">aes</span>(pcthisp, violations)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violations_by_pcthisp, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(pcthisp_lm)[<span class="dv">1</span>],</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(pcthisp_lm)[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="fit-a-logistic-regression-model-using-maximum-likelihood" class="level1">
-<h1>Fit a logistic regression model using maximum likelihood</h1>
-<p>Recall that logistic regression uses <em>maximum likelihood</em>, not OLS, to estimate coefficients. Usually we will use functions from R packages to fit these models, but I want you to do it yourself once.</p>
-<section id="negative-log-likelihood" class="level2">
-<h2 class="anchored" data-anchor-id="negative-log-likelihood">Negative log likelihood</h2>
-<p>Estimating coefficients is an optimization problem: what combination yields the maximum likelihood? There are two things we can do to make our problem more tractable for optimization.</p>
-<ol type="1">
-<li>Recall that the likelihood function involves a <em>product</em>. Multiplication is computationally costly (compared to addition) and multiplying small numbers is very error prone. We can avoid this problem by working with logarithms. The log of a product is the sum of the logs: <span class="math inline">\(log(a \times b) = log(a) + log(b)\)</span>. Logarithms are monotonically increasing, which means if <span class="math inline">\(a &gt; b\)</span> then <span class="math inline">\(log(a) &gt; log(b)\)</span>. This useful property means we can maximize the sum of the log likelihoods (which is quick and robust to errors) instead of the product of likelihoods (which is slow and error prone).</li>
-<li>Optimization algorithms typically find the <em>minimum</em> value. They’re intended to look for valleys, not peaks. So instead of maximizing the log likelihood, we can minimize the negative log likelihood.</li>
-</ol>
-<p>That seems confusing! Let’s write the code and so we can see what’s happening. Do the following:</p>
-<ol type="1">
-<li>Write a likelihood function for the violations and percent Hispanic model. This should calculate the negative log likelihood of a set of coefficients, conditional on the data.</li>
-<li>Call an optimization function to find the maximum likelihood parameters.</li>
-</ol>
-<p>It will help to keep the model formulation handy:</p>
-<p><span class="math display">\[
-\begin{align}
-\text{violations} &amp;\sim Bernoulli(p) \\
-logit(p) &amp;= \beta_0 + \beta_1 \text{percentHispanic}
-\end{align}
-\]</span></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inverse logit utility function</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>inv_logit <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">exp</span>(x) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(x))</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Likelihood of the coefficients, given the data</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>likelihood_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(coefficients, data) {</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate logit(p) based on coefficients and predictor</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Invert the logit to get p</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use the PMF of the Bernoulli to get our log likelihoods</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum the negative log likelihood</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Use an optimization function to get the maximum likelihood coefficients</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>drinking_water_complete <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(drinking_water, pcthisp, violations)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>coef_optim <span class="ot">&lt;-</span> <span class="fu">optim</span>(???, </span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                    ???, </span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> ???)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="questions-2" class="level2">
-<h2 class="anchored" data-anchor-id="questions-2">Questions</h2>
-<ol type="1">
-<li>What were your maximum likelihood estimates for <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span>?</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What are the maximum likelihood estimates for our coefficients?</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hint: explore coef_optim</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="2" type="1">
-<li>What’s the predicted probability of drinking water violations for communities with 0%, 50%, and 100% Hispanic population?<br>
-Plot the predicted probability across the whole range 0-100% Hispanic.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create and plot predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="3" type="1">
-<li>How much does the probability of a drinking water violation change when percent Hispanic population increases from 10 to 20%, 45 to 55%, and 80 to 90%?</li>
-</ol>
-<ol start="4" type="1">
-<li>How would you interpret the coefficients? What do the slope and intercept mean in this context? Where is the relationship linear, and where is it non-linear?</li>
-<li>Create a “DEM” of the likelihood landscape for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. Choose a range of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> values around your best estimates, calculate the likelihood for each combination, and create a figure with <span class="math inline">\(\beta_0\)</span> on the x-axis, <span class="math inline">\(\beta_1\)</span> on the y-axis, and the likelihood as the fill. Add a point for <span class="math inline">\((\hat\beta_0, \hat\beta_1)\)</span>.<br>
-Bonus problem: add contours!</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>likelihood_dem <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  ???,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  ???</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">coefficients =</span> <span class="fu">mapply</span>(<span class="cf">function</span>(b0, b1) <span class="fu">c</span>(<span class="at">beta0 =</span> b0, <span class="at">beta1 =</span> b1),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                               ???, ???,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">SIMPLIFY =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">negloglik =</span> <span class="fu">sapply</span>(coefficients, </span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                            ???, </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">data =</span> ???),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">likelihood =</span> ???)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(likelihood_dem, <span class="fu">aes</span>(???, ???, <span class="at">fill =</span> ???)) <span class="sc">+</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???, <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="fit-the-full-logistic-regression-model-using-glm" class="level1">
-<h1>Fit the full logistic regression model using <code>glm()</code></h1>
-<p>Normally we won’t need to write our own likelihood functions and use optimization to find our maximum likelihood coefficients. The <code>glm()</code> function in the built-in <code>stats</code> package can fit all kinds of generalized linear models, which includes logistic regression.</p>
-<p>Here’s how to fit the same model from the previous section. Notice the formula and data arguments look very similar to what we’d use for <code>lm()</code>. But now we have to specify the response variable’s “family” (i.e., the type of random variable) and the link function we want to use (logit, in our case).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pcthisp_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(violations <span class="sc">~</span> pcthisp, </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>),</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> drinking_water)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pcthisp_glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="questions-3" class="level2">
-<h2 class="anchored" data-anchor-id="questions-3">Questions</h2>
-<ol type="1">
-<li>How would you fit a model that includes an interaction term between ethnicity and SES?</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>interaction_glm <span class="ot">&lt;-</span> ???</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interaction_glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="2" type="1">
-<li>Create a figure similar to Fig. 1 in <span class="citation" data-cites="switzer2017">@switzer2017</span>. Put percent Hispanic population on the x-axis, median household income on the y-axis, and make the fill the probability of a water quality violation.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pcthisp =</span> ???,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">medianincomehouse =</span> ???</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">violations =</span> <span class="fu">predict</span>(???, </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">newdata =</span> ., </span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">type =</span> ???))</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="3" type="1">
-<li>Interpret the predicted surface. How does SES influence the relationship between ethnicity and exposure to environmental hazards? What is the “slope” of the probability of a violation w.r.t. percent Hispanic population at low, medium, and high median household income levels?<br>
-</li>
-</ol>
 
 
 <!-- -->
 
+
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-hitt2023" class="csl-entry" role="listitem">
+Hitt, Lauren G., Sarah Khalil, Annelise Blanchette, Myra E. Finkelstein, Erik N. K. Iverson, Stephanie C. McClelland, Renata Durães Ribeiro, and Jordan Karubian. 2023. <span>“Lead Exposure Is Correlated with Reduced Nesting Success of an Urban Songbird.”</span> <em>Environmental Research</em> 227 (June): 115711. <a href="https://doi.org/10.1016/j.envres.2023.115711">https://doi.org/10.1016/j.envres.2023.115711</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1024,297 +907,254 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb14" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "EDS222 Week 8 Lab: Hypothesis testing"</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">    echo: true</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">    eval: false</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu"># The Color of Drinking Water</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>Is exposure to environmental hazards influenced by *class* or *race and ethnicity*? Switzer and Teodoro [@switzer2017] argued the either-or framing of that question is misguided, and actually the *interaction* between class and race/ethnicity is the important question for environmental justice. Today's lab will use logistic regression and interaction terms to investigate drinking water quality in the context of socio-economic status (SES), race, and ethnicity.</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu"># Overview</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Data exploration</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Try (and fail) to use OLS</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Fit a logistic regression model using maximum likelihood</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Fit the full logistic regression model using <span class="in">`glm()`</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data exploration</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>We will use the data from @switzer2017 for today's lab. Begin by downloading the CSV file available <span class="co">[</span><span class="ot">here</span><span class="co">](https://drive.google.com/file/d/1_1vgFyUxWW7XNzNcVzd32UY9502TspXn/view?usp=drive_link)</span>. These data come from multiple sources.</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## Water utility and violations data</span></span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Source: Safe Drinking Water Information System (SDWIS)</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Time period: 2010-2013 (4 years)</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Sample size: 12,972 utilities</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Criteria: Local government-owned utilities serving populations of 10,000 or more</span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Demographic data</span></span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Source: US Census Bureau's American Community Surveys (2010-2013)</span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Variables included:</span>
-<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Percent Hispanic population</span>
-<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Percent Black population</span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Percent of population with high school education</span>
-<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Percent of population with bachelor's degree</span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Percent of population below poverty line</span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Median household income</span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>Load the data and begin exploring.</span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(tidyverse))</span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
-<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>drinking_water <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"drinking_water.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questions</span></span>
-<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>What do you think each row represents?\</span>
-<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>    **The water utility and demographic data for a single district in a single year.**</span>
-<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What columns do you think represent:</span>
-<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a><span class="ss">    1.  </span>Drinking water health violations?\</span>
-<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>        **`health`**</span>
-<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a><span class="ss">    2.  </span>Percent Black and Hispanic population in the utility district?\</span>
-<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>        <span class="in">`pctblack`</span> and <span class="in">`pcthisp`</span>, respectively</span>
-<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a><span class="ss">    3.  </span>Median household income in the utility district?\</span>
-<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>        <span class="in">`medianincomehouse`</span></span>
-<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>One column includes a *count* of drinking water health violations. How would you create a new column with a binary variable representing whether there were any violations?</span>
-<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>drinking_water<span class="sc">$</span>violations <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(drinking_water<span class="sc">$</span>health <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Create a scatter plot of violations against race (percent Black population), ethnicity (percent Hispanic population), and SES (median household income). What visualization issues do we get with a scatter plot? How could you address that?\</span>
-<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>    **Points are *overplotted*, we can't see the overall trend. One option: bin the data and calculate the mean.**</span>
-<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>violations_by_pctblack <span class="ot">&lt;-</span> drinking_water <span class="sc">%&gt;%</span> </span>
-<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pctblack =</span> <span class="fu">round</span>(pctblack <span class="sc">/</span> <span class="dv">5</span>) <span class="sc">*</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pctblack) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">violations =</span> <span class="fu">mean</span>(violations))</span>
-<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(drinking_water, <span class="fu">aes</span>(pctblack, violations)) <span class="sc">+</span></span>
-<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violations_by_pctblack, <span class="at">color =</span> <span class="st">"red"</span>)</span>
-<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>violations_by_pcthisp <span class="ot">&lt;-</span> drinking_water <span class="sc">%&gt;%</span> </span>
-<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pcthisp =</span> <span class="fu">round</span>(pcthisp <span class="sc">/</span> <span class="dv">5</span>) <span class="sc">*</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pcthisp) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">violations =</span> <span class="fu">mean</span>(violations))</span>
-<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(drinking_water, <span class="fu">aes</span>(pcthisp, violations)) <span class="sc">+</span></span>
-<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violations_by_pcthisp, <span class="at">color =</span> <span class="st">"red"</span>)</span>
-<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>violations_by_medianincomehouse <span class="ot">&lt;-</span> drinking_water <span class="sc">%&gt;%</span> </span>
-<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">medianincomehouse =</span> <span class="fu">round</span>(medianincomehouse <span class="sc">/</span> <span class="fl">1e4</span>) <span class="sc">*</span> <span class="fl">1e4</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(medianincomehouse) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">violations =</span> <span class="fu">mean</span>(violations))</span>
-<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(drinking_water, <span class="fu">aes</span>(medianincomehouse, violations)) <span class="sc">+</span></span>
-<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violations_by_medianincomehouse, <span class="at">color =</span> <span class="st">"red"</span>)</span>
-<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a><span class="fu"># Try (and fail) to use OLS</span></span>
-<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>Fit the following OLS model.</span>
-<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>\text{violations} = \beta_0 + \beta_1\text{percentHispanic}</span>
-<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>pcthisp_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(violations <span class="sc">~</span> pcthisp, drinking_water)</span>
-<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pcthisp_lm)</span>
-<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questions</span></span>
-<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Plot the residuals. What pattern do you notice?\</span>
-<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a>    **All the residuals fall along two parallel lines - not normal!**</span>
-<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a>drinking_water <span class="sc">%&gt;%</span> </span>
-<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(violations, pcthisp) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resid =</span> <span class="fu">resid</span>(pcthisp_lm)) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(pcthisp, resid)) <span class="sc">+</span></span>
-<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Plot the raw data and the predicted values for <span class="in">`violations`</span>. Are there any obvious problems?\</span>
-<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a>    **The predicted values fall between 0 and 1, so they could conceivably be interpreted as probabilities. But the raw data are far from the line.**</span>
-<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(drinking_water, <span class="fu">aes</span>(pcthisp, violations)) <span class="sc">+</span></span>
-<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> violations_by_pcthisp, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(pcthisp_lm)[<span class="dv">1</span>],</span>
-<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(pcthisp_lm)[<span class="dv">2</span>])</span>
-<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a><span class="fu"># Fit a logistic regression model using maximum likelihood</span></span>
-<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a>Recall that logistic regression uses *maximum likelihood*, not OLS, to estimate coefficients. Usually we will use functions from R packages to fit these models, but I want you to do it yourself once.</span>
-<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## Negative log likelihood</span></span>
-<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a>Estimating coefficients is an optimization problem: what combination yields the maximum likelihood? There are two things we can do to make our problem more tractable for optimization.</span>
-<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Recall that the likelihood function involves a *product*. Multiplication is computationally costly (compared to addition) and multiplying small numbers is very error prone. We can avoid this problem by working with logarithms. The log of a product is the sum of the logs: $log(a \times b) = log(a) + log(b)$. Logarithms are monotonically increasing, which means if $a &gt; b$ then $log(a) &gt; log(b)$. This useful property means we can maximize the sum of the log likelihoods (which is quick and robust to errors) instead of the product of likelihoods (which is slow and error prone).</span>
-<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Optimization algorithms typically find the *minimum* value. They're intended to look for valleys, not peaks. So instead of maximizing the log likelihood, we can minimize the negative log likelihood.</span>
-<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a>That seems confusing! Let's write the code and so we can see what's happening. Do the following:</span>
-<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Write a likelihood function for the violations and percent Hispanic model. This should calculate the negative log likelihood of a set of coefficients, conditional on the data.</span>
-<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Call an optimization function to find the maximum likelihood parameters.</span>
-<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a>It will help to keep the model formulation handy:</span>
-<span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a>\begin{align}</span>
-<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a>\text{violations} &amp;\sim Bernoulli(p) <span class="sc">\\</span></span>
-<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a>logit(p) &amp;= \beta_0 + \beta_1 \text{percentHispanic}</span>
-<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a>\end{align}</span>
-<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb14-193"><a href="#cb14-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-196"><a href="#cb14-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-197"><a href="#cb14-197" aria-hidden="true" tabindex="-1"></a><span class="co"># Inverse logit utility function</span></span>
-<span id="cb14-198"><a href="#cb14-198" aria-hidden="true" tabindex="-1"></a>inv_logit <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">exp</span>(x) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(x))</span>
-<span id="cb14-199"><a href="#cb14-199" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-200"><a href="#cb14-200" aria-hidden="true" tabindex="-1"></a><span class="co"># Likelihood of the coefficients, given the data</span></span>
-<span id="cb14-201"><a href="#cb14-201" aria-hidden="true" tabindex="-1"></a>likelihood_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(coefficients, data) {</span>
-<span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate logit(p) based on coefficients and predictor</span></span>
-<span id="cb14-203"><a href="#cb14-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-204"><a href="#cb14-204" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Invert the logit to get p</span></span>
-<span id="cb14-205"><a href="#cb14-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-206"><a href="#cb14-206" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use the PMF of the Bernoulli to get our log likelihoods</span></span>
-<span id="cb14-207"><a href="#cb14-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-208"><a href="#cb14-208" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum the negative log likelihood</span></span>
-<span id="cb14-209"><a href="#cb14-209" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-210"><a href="#cb14-210" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-211"><a href="#cb14-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-212"><a href="#cb14-212" aria-hidden="true" tabindex="-1"></a><span class="co"># Use an optimization function to get the maximum likelihood coefficients</span></span>
-<span id="cb14-213"><a href="#cb14-213" aria-hidden="true" tabindex="-1"></a>drinking_water_complete <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(drinking_water, pcthisp, violations)</span>
-<span id="cb14-214"><a href="#cb14-214" aria-hidden="true" tabindex="-1"></a>coef_optim <span class="ot">&lt;-</span> <span class="fu">optim</span>(???, </span>
-<span id="cb14-215"><a href="#cb14-215" aria-hidden="true" tabindex="-1"></a>                    ???, </span>
-<span id="cb14-216"><a href="#cb14-216" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> ???)</span>
-<span id="cb14-217"><a href="#cb14-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-219"><a href="#cb14-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questions</span></span>
-<span id="cb14-221"><a href="#cb14-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-222"><a href="#cb14-222" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>What were your maximum likelihood estimates for $\hat\beta_0$ and $\hat\beta_1$?</span>
-<span id="cb14-223"><a href="#cb14-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-226"><a href="#cb14-226" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-227"><a href="#cb14-227" aria-hidden="true" tabindex="-1"></a><span class="co"># What are the maximum likelihood estimates for our coefficients?</span></span>
-<span id="cb14-228"><a href="#cb14-228" aria-hidden="true" tabindex="-1"></a><span class="co"># Hint: explore coef_optim</span></span>
-<span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What's the predicted probability of drinking water violations for communities with 0%, 50%, and 100% Hispanic population?\</span>
-<span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a>    Plot the predicted probability across the whole range 0-100% Hispanic.</span>
-<span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a><span class="co"># Create and plot predictions</span></span>
-<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-242"><a href="#cb14-242" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>How much does the probability of a drinking water violation change when percent Hispanic population increases from 10 to 20%, 45 to 55%, and 80 to 90%?</span>
-<span id="cb14-243"><a href="#cb14-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-246"><a href="#cb14-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-247"><a href="#cb14-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-248"><a href="#cb14-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-249"><a href="#cb14-249" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>How would you interpret the coefficients? What do the slope and intercept mean in this context? Where is the relationship linear, and where is it non-linear?</span>
-<span id="cb14-250"><a href="#cb14-250" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Create a "DEM" of the likelihood landscape for $\beta_0$ and $\beta_1$. Choose a range of $\beta_0$ and $\beta_1$ values around your best estimates, calculate the likelihood for each combination, and create a figure with $\beta_0$ on the x-axis, $\beta_1$ on the y-axis, and the likelihood as the fill. Add a point for $(\hat\beta_0, \hat\beta_1)$.\</span>
-<span id="cb14-251"><a href="#cb14-251" aria-hidden="true" tabindex="-1"></a>    Bonus problem: add contours!</span>
-<span id="cb14-252"><a href="#cb14-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-255"><a href="#cb14-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-256"><a href="#cb14-256" aria-hidden="true" tabindex="-1"></a>likelihood_dem <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
-<span id="cb14-257"><a href="#cb14-257" aria-hidden="true" tabindex="-1"></a>  ???,</span>
-<span id="cb14-258"><a href="#cb14-258" aria-hidden="true" tabindex="-1"></a>  ???</span>
-<span id="cb14-259"><a href="#cb14-259" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-260"><a href="#cb14-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">coefficients =</span> <span class="fu">mapply</span>(<span class="cf">function</span>(b0, b1) <span class="fu">c</span>(<span class="at">beta0 =</span> b0, <span class="at">beta1 =</span> b1),</span>
-<span id="cb14-261"><a href="#cb14-261" aria-hidden="true" tabindex="-1"></a>                               ???, ???,</span>
-<span id="cb14-262"><a href="#cb14-262" aria-hidden="true" tabindex="-1"></a>                               <span class="at">SIMPLIFY =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb14-263"><a href="#cb14-263" aria-hidden="true" tabindex="-1"></a>         <span class="at">negloglik =</span> <span class="fu">sapply</span>(coefficients, </span>
-<span id="cb14-264"><a href="#cb14-264" aria-hidden="true" tabindex="-1"></a>                            ???, </span>
-<span id="cb14-265"><a href="#cb14-265" aria-hidden="true" tabindex="-1"></a>                            <span class="at">data =</span> ???),</span>
-<span id="cb14-266"><a href="#cb14-266" aria-hidden="true" tabindex="-1"></a>         <span class="at">likelihood =</span> ???)</span>
-<span id="cb14-267"><a href="#cb14-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-268"><a href="#cb14-268" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(likelihood_dem, <span class="fu">aes</span>(???, ???, <span class="at">fill =</span> ???)) <span class="sc">+</span></span>
-<span id="cb14-269"><a href="#cb14-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
-<span id="cb14-270"><a href="#cb14-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???, <span class="at">color =</span> <span class="st">"red"</span>)</span>
-<span id="cb14-271"><a href="#cb14-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-272"><a href="#cb14-272" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-273"><a href="#cb14-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-274"><a href="#cb14-274" aria-hidden="true" tabindex="-1"></a><span class="fu"># Fit the full logistic regression model using `glm()`</span></span>
-<span id="cb14-275"><a href="#cb14-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-276"><a href="#cb14-276" aria-hidden="true" tabindex="-1"></a>Normally we won't need to write our own likelihood functions and use optimization to find our maximum likelihood coefficients. The <span class="in">`glm()`</span> function in the built-in <span class="in">`stats`</span> package can fit all kinds of generalized linear models, which includes logistic regression.</span>
-<span id="cb14-277"><a href="#cb14-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-278"><a href="#cb14-278" aria-hidden="true" tabindex="-1"></a>Here's how to fit the same model from the previous section. Notice the formula and data arguments look very similar to what we'd use for <span class="in">`lm()`</span>. But now we have to specify the response variable's "family" (i.e., the type of random variable) and the link function we want to use (logit, in our case).</span>
-<span id="cb14-279"><a href="#cb14-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-282"><a href="#cb14-282" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-283"><a href="#cb14-283" aria-hidden="true" tabindex="-1"></a>pcthisp_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(violations <span class="sc">~</span> pcthisp, </span>
-<span id="cb14-284"><a href="#cb14-284" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>),</span>
-<span id="cb14-285"><a href="#cb14-285" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> drinking_water)</span>
-<span id="cb14-286"><a href="#cb14-286" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pcthisp_glm)</span>
-<span id="cb14-287"><a href="#cb14-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-288"><a href="#cb14-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-289"><a href="#cb14-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-290"><a href="#cb14-290" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questions</span></span>
-<span id="cb14-291"><a href="#cb14-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-292"><a href="#cb14-292" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>How would you fit a model that includes an interaction term between ethnicity and SES?</span>
-<span id="cb14-293"><a href="#cb14-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-296"><a href="#cb14-296" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-297"><a href="#cb14-297" aria-hidden="true" tabindex="-1"></a>interaction_glm <span class="ot">&lt;-</span> ???</span>
-<span id="cb14-298"><a href="#cb14-298" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interaction_glm)</span>
-<span id="cb14-299"><a href="#cb14-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-300"><a href="#cb14-300" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-301"><a href="#cb14-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-302"><a href="#cb14-302" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Create a figure similar to Fig. 1 in @switzer2017. Put percent Hispanic population on the x-axis, median household income on the y-axis, and make the fill the probability of a water quality violation.</span>
-<span id="cb14-303"><a href="#cb14-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-306"><a href="#cb14-306" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-307"><a href="#cb14-307" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
-<span id="cb14-308"><a href="#cb14-308" aria-hidden="true" tabindex="-1"></a>  <span class="at">pcthisp =</span> ???,</span>
-<span id="cb14-309"><a href="#cb14-309" aria-hidden="true" tabindex="-1"></a>  <span class="at">medianincomehouse =</span> ???</span>
-<span id="cb14-310"><a href="#cb14-310" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-311"><a href="#cb14-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">violations =</span> <span class="fu">predict</span>(???, </span>
-<span id="cb14-312"><a href="#cb14-312" aria-hidden="true" tabindex="-1"></a>                              <span class="at">newdata =</span> ., </span>
-<span id="cb14-313"><a href="#cb14-313" aria-hidden="true" tabindex="-1"></a>                              <span class="at">type =</span> ???))</span>
-<span id="cb14-314"><a href="#cb14-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-315"><a href="#cb14-315" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot</span></span>
-<span id="cb14-316"><a href="#cb14-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-317"><a href="#cb14-317" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-318"><a href="#cb14-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-319"><a href="#cb14-319" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Interpret the predicted surface. How does SES influence the relationship between ethnicity and exposure to environmental hazards? What is the "slope" of the probability of a violation w.r.t. percent Hispanic population at low, medium, and high median household income levels?\</span>
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "EDS222 Week 8 Lab: Hypothesis testing"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    echo: true</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    eval: false</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> references.bib</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>(<span class="dv">14</span>))</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu"># To lead poison a mockingbird</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Background</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>Lead is an important contaminant in urban areas with well-known impacts on human health, but do non-human animals also face risks from lead exposure? Hitt *et al.* investigated this question by measuring lead levels in soil and the blood of breeding mockingbirds, as well as egg hatching and offspring development <span class="co">[</span><span class="ot">@hitt2023</span><span class="co">]</span>. We will replicate parts of their analysis here.</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Get the data</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>The data for this study were deposited in the Dryad Data Repository and are available <span class="co">[</span><span class="ot">here</span><span class="co">](https://datadryad.org/stash/dataset/doi:10.5061/dryad.tht76hf3v)</span>. Download the full dataset and put them in the appropriate folder of your RStudio project.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>Read the northern mockingbird nestling data ("NOMO_Nest_Data.csv") and nestling lead data ("NestlingPb.csv") into data frames called <span class="in">`nest_data`</span> and <span class="in">`nestlingpb_data`</span>, respectively. Filter both data frames to the Uptown and Lakeshore neighborhoods.</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-data</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hypothesis testing by randomization</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>*Do mockingbirds in a neighborhood with higher lead concentration have less successful nests?*</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>We'll investigate this question using randomization hypothesis testing.</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">### Nest success</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="in">`nest_data`</span> contains columns <span class="in">`hood`</span> and <span class="in">`bin.status`</span>, representing the neighborhood and *binary status* (at least one chick fledged or not) for each monitored nest. Visualize how nest success (i.e., binary status) varied by neighborhood.</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: visualize-success</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 1: state the null and alternative hypotheses</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>*H~0~: \</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>H~A~:*</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 2: calculate the point statistic</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>1<span class="sc">\)</span> What is the relevant sample statistic for our hypothesis?</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>2<span class="sc">\)</span> How would you calculate it?</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: point-estimate-success</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 3: quantify the uncertainty</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>Use randomization to simulate the distribution of the sample statistic under the null hypothesis.</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: randomization-success</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 4: calculate probability of the point estimate under the null</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>What's the p-value?</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: pval-success</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 5: reject or fail to reject the null</span></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="fu">### Nestling blood lead levels</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>Now it's your turn. Perform a similar analysis to investigate whether nestling blood Pb levels vary by neighborhood. Use <span class="in">`nestlingpb_data`</span> for this part, column <span class="in">`blood_ug_dl_pbwt`</span>.</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>First, visualize the blood Pb levels by neighborhood. What's an appropriate type of visualization for this?</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: visualize-bloodpb</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 1: state the null and alternative hypotheses</span></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>*H~0~: \</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>H~A~:*</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 2: calculate the point statistic</span></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>1<span class="sc">\)</span> What is the relevant sample statistic for our hypothesis?</span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>2<span class="sc">\)</span> How would you calculate it?</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: point-estimate-bloodpb</span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 3: quantify the uncertainty</span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>Use randomization to simulate the distribution of the sample statistic under the null hypothesis.</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: randomization-bloodpb</span></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 4: calculate probability of the point estimate under the null</span></span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>What's the p-value?</span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: pval-bloodpb</span></span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 5: reject or fail to reject the null</span></span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hypothesis testing by normal approximation</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>Rather than using randomization to simulate the null distribution, it's often easier to approximate it as a normal distribution.</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>***Does nestling blood Pb level have a relationship with feather Pb level?***</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>First, visualize the relationship between the two variables.</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: blood-feathers-visualization</span></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 1: state the null and alternative hypotheses</span></span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>*H~0~: \</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>H~A~:*</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 2: calculate the point statistic</span></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>1<span class="sc">\)</span> What is the relevant sample statistic for our hypothesis?</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>2<span class="sc">\)</span> How would you calculate it?</span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: blood-feathers-lm</span></span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 3: quantify the uncertainty</span></span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>Use the standard error of the regression coefficient to visualize the distribution of the sample statistic under the null hypothesis.</span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: blood-feathers-null</span></span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 4: calculate probability of the point estimate under the null</span></span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>What's the p-value? Use <span class="in">`pnorm()`</span> to get the probability of a point estimate at least as extreme as the observed.</span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: blood-feathers-pval</span></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>Our calculate p-value is much lower than the p-value from the summary of our linear model. In class I told you <span class="in">`lm()`</span> uses a *Student's t-distribution* instead of a normal distribution for calculating the p-value. When sample sizes are large, the normal distribution and t-distribution are virtually identical. With only 22 complete data points, our sample size is relatively small. Therefore the t-distribution has *thicker tails* and yields a larger p-value. Hence the discrepancy.</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 5: reject or fail to reject the null</span></span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sensitivity to outliers</span></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>Revisit the visualization of the blood and feather Pb levels. One point seems to be an extreme outlier, and it seems to be exerting a strong influence on our model. Repeat the previous analysis with that point removed, then answer the question below.</span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: remove-outlier</span></span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>**Question:** Of the two analyses (with and without the outlier), which had a lower p-value? Does that make it a better analysis?</span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a><span class="fu">## Confidence intervals</span></span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>For the last part of today's lab we will construct confidence intervals around the point estimate of the blood Pb level coefficient. Here's the plan:</span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Simulate a population of nestlings, with the same relationship between blood and feather Pb levels as the observed sample.</span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Draw a new sample of nestlings from the simulated population. Create a confidence interval for the point estimate of the blood Pb level coefficient in this sample.</span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Repeat the process 100 times.</span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a>\~95% of our 95% CIs should contain the population parameter.</span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Simulate the population</span></span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: blood-feather-pop</span></span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Create one confidence interval</span></span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: blood-feather-ci</span></span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Repeat the process</span></span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>How many 95% CIs contain the population parameter?</span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: repeat-ci</span></span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recap</span></span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Randomization allows us to simulate the null distribution, which we can use to quantify the probability of our result if the null hypothesis is true.</span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`sample()`</span> and <span class="in">`replicate()`</span> are helpful here!</span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Randomization doesn't make assumptions about the normality of the sample statistic, but it does assume the sample is representative of the population.</span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>By assuming the sample statistic is normally distributed, we can use standard errors to conduct hypothesis testing.</span>
+<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>R will calculate standard errors for us for most sample statistics, such as regression coefficients.</span>
+<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>We can also use standard errors to construct confidence intervals.</span>
+<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>By simulating a population, we demonstrated \~95% of 95% CIs will contain the population parameter.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

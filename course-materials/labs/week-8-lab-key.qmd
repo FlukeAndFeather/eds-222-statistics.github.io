@@ -223,8 +223,8 @@ ggplot(nestlingpb_data, aes(blood_ug_dl_pbwt, feather_ug_g_pbwt)) +
 
 #### Step 1: state the null and alternative hypotheses
 
-*H~0~: Blood Pb level does not have an effect on* feather Pb level*\
-H~A~: Blood Pb level has an effect on* feather Pb level
+*H~0~: Blood Pb level does not have an effect on* *feather Pb level\
+H~A~: Blood Pb level has an effect on* *feather Pb level*
 
 #### Step 2: calculate the point statistic
 

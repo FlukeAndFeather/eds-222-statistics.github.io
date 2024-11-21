@@ -415,7 +415,7 @@ H<sub>A</sub>: Neighborhood has an effect on nest success</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>(null_dist) <span class="sc">&gt;</span> <span class="fu">abs</span>(point_estimate_success)) <span class="sc">/</span> <span class="fu">length</span>(null_dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.457</code></pre>
+<pre><code>[1] 0.488</code></pre>
 </div>
 </div>
 </section>
@@ -537,8 +537,8 @@ H<sub>A</sub>: Neighborhood has an effect on nestling Pb levels</em></p>
 </div>
 <section id="step-1-state-the-null-and-alternative-hypotheses-2" class="level4">
 <h4 class="anchored" data-anchor-id="step-1-state-the-null-and-alternative-hypotheses-2">Step 1: state the null and alternative hypotheses</h4>
-<p><em>H<sub>0</sub>: Blood Pb level does not have an effect on</em> feather Pb level<em><br>
-H<sub>A</sub>: Blood Pb level has an effect on</em> feather Pb level</p>
+<p><em>H<sub>0</sub>: Blood Pb level does not have an effect on</em> <em>feather Pb level<br>
+H<sub>A</sub>: Blood Pb level has an effect on</em> <em>feather Pb level</em></p>
 </section>
 <section id="step-2-calculate-the-point-statistic-2" class="level4">
 <h4 class="anchored" data-anchor-id="step-2-calculate-the-point-statistic-2">Step 2: calculate the point statistic</h4>
@@ -752,18 +752,18 @@ lm(formula = feather_ug_g_pbwt ~ blood_ug_dl_pbwt, data = blood_feather_pop)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--4.4716 -0.7769 -0.0019  0.7746  4.7071 
+-4.3585 -0.7995 -0.0066  0.7888  4.5065 
 
 Coefficients:
                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)      0.135360   0.023144   5.849 5.11e-09 ***
-blood_ug_dl_pbwt 0.088881   0.001026  86.615  &lt; 2e-16 ***
+(Intercept)      0.106263   0.023750   4.474 7.76e-06 ***
+blood_ug_dl_pbwt 0.089581   0.001039  86.217  &lt; 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.154 on 9998 degrees of freedom
-Multiple R-squared:  0.4287,    Adjusted R-squared:  0.4286 
-F-statistic:  7502 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.176 on 9998 degrees of freedom
+Multiple R-squared:  0.4264,    Adjusted R-squared:  0.4264 
+F-statistic:  7433 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
@@ -783,7 +783,7 @@ F-statistic:  7502 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>sample_ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>point_estimate     ci95_lower     ci95_upper 
-    0.06952627     0.03105311     0.10799942 </code></pre>
+    0.11452841     0.06254545     0.16651138 </code></pre>
 </div>
 </div>
 </section>
@@ -1551,8 +1551,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb43-245"><a href="#cb43-245" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-246"><a href="#cb43-246" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 1: state the null and alternative hypotheses</span></span>
 <span id="cb43-247"><a href="#cb43-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-248"><a href="#cb43-248" aria-hidden="true" tabindex="-1"></a>*H~0~: Blood Pb level does not have an effect on* feather Pb level*\</span>
-<span id="cb43-249"><a href="#cb43-249" aria-hidden="true" tabindex="-1"></a>H~A~: Blood Pb level has an effect on* feather Pb level</span>
+<span id="cb43-248"><a href="#cb43-248" aria-hidden="true" tabindex="-1"></a>*H~0~: Blood Pb level does not have an effect on* *feather Pb level\</span>
+<span id="cb43-249"><a href="#cb43-249" aria-hidden="true" tabindex="-1"></a>H~A~: Blood Pb level has an effect on* *feather Pb level*</span>
 <span id="cb43-250"><a href="#cb43-250" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-251"><a href="#cb43-251" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Step 2: calculate the point statistic</span></span>
 <span id="cb43-252"><a href="#cb43-252" aria-hidden="true" tabindex="-1"></a></span>

@@ -5,288 +5,244 @@ format:
     echo: true
     eval: false
     code-tools: true
+bibliography: references.bib
 ---
-
-# The Color of Drinking Water
-
-Is exposure to environmental hazards influenced by *class* or *race and ethnicity*? Switzer and Teodoro [@switzer2017] argued the either-or framing of that question is misguided, and actually the *interaction* between class and race/ethnicity is the important question for environmental justice. Today's lab will use logistic regression and interaction terms to investigate drinking water quality in the context of socio-economic status (SES), race, and ethnicity.
-
-# Overview
-
-1.  Data exploration
-2.  Try (and fail) to use OLS
-3.  Fit a logistic regression model using maximum likelihood
-4.  Fit the full logistic regression model using `glm()`
-
-# Data exploration
-
-We will use the data from @switzer2017 for today's lab. Begin by downloading the CSV file available [here](https://drive.google.com/file/d/1_1vgFyUxWW7XNzNcVzd32UY9502TspXn/view?usp=drive_link). These data come from multiple sources.
-
-## Water utility and violations data
-
--   Source: Safe Drinking Water Information System (SDWIS)
-
--   Time period: 2010-2013 (4 years)
-
--   Sample size: 12,972 utilities
-
--   Criteria: Local government-owned utilities serving populations of 10,000 or more
-
-## Demographic data
-
--   Source: US Census Bureau's American Community Surveys (2010-2013)
-
--   Variables included:
-
-    -   Percent Hispanic population
-
-    -   Percent Black population
-
-    -   Percent of population with high school education
-
-    -   Percent of population with bachelor's degree
-
-    -   Percent of population below poverty line
-
-    -   Median household income
-
-Load the data and begin exploring.
 
 ```{r}
 #| label: setup
+#| include: false
 
-suppressMessages(library(tidyverse))
-theme_set(theme_bw())
-
-drinking_water <- read_csv("drinking_water.csv", show_col_types = FALSE)
+library(tidyverse)
+theme_set(theme_classic(14))
 
 ```
 
-## Questions
+# To lead poison a mockingbird
 
-1.  What do you think each row represents?\
-    **The water utility and demographic data for a single district in a single year.**
-2.  What columns do you think represent:
-    1.  Drinking water health violations?\
-        **`health`**
-    2.  Percent Black and Hispanic population in the utility district?\
-        `pctblack` and `pcthisp`, respectively
-    3.  Median household income in the utility district?\
-        `medianincomehouse`
-3.  One column includes a *count* of drinking water health violations. How would you create a new column with a binary variable representing whether there were any violations?
+## Background
+
+Lead is an important contaminant in urban areas with well-known impacts on human health, but do non-human animals also face risks from lead exposure? Hitt *et al.* investigated this question by measuring lead levels in soil and the blood of breeding mockingbirds, as well as egg hatching and offspring development [@hitt2023]. We will replicate parts of their analysis here.
+
+## Get the data
+
+The data for this study were deposited in the Dryad Data Repository and are available [here](https://datadryad.org/stash/dataset/doi:10.5061/dryad.tht76hf3v). Download the full dataset and put them in the appropriate folder of your RStudio project.
+
+Read the northern mockingbird nestling data ("NOMO_Nest_Data.csv") and nestling lead data ("NestlingPb.csv") into data frames called `nest_data` and `nestlingpb_data`, respectively. Filter both data frames to the Uptown and Lakeshore neighborhoods.
 
 ```{r}
-drinking_water$violations <- ifelse(drinking_water$health > 0, 1, 0)
+#| label: load-data
 
 ```
 
-4.  Create a scatter plot of violations against race (percent Black population), ethnicity (percent Hispanic population), and SES (median household income). What visualization issues do we get with a scatter plot? How could you address that?\
-    **Points are *overplotted*, we can't see the overall trend. One option: bin the data and calculate the mean.**
+## Hypothesis testing by randomization
+
+*Do mockingbirds in a neighborhood with higher lead concentration have less successful nests?*
+
+We'll investigate this question using randomization hypothesis testing.
+
+### Nest success
+
+`nest_data` contains columns `hood` and `bin.status`, representing the neighborhood and *binary status* (at least one chick fledged or not) for each monitored nest. Visualize how nest success (i.e., binary status) varied by neighborhood.
 
 ```{r}
-violations_by_pctblack <- drinking_water %>% 
-  mutate(pctblack = round(pctblack / 5) * 5) %>% 
-  group_by(pctblack) %>% 
-  summarize(violations = mean(violations))
-  
-ggplot(drinking_water, aes(pctblack, violations)) +
-  geom_point() +
-  geom_point(data = violations_by_pctblack, color = "red")
-
-violations_by_pcthisp <- drinking_water %>% 
-  mutate(pcthisp = round(pcthisp / 5) * 5) %>% 
-  group_by(pcthisp) %>% 
-  summarize(violations = mean(violations))
-  
-ggplot(drinking_water, aes(pcthisp, violations)) +
-  geom_point() +
-  geom_point(data = violations_by_pcthisp, color = "red")
-
-violations_by_medianincomehouse <- drinking_water %>% 
-  mutate(medianincomehouse = round(medianincomehouse / 1e4) * 1e4) %>% 
-  group_by(medianincomehouse) %>% 
-  summarize(violations = mean(violations))
-  
-ggplot(drinking_water, aes(medianincomehouse, violations)) +
-  geom_point() +
-  geom_point(data = violations_by_medianincomehouse, color = "red")
+#| label: visualize-success
 
 ```
 
-# Try (and fail) to use OLS
+#### Step 1: state the null and alternative hypotheses
 
-Fit the following OLS model.
+*H~0~: \
+H~A~:*
 
-$$
-\text{violations} = \beta_0 + \beta_1\text{percentHispanic}
-$$
+#### Step 2: calculate the point statistic
+
+1\) What is the relevant sample statistic for our hypothesis?
+
+2\) How would you calculate it?
 
 ```{r}
-pcthisp_lm <- lm(violations ~ pcthisp, drinking_water)
-summary(pcthisp_lm)
+#| label: point-estimate-success
 
 ```
 
-## Questions
+#### Step 3: quantify the uncertainty
 
-1.  Plot the residuals. What pattern do you notice?\
-    **All the residuals fall along two parallel lines - not normal!**
+Use randomization to simulate the distribution of the sample statistic under the null hypothesis.
 
 ```{r}
-drinking_water %>% 
-  select(violations, pcthisp) %>% 
-  drop_na() %>% 
-  mutate(resid = resid(pcthisp_lm)) %>% 
-  ggplot(aes(pcthisp, resid)) +
-  geom_point()
+#| label: randomization-success
 
 ```
 
-2.  Plot the raw data and the predicted values for `violations`. Are there any obvious problems?\
-    **The predicted values fall between 0 and 1, so they could conceivably be interpreted as probabilities. But the raw data are far from the line.**
+#### Step 4: calculate probability of the point estimate under the null
+
+What's the p-value?
 
 ```{r}
-ggplot(drinking_water, aes(pcthisp, violations)) +
-  geom_point() +
-  geom_point(data = violations_by_pcthisp, color = "red") +
-  geom_abline(intercept = coef(pcthisp_lm)[1],
-              slope = coef(pcthisp_lm)[2])
-  
+#| label: pval-success
+
 ```
 
-# Fit a logistic regression model using maximum likelihood
+#### Step 5: reject or fail to reject the null
 
-Recall that logistic regression uses *maximum likelihood*, not OLS, to estimate coefficients. Usually we will use functions from R packages to fit these models, but I want you to do it yourself once.
+### Nestling blood lead levels
 
-## Negative log likelihood
+Now it's your turn. Perform a similar analysis to investigate whether nestling blood Pb levels vary by neighborhood. Use `nestlingpb_data` for this part, column `blood_ug_dl_pbwt`.
 
-Estimating coefficients is an optimization problem: what combination yields the maximum likelihood? There are two things we can do to make our problem more tractable for optimization.
-
-1.  Recall that the likelihood function involves a *product*. Multiplication is computationally costly (compared to addition) and multiplying small numbers is very error prone. We can avoid this problem by working with logarithms. The log of a product is the sum of the logs: $log(a \times b) = log(a) + log(b)$. Logarithms are monotonically increasing, which means if $a > b$ then $log(a) > log(b)$. This useful property means we can maximize the sum of the log likelihoods (which is quick and robust to errors) instead of the product of likelihoods (which is slow and error prone).
-2.  Optimization algorithms typically find the *minimum* value. They're intended to look for valleys, not peaks. So instead of maximizing the log likelihood, we can minimize the negative log likelihood.
-
-That seems confusing! Let's write the code and so we can see what's happening. Do the following:
-
-1.  Write a likelihood function for the violations and percent Hispanic model. This should calculate the negative log likelihood of a set of coefficients, conditional on the data.
-2.  Call an optimization function to find the maximum likelihood parameters.
-
-It will help to keep the model formulation handy:
-
-$$
-\begin{align}
-\text{violations} &\sim Bernoulli(p) \\
-logit(p) &= \beta_0 + \beta_1 \text{percentHispanic}
-\end{align}
-$$
+First, visualize the blood Pb levels by neighborhood. What's an appropriate type of visualization for this?
 
 ```{r}
-# Inverse logit utility function
-inv_logit <- function(x) exp(x) / (1 + exp(x))
-  
-# Likelihood of the coefficients, given the data
-likelihood_fun <- function(coefficients, data) {
-  # Calculate logit(p) based on coefficients and predictor
-
-  # Invert the logit to get p
-
-  # Use the PMF of the Bernoulli to get our log likelihoods
-
-  # Sum the negative log likelihood
-  
-}
-
-# Use an optimization function to get the maximum likelihood coefficients
-drinking_water_complete <- drop_na(drinking_water, pcthisp, violations)
-coef_optim <- optim(???, 
-                    ???, 
-                    data = ???)
+#| label: visualize-bloodpb
 
 ```
 
-## Questions
+#### Step 1: state the null and alternative hypotheses
 
-1.  What were your maximum likelihood estimates for $\hat\beta_0$ and $\hat\beta_1$?
+*H~0~: \
+H~A~:*
+
+#### Step 2: calculate the point statistic
+
+1\) What is the relevant sample statistic for our hypothesis?
+
+2\) How would you calculate it?
 
 ```{r}
-# What are the maximum likelihood estimates for our coefficients?
-# Hint: explore coef_optim
+#| label: point-estimate-bloodpb
 
 ```
 
-2.  What's the predicted probability of drinking water violations for communities with 0%, 50%, and 100% Hispanic population?\
-    Plot the predicted probability across the whole range 0-100% Hispanic.
+#### Step 3: quantify the uncertainty
+
+Use randomization to simulate the distribution of the sample statistic under the null hypothesis.
 
 ```{r}
-# Create and plot predictions
+#| label: randomization-bloodpb
 
 ```
 
-3.  How much does the probability of a drinking water violation change when percent Hispanic population increases from 10 to 20%, 45 to 55%, and 80 to 90%?
+#### Step 4: calculate probability of the point estimate under the null
+
+What's the p-value?
 
 ```{r}
+#| label: pval-bloodpb
 
 ```
 
-4.  How would you interpret the coefficients? What do the slope and intercept mean in this context? Where is the relationship linear, and where is it non-linear?
-5.  Create a "DEM" of the likelihood landscape for $\beta_0$ and $\beta_1$. Choose a range of $\beta_0$ and $\beta_1$ values around your best estimates, calculate the likelihood for each combination, and create a figure with $\beta_0$ on the x-axis, $\beta_1$ on the y-axis, and the likelihood as the fill. Add a point for $(\hat\beta_0, \hat\beta_1)$.\
-    Bonus problem: add contours!
+#### Step 5: reject or fail to reject the null
+
+## Hypothesis testing by normal approximation
+
+Rather than using randomization to simulate the null distribution, it's often easier to approximate it as a normal distribution.
+
+***Does nestling blood Pb level have a relationship with feather Pb level?***
+
+First, visualize the relationship between the two variables.
 
 ```{r}
-likelihood_dem <- expand_grid(
-  ???,
-  ???
-) %>% 
-  mutate(coefficients = mapply(function(b0, b1) c(beta0 = b0, beta1 = b1),
-                               ???, ???,
-                               SIMPLIFY = FALSE),
-         negloglik = sapply(coefficients, 
-                            ???, 
-                            data = ???),
-         likelihood = ???)
-
-ggplot(likelihood_dem, aes(???, ???, fill = ???)) +
-  geom_raster() +
-  geom_point(x = ???, y = ???, color = "red")
+#| label: blood-feathers-visualization
 
 ```
 
-# Fit the full logistic regression model using `glm()`
+#### Step 1: state the null and alternative hypotheses
 
-Normally we won't need to write our own likelihood functions and use optimization to find our maximum likelihood coefficients. The `glm()` function in the built-in `stats` package can fit all kinds of generalized linear models, which includes logistic regression.
+*H~0~: \
+H~A~:*
 
-Here's how to fit the same model from the previous section. Notice the formula and data arguments look very similar to what we'd use for `lm()`. But now we have to specify the response variable's "family" (i.e., the type of random variable) and the link function we want to use (logit, in our case).
+#### Step 2: calculate the point statistic
+
+1\) What is the relevant sample statistic for our hypothesis?
+
+2\) How would you calculate it?
 
 ```{r}
-pcthisp_glm <- glm(violations ~ pcthisp, 
-                   family = binomial(link = "logit"),
-                   data = drinking_water)
-summary(pcthisp_glm)
+#| label: blood-feathers-lm
 
 ```
 
-## Questions
+#### Step 3: quantify the uncertainty
 
-1.  How would you fit a model that includes an interaction term between ethnicity and SES?
+Use the standard error of the regression coefficient to visualize the distribution of the sample statistic under the null hypothesis.
 
 ```{r}
-interaction_glm <- ???
-summary(interaction_glm)
+#| label: blood-feathers-null
 
 ```
 
-2.  Create a figure similar to Fig. 1 in @switzer2017. Put percent Hispanic population on the x-axis, median household income on the y-axis, and make the fill the probability of a water quality violation.
+#### Step 4: calculate probability of the point estimate under the null
+
+What's the p-value? Use `pnorm()` to get the probability of a point estimate at least as extreme as the observed.
 
 ```{r}
-predictions <- expand_grid(
-  pcthisp = ???,
-  medianincomehouse = ???
-) %>% 
-  mutate(violations = predict(???, 
-                              newdata = ., 
-                              type = ???))
-
-# Create plot
+#| label: blood-feathers-pval
 
 ```
 
-3.  Interpret the predicted surface. How does SES influence the relationship between ethnicity and exposure to environmental hazards? What is the "slope" of the probability of a violation w.r.t. percent Hispanic population at low, medium, and high median household income levels?\
+::: callout-note
+Our calculate p-value is much lower than the p-value from the summary of our linear model. In class I told you `lm()` uses a *Student's t-distribution* instead of a normal distribution for calculating the p-value. When sample sizes are large, the normal distribution and t-distribution are virtually identical. With only 22 complete data points, our sample size is relatively small. Therefore the t-distribution has *thicker tails* and yields a larger p-value. Hence the discrepancy.
+:::
+
+#### Step 5: reject or fail to reject the null
+
+### Sensitivity to outliers
+
+Revisit the visualization of the blood and feather Pb levels. One point seems to be an extreme outlier, and it seems to be exerting a strong influence on our model. Repeat the previous analysis with that point removed, then answer the question below.
+
+```{r}
+#| label: remove-outlier
+
+```
+
+**Question:** Of the two analyses (with and without the outlier), which had a lower p-value? Does that make it a better analysis?
+
+## Confidence intervals
+
+For the last part of today's lab we will construct confidence intervals around the point estimate of the blood Pb level coefficient. Here's the plan:
+
+1.  Simulate a population of nestlings, with the same relationship between blood and feather Pb levels as the observed sample.
+
+2.  Draw a new sample of nestlings from the simulated population. Create a confidence interval for the point estimate of the blood Pb level coefficient in this sample.
+
+3.  Repeat the process 100 times.
+
+\~95% of our 95% CIs should contain the population parameter.
+
+### 1. Simulate the population
+
+```{r}
+#| label: blood-feather-pop
+
+```
+
+### 2. Create one confidence interval
+
+```{r}
+#| label: blood-feather-ci
+
+```
+
+### 3. Repeat the process
+
+How many 95% CIs contain the population parameter?
+
+```{r}
+#| label: repeat-ci
+
+```
+
+## Recap
+
+-   Randomization allows us to simulate the null distribution, which we can use to quantify the probability of our result if the null hypothesis is true.
+
+    -   `sample()` and `replicate()` are helpful here!
+
+    -   Randomization doesn't make assumptions about the normality of the sample statistic, but it does assume the sample is representative of the population.
+
+-   By assuming the sample statistic is normally distributed, we can use standard errors to conduct hypothesis testing.
+
+    -   R will calculate standard errors for us for most sample statistics, such as regression coefficients.
+
+-   We can also use standard errors to construct confidence intervals.
+
+    -   By simulating a population, we demonstrated \~95% of 95% CIs will contain the population parameter.
