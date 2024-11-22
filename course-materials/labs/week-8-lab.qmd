@@ -32,6 +32,12 @@ Read the northern mockingbird nestling data ("NOMO_Nest_Data.csv") and nestling 
 ```{r}
 #| label: load-data
 
+nest_data <- read_csv("data/NOMO_Nest_Data.csv") %>% 
+  filter(hood %in% c("ls", "up"))
+
+nestlingpb_data <- read_csv("data/NestlingPb.csv") %>% 
+  filter(hood %in% c("lakeshore", "uptown"))
+
 ```
 
 ## Hypothesis testing by randomization
@@ -47,21 +53,36 @@ We'll investigate this question using randomization hypothesis testing.
 ```{r}
 #| label: visualize-success
 
+ggplot(nest_data, aes(hood, fill = factor(bin.status))) +
+  geom_bar() +
+  scale_fill_brewer("Nest success", palette = "Dark2")
+
 ```
 
 #### Step 1: state the null and alternative hypotheses
 
-*H~0~: \
-H~A~:*
+*H~0~*: Neighborhood has no effect on nest success
 
-#### Step 2: calculate the point statistic
+*H~A~*: Neighborhood has an effect on nest success
+
+#### Step 2: calculate the point estimate
 
 1\) What is the relevant sample statistic for our hypothesis?
+
+Difference in proportions
 
 2\) How would you calculate it?
 
 ```{r}
 #| label: point-estimate-success
+
+nest_success <- nest_data %>% 
+  group_by(hood) %>% 
+  summarize(prop = sum(bin.status) / n())
+
+point_estimate_success <- nest_success$prop[2] - nest_success$prop[1]
+
+point_estimate_success
 
 ```
 
@@ -72,6 +93,24 @@ Use randomization to simulate the distribution of the sample statistic under the
 ```{r}
 #| label: randomization-success
 
+null_dist <- replicate(1000, {
+  nest_success <- nest_data %>% 
+    mutate(hood = sample(hood, n())) %>% 
+    group_by(hood) %>% 
+    summarize(prop = sum(bin.status) / n())
+  
+  point_estimate_success <- nest_success$prop[2] - nest_success$prop[1]
+  
+  point_estimate_success
+})
+
+ggplot(tibble(null_dist), aes(null_dist)) +
+  geom_histogram(bins = 20, 
+                 color = "cornflowerblue", 
+                 fill = NA) +
+  geom_vline(xintercept = point_estimate_success, 
+             color = "firebrick")
+
 ```
 
 #### Step 4: calculate probability of the point estimate under the null
@@ -81,9 +120,16 @@ What's the p-value?
 ```{r}
 #| label: pval-success
 
+sum(abs(null_dist) > abs(point_estimate_success)) / 
+  length(null_dist)
+
 ```
 
 #### Step 5: reject or fail to reject the null
+
+We're using a threshold of alpha=0.05 (by convention). p>0.05, so we fail to reject the null.
+
+Do we accept the null? NO. NO WE DO NOT.
 
 ### Nestling blood lead levels
 
