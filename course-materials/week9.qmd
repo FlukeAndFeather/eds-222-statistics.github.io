@@ -1,5 +1,5 @@
 ---
-title: "Course review and Thanksgiving"
+title: "Spatio-temporal regression"
 subtitle: "Week 9"
 description: "November 25^th^ - November 29^th^"
 ---
@@ -8,9 +8,9 @@ description: "November 25^th^ - November 29^th^"
 
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture slides  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab activity | {{< fa book-open-reader title="A person holding an open book" >}} Reading |
 |----|----|----|
-| Course review (Zoom) | No class (Thanksgiving) | None |
+| [Spatio-temporal regression](https://vimeo.com/1033528160) <br/> [Slides](handouts/week9-handout.pdf) <br/> [Slides - annotated](handouts/week9-handout-annotated.pdf) | No class (Thanksgiving) | None |
 : {.hover .bordered tbl-colwidths="[30,35,35]"} 
 
 ## Notes
 
-* Course review will be held over Zoom to accommodate student travel.
+* Lecture this week is recorded (see link to Vimeo).

@@ -415,7 +415,7 @@ H<sub>A</sub>: Neighborhood has an effect on nest success</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>(null_dist) <span class="sc">&gt;</span> <span class="fu">abs</span>(point_estimate_success)) <span class="sc">/</span> <span class="fu">length</span>(null_dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.488</code></pre>
+<pre><code>[1] 0.474</code></pre>
 </div>
 </div>
 </section>
@@ -752,18 +752,18 @@ lm(formula = feather_ug_g_pbwt ~ blood_ug_dl_pbwt, data = blood_feather_pop)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3.9771 -0.7946 -0.0070  0.7852  4.8380 
+-4.4836 -0.7912  0.0023  0.7806  4.6634 
 
 Coefficients:
                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       0.12804    0.02366   5.411  6.4e-08 ***
-blood_ug_dl_pbwt  0.08825    0.00104  84.856  &lt; 2e-16 ***
+(Intercept)      0.099982   0.023680   4.222 2.44e-05 ***
+blood_ug_dl_pbwt 0.090515   0.001042  86.825  &lt; 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.16 on 9998 degrees of freedom
-Multiple R-squared:  0.4187,    Adjusted R-squared:  0.4186 
-F-statistic:  7201 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.169 on 9998 degrees of freedom
+Multiple R-squared:  0.4299,    Adjusted R-squared:  0.4298 
+F-statistic:  7539 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
@@ -783,7 +783,7 @@ F-statistic:  7201 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>sample_ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>point_estimate     ci95_lower     ci95_upper 
-    0.08142236     0.03443698     0.12840774 </code></pre>
+    0.10653450     0.05353169     0.15953732 </code></pre>
 </div>
 </div>
 </section>
